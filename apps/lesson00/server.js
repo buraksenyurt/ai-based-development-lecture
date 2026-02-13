@@ -9,7 +9,7 @@ app.use(express.static(__dirname));
 
 // Ana sayfa route'u
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'cv.html'));
+    res.sendFile(path.join(__dirname, 'myCV.html'));
 });
 
 // Sunucuyu başlat

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cv>
+    <personal_info>
+        <fullname>Burak Selim Şenyurt</fullname>
+        <birth_year>1976</birth_year>
+        <contact>
+            <email>burakselimsenyurt@gmail.com</email>
+        </contact>
+        <blog>https://www.buraksenyurt.com</blog>
+        <github_user>buraksenyurt</github_user>
+    </personal_info>
+    
+    <education>
+        <graduate>Y.T.Ü</graduate>
+        <graduate_year>1999</graduate_year>
+        <department>Matematik Mühendisliği</department>
+    </education>
+    
+    <experience>
+        <job>
+            <company>Doğuş Teknoloji</company>
+            <position>Expert Senior Software Developer</position>
+            <start_year>2018</start_year>
+        </job>
+        <job>
+            <company>ING Bank</company>
+            <position>Senior Software Consultant</position>
+            <start_year>2013</start_year>
+            <end_year>2018</end_year>
+        </job>
+    </experience>
+    
+    <skills>
+        <professional_skills>
+            <skill>C#</skill>
+            <skill>Rust</skill>
+        </professional_skills>
+        <personal_skills>
+            <skill>Problem Solving</skill>
+            <skill>Teamwork</skill>
+        </personal_skills>
+    </skills>
+    
+    <languages>
+        <language>
+            <name>English</name>
+            <level>Advanced</level>
+        </language>
+        <language>
+            <name>Turkish</name>
+            <level>Native</level>
+        </language>
+    </languages>
+    
+    <hobbies>
+        <hobby>Reading</hobby>
+        <hobby>Model Airplane Building</hobby>
+    </hobbies>
+</cv>
