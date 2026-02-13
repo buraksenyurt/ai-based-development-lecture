@@ -2,6 +2,13 @@
 
 Konya Gıda ve Tarım Üniversitesitesi Yazılım Müh. ve Pamukkale Üniversitesi Eletrik Elektronik ve Yönetim Bilişim Sistemleri bölümleri için açılmış derse ait doküman ve örnek uygulamaların yer aldığı repodur.
 
+- [Yapay Zeka Destekli Yazılım Geliştirme](#yapay-zeka-destekli-yazılım-geliştirme)
+  - [Önsöz](#önsöz)
+  - [Gün 00 - Tanışma ve `Hello World` Uygulamasının Geliştirilmesi](#gün-00---tanışma-ve-hello-world-uygulamasının-geliştirilmesi)
+    - [Bu çalışmadan çıkarılması gereken dersler](#bu-çalışmadan-çıkarılması-gereken-dersler)
+  - [Gün 01 - CV Bank Projesi için Prototip Geliştirme](#gün-01---cv-bank-projesi-için-prototip-geliştirme)
+- [Terimler Sözlüğü](Dictionary.md)
+
 ## Önsöz
 
 Yapay zeka araçları günümüzün hype konusu olsa da, bu araçların yazılım geliştirme süreçlerine entegrasyonu henüz tam olarak anlaşılmış değildir. Bu dersin amacı, yapay zeka destekli yazılım geliştirme süreçlerini anlamak ve bu süreçlerde karşılaşılabilecek zorlukları ele almaktır. Ders boyunca, yapay zeka araçlarının yazılım geliştirme süreçlerine nasıl entegre edileceği, avantajları/dezavantajları ve bu araçların kullanımı sırasında karşılaşılabilecek zorluklar üzerinde durulacaktır. Ayrıca, yapay zeka destekli yazılım geliştirme süreçlerinde güvenlik, teknik borç ve proje mimarisi gibi önemli konulara da değinilecektir. Dönem boyunca aşağıdaki soruların cevaplarını arayacağız:
@@ -67,3 +74,12 @@ Nihai amacımız orta ölçekte bir cv bankası uygulaması geliştirmek ve sür
 - Komple bir proje yazdırmak yerine küçük parçalar halinde kod üretmenin daha verimli olabileceğini göz önüne alarak ilerlemeliyiz.
 
 ## Gün 01 - CV Bank Projesi için Prototip Geliştirme
+
+## Uygulama Önerileri
+
+Bu repodaki birçok doküman veya içerik yeni uygulamalar yazmak için bir başlangıç noktası olabilir. Bu fikirleri hakim olduğunuz programlama dili ve geliştirme platformları ve yapay zeka araçlarıyla birleştirerek kendi projelerinizi geliştirebilirsiniz. **Vibe Coding** pratiklerinden ziyade **Agentic Engineering** yaklaşımını benimseyerek hareket etmek daha doğru olur. Yani yapay zeka araçlarını birer yardımcı olarak kullanmak ve onların ürettiği çıktıları dikkatlice inceleyip gerektiğinde müdahale ederek ilerlemek daha verimli olacaktır. Bu süreçte kod güvenilirliği, teknik borç ve proje mimarisi gibi konulara dikkat etmek önemlidir.
+
+| Proje Fikri | Açıklama |
+| --- | --- |
+| Terimler Sözlüğü | Ders müfredatında geçen teknik terimlerin tanımlarını ve açıklamalarını içeren bir sözlük uygulaması. Kullanıcı terim arayabilir, yeni terimler ekleyebilir. Terimler merkezi bir veri sisteminde servis tabanlı çekilir. Düzenleme ve ekleme fonksiyonellikleri yetkiye *(Authorization)* bağlıdır. |
+| | |
