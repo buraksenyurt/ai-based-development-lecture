@@ -1,0 +1,16 @@
+{
+  "name": "cv-web-server",
+  "version": "1.0.0",
+  "description": "Simple web server for CV HTML page",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["web", "server", "cv"],
+  "author": "Burak Selim Şenyurt",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

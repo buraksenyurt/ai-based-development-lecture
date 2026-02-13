@@ -1,0 +1,47 @@
+{
+    "Fullname": "Burak Selim Şenyurt",
+    "BirthYear": 1976,
+    "Graduate": "Y.T.Ü",
+    "GraduateYear": 1999,
+    "Contact": {
+        "Email": "burakselimsenyurt@gmail.com"
+    },
+    "Department": "Matematik Mühendisliği",
+    "Blog": "https://www.buraksenyurt.com",
+    "GithubUser": "buraksenyurt",
+    "Experience": [
+        {
+            "Company": "Doğuş Teknoloji",
+            "Position": "Expert Senior Software Developer",
+            "StartYear": 2018
+        },
+        {
+            "Company": "ING Bank",
+            "Position": "Senior Software Consultant",
+            "StartYear": 2013,
+            "EndYear": 2018
+        }
+    ],
+    "ProfessionalSkills": [
+        "C#",
+        "Rust"
+    ],
+    "PersonalSkills": [
+        "Problem Solving",
+        "Teamwork"
+    ],
+    "Languages": [
+        {
+            "Language": "English",
+            "Level": "Advanced"
+        },
+        {
+            "Language": "Turkish",
+            "Level": "Native"
+        }
+    ],
+    "Hobbies": [
+        "Reading",
+        "Model Airplane Building"
+    ]
+}

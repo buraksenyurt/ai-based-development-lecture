@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Özgeçmiş</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body class="bg-light">
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <!-- Header Card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body bg-primary text-white">
+                        <h1 class="display-4 mb-3" id="fullname">Yükleniyor...</h1>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-2">
+                                    <i class="bi bi-envelope-fill me-2"></i>
+                                    <span id="email"></span>
+                                </p>
+                                <p class="mb-2">
+                                    <i class="bi bi-mortarboard-fill me-2"></i>
+                                    <span id="graduate"></span> - <span id="graduateYear"></span>
+                                </p>
+                                <p class="mb-2">
+                                    <i class="bi bi-book-fill me-2"></i>
+                                    <span id="department"></span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-2">
+                                    <i class="bi bi-calendar-fill me-2"></i>
+                                    Doğum Yılı: <span id="birthYear"></span>
+                                </p>
+                                <p class="mb-2">
+                                    <i class="bi bi-globe me-2"></i>
+                                    <a href="#" id="blog" class="text-white" target="_blank">Blog</a>
+                                </p>
+                                <p class="mb-2">
+                                    <i class="bi bi-github me-2"></i>
+                                    <a href="#" id="github" class="text-white" target="_blank">GitHub</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience Section -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-dark text-white">
+                        <h3 class="mb-0"><i class="bi bi-briefcase-fill me-2"></i>İş Deneyimi</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="experience" class="list-group list-group-flush">
+                            <!-- Experience items will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Professional Skills -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header bg-success text-white">
+                                <h4 class="mb-0"><i class="bi bi-code-slash me-2"></i>Profesyonel Yetenekler</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="professionalSkills"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Skills -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header bg-info text-white">
+                                <h4 class="mb-0"><i class="bi bi-person-fill me-2"></i>Kişisel Yetenekler</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="personalSkills"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Languages -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header bg-warning text-dark">
+                                <h4 class="mb-0"><i class="bi bi-translate me-2"></i>Diller</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="languages"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hobbies -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header bg-secondary text-white">
+                                <h4 class="mb-0"><i class="bi bi-heart-fill me-2"></i>Hobiler</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="hobbies"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Fetch and display CV data
+        fetch('myCV.json')
+            .then(response => response.json())
+            .then(data => {
+                // Header Information
+                document.getElementById('fullname').textContent = data.Fullname;
+                document.getElementById('birthYear').textContent = data.BirthYear;
+                document.getElementById('graduate').textContent = data.Graduate;
+                document.getElementById('graduateYear').textContent = data.GraduateYear;
+                document.getElementById('email').textContent = data.Contact.Email;
+                document.getElementById('department').textContent = data.Department;
+                
+                // Blog link
+                const blogLink = document.getElementById('blog');
+                blogLink.href = data.Blog;
+                blogLink.textContent = data.Blog;
+                
+                // GitHub link
+                const githubLink = document.getElementById('github');
+                githubLink.href = `https://github.com/${data.GithubUser}`;
+                githubLink.textContent = `@${data.GithubUser}`;
+
+                // Experience
+                const experienceDiv = document.getElementById('experience');
+                data.Experience.forEach(exp => {
+                    const expItem = document.createElement('div');
+                    expItem.className = 'list-group-item';
+                    
+                    const yearsText = exp.EndYear 
+                        ? `${exp.StartYear} - ${exp.EndYear}` 
+                        : `${exp.StartYear} - Günümüz`;
+                    
+                    expItem.innerHTML = `
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">${exp.Company}</h5>
+                            <small class="text-muted">${yearsText}</small>
+                        </div>
+                        <p class="mb-1">${exp.Position}</p>
+                    `;
+                    experienceDiv.appendChild(expItem);
+                });
+
+                // Professional Skills
+                const professionalSkillsDiv = document.getElementById('professionalSkills');
+                data.ProfessionalSkills.forEach(skill => {
+                    const badge = document.createElement('span');
+                    badge.className = 'badge bg-success me-2 mb-2';
+                    badge.textContent = skill;
+                    professionalSkillsDiv.appendChild(badge);
+                });
+
+                // Personal Skills
+                const personalSkillsDiv = document.getElementById('personalSkills');
+                data.PersonalSkills.forEach(skill => {
+                    const badge = document.createElement('span');
+                    badge.className = 'badge bg-info me-2 mb-2';
+                    badge.textContent = skill;
+                    personalSkillsDiv.appendChild(badge);
+                });
+
+                // Languages
+                const languagesDiv = document.getElementById('languages');
+                const languagesList = document.createElement('ul');
+                languagesList.className = 'list-group list-group-flush';
+                data.Languages.forEach(lang => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                    listItem.innerHTML = `
+                        ${lang.Language}
+                        <span class="badge bg-warning text-dark">${lang.Level}</span>
+                    `;
+                    languagesList.appendChild(listItem);
+                });
+                languagesDiv.appendChild(languagesList);
+
+                // Hobbies
+                const hobbiesDiv = document.getElementById('hobbies');
+                const hobbiesList = document.createElement('ul');
+                hobbiesList.className = 'list-group list-group-flush';
+                data.Hobbies.forEach(hobby => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item';
+                    listItem.innerHTML = `<i class="bi bi-star-fill text-secondary me-2"></i>${hobby}`;
+                    hobbiesList.appendChild(listItem);
+                });
+                hobbiesDiv.appendChild(hobbiesList);
+            })
+            .catch(error => {
+                console.error('CV verisi yüklenirken hata oluştu:', error);
+                document.getElementById('fullname').textContent = 'Veri yüklenemedi!';
+            });
+    </script>
+</body>
+</html>
