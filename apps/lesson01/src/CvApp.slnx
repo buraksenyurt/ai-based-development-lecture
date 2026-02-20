@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="CvApp.Api/CvApp.Api.csproj" />
+  <Project Path="CvApp.Application/CvApp.Application.csproj" />
+  <Project Path="CvApp.Domain/CvApp.Domain.csproj" />
+  <Project Path="CvApp.Infrastructure/CvApp.Infrastructure.csproj" />
+</Solution>
