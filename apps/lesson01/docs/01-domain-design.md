@@ -20,7 +20,7 @@ Sisteme kayıt olan kullanıcıyı temsil eder.
 |ContactId|Guid|Unique/Identity alanıdır|D4816D0A-CD8E-4442-98C0-65D3BA11BE70|Tekrar etmemelidir, benzersiz olmalıdır|
 |Kind|[ContactType](#contacttype-enum) değerlerinden birisi olabilir|Türe göre kurallar içerir. Örneğin email geçerli formatta olmalıdır, Social Network bilgisi geçerli URL formatında olmalıdır|||
 |RelatedUser|Guid|Bu iletişim bilgisinin sahibi olan UserId değeridir|5C98741B-64C8-49DE-9E68-3D7A2F44802B||
-|Value|Text|Kind değerine göre iletişim bilgisinin içeriğidir|noone@nowhere.org, +41 111 111 11 11 vb||
+|Value|Text|Kind değerine göre iletişim bilgisinin içeriğidir|noone(at)nowhere.org, +41 111 111 11 11 vb||
 
 ## Resume *(Aggregate)*
 
