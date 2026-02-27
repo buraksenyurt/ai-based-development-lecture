@@ -12,27 +12,32 @@ Burası ders müfredatında incelenen konulara ait teknik terimlerin özetlendi�
 | 4 | [Code Review](#code-review) |
 | 5 | [Context](#context) |
 | 6 | [Cross-Origin Request Blocked](#cross-origin-request-blocked) |
-| 7 | [Dağıtık Sistemler](#dağıtık-sistemler-distributed-systems) |
+| 7 | [Dağıtık Sistemler *(Distributed Systems)*](#dağıtık-sistemler-distributed-systems) |
 | 8 | [GitHub Copilot](#github-copilot) |
 | 9 | [GitHub Repo](#github-repo) |
-| 10 | [gRPC](#grpc-google-remote-procedure-call) |
-| 11 | [HTML](#html-hypertext-markup-language) |
-| 12 | [Javascript](#javascript-js) |
-| 13 | [JSON](#json-javascript-object-notation) |
+| 10 | [gRPC *(Google Remote Procedure Call)*](#grpc-google-remote-procedure-call) |
+| 11 | [HTML *(Hypertext Markup Language)*](#html-hypertext-markup-language) |
+| 12 | [Javascript *(JS)*](#javascript-js) |
+| 13 | [JSON *(Javascript Object Notation)*](#json-javascript-object-notation) |
 | 14 | [Legacy System](#legacy-system) |
 | 15 | [Markdown Format](#markdown-format) |
-| 16 | [MCP](#mcp-model-context-protocol) |
+| 16 | [MCP *(Model Context Protocol)*](#mcp-model-context-protocol) |
 | 17 | [Prompt](#prompt) |
-| 18 | [RAG](#rag-retrieval-augmented-generation) |
-| 19 | [RDBMS](#rdbms-relational-database-management-system) |
-| 20 | [Regex](#regex-regular-expressions) |
-| 21 | [REST](#rest-representational-state-transfer) |
-| 22 | [Rich Entity](#rich-entity) |
-| 23 | [SOAP](#soap-simple-object-access-protocol) |
-| 24 | [Spec-Oriented Programming](#spec-oriented-programming) |
-| 25 | [Teknik Borç](#teknik-borç-technical-debt) |
-| 26 | [UX](#ux-user-experience) |
-| 27 | [XML](#xml-extensible-markup-language) |
+| 18 | [Prompt Injection](#prompt-injection) |
+| 19 | [RAG *(Retrieval Augmented Generation)*](#rag-retrieval-augmented-generation) |
+| 20 | [RDBMS *(Relational Database Management System)*](#rdbms-relational-database-management-system) |
+| 21 | [Regex *(Regular Expressions)*](#regex-regular-expressions) |
+| 22 | [REST *(Representational State Transfer)*](#rest-representational-state-transfer) |
+| 23 | [Rich Entity](#rich-entity) |
+| 24 | [SOAP *(Simple Object Access Protocol)*](#soap-simple-object-access-protocol) |
+| 25 | [Spec-Oriented Programming](#spec-oriented-programming) |
+| 26 | [SQL Injection](#sql-injection) |
+| 27 | [Teknik Borç *(Technical Debt)*](#teknik-borç-technical-debt) |
+| 28 | [Tightly Coupled vs Loosely Coupled](#tightly-coupled-vs-loosely-coupled) |
+| 29 | [UX *(User Experience)*](#ux-user-experience) |
+| 30 | [XSS *(Cross-Site Scripting)*](#xss-cross-site-scripting) |
+| 31 | [XML *(eXtensible Markup Language)*](#xml-extensible-markup-language) |
+| 32 | [YAML *(YAML Ain't Markup Language)*](#yaml-yaml-aint-markup-language) |
 
 ## Terimler
 
@@ -104,6 +109,10 @@ Basit işaretleme sözdizimiyle düz metin formatında belge yazmayı sağlayan 
 
 Yapay zeka modellerine verilen giriş metni veya talimatlardır. Modelin nasıl yanıt vereceğini ve hangi görevleri yapacağını belirler. İyi yazılmış promptlar daha kaliteli ve doğru sonuçlar üretir. Bu sebepten **Prompt Engineering** (Prompt Mühendisliği) önemli bir beceri haline gelmiştir. Promptlar, doğal dil açıklamaları, örnekler veya belirli formatlarda olabilir.
 
+### Prompt Injection
+
+Yapay zeka modellerine verilen promptların kötü niyetli kullanıcılar tarafından manipüle edilmesiyle ortaya çıkan bir güvenlik açığıdır. Kötü niyetli promptlar, modelin beklenmedik veya zararlı yanıtlar üretmesine neden olabilir. Bu tür saldırılar, modelin güvenliğini tehlikeye atabilir ve istenmeyen sonuçlara yol açabilir. Prompt Injection saldırılarına karşı, kullanıcı girdilerinin doğrulanması ve temizlenmesi gibi önlemler alınmalıdır.
+
 ### RAG *(Retrieval Augmented Generation)*
 
 Yapay zeka modellerinin bilgiye dayalı yanıtlar üretmek için harici veri kaynaklarından bilgi çekmesini sağlayan bir tekniktir. Model, verilen bir sorguya yanıt üretmeden önce ilgili bilgiyi veri tabanları, belgeler veya API'ler gibi kaynaklardan alır. Bu sayede daha doğru ve güncel yanıtlar üretebilir.
@@ -132,17 +141,33 @@ Domain Driven Design (DDD) yaklaşımında, sadece veri tutan değil aynı zaman
 
 Yazılım geliştirme sürecinde, uygulamanın mimari tasarımını ve domain modelini detaylı bir şekilde tanımlayan spesifikasyon dokümanlarına dayalı olarak geliştirme yapma yaklaşımıdır. Bu yaklaşımda, geliştiriciler öncelikle yüksek seviyede mimari ve domain tasarımını içeren dokümanlar hazırlar ve ardından bu dokümanlara göre kod üretirler. Spec-Oriented Programming, özellikle yapay zeka destekli geliştirme süreçlerinde, AI modellerinin daha iyi sonuçlar üretmesi için net ve detaylı spesifikasyonların önemini vurgular.
 
+### SQL Injection
+
+Kötü niyetli kullanıcıların SQL sorgularını manipüle ederek veri tabanına yetkisiz erişim sağlamasına izin veren bir güvenlik açığı türüdür. Genellikle kullanıcı tarafından sağlanan verilerin uygun şekilde doğrulanmaması veya temizlenmemesi nedeniyle ortaya çıkar. SQL Injection saldırıları, veri tabanındaki hassas bilgilerin çalınmasına, değiştirilmesine veya silinmesine yol açabilir.
+
 ### Teknik Borç *(Technical Debt)*
 
 Hızlı geliştirme için kısa vadeli çözümler tercih edildiğinde oluşan, gelecekte daha fazla efor gerektirecek kod kalitesi eksikliğidir. Zaman içinde biriken teknik borç, bakım maliyetlerini artırır ve yeni özellik eklemeyi zorlaştırır. **Refactoring** ve kod iyileştirmeleriyle azaltılır. Bilinçli bir şekilde teknik borç alınabilir ancak uzun vadede yönetilmesi gerekir.
+
+### Tightly Coupled vs Loosely Coupled
+
+Dependency Injection konusunun önemli bir parçası olan bu kavramlar, yazılım bileşenlerinin birbirlerine olan bağımlılık derecesini ifade eder. Tightly Coupled *(Sıkı Bağlı)* yapılar, bileşenlerin birbirlerine sıkı/kolayca ayrıştırılamayacak bir şekilde bağlı olduğu durumları ifade eder. Bu sıkı bağlılık değişiklik yapmayı zorlaştırır ve test edilebilirliği azaltır. Test edilebilirliğin azalması kod bakımını zorlaştırır ve güvenilirliği düşürür. Loosely Coupled *(Gevşek Bağlı)* yapılar ise bileşenlerin çeşitli soyutlamalar ile birbirlerine daha az bağımlı olacak halde kullanılabildiği durumları ifade eder. Bu tür yapılar, değişiklik yapmayı kolaylaştırır ve test edilebilirliği artırır, doğal olarak kod bakımını kolaylaştırır ve güvenilirliği artırır. Özellile SOLID prensiplerinden olan Dependency Inversion Principle (DIP) bu konuda önemli bir rol oynar.
 
 ### UX *(User Experience)*
 
 Bir kullanıcının bir ürün veya hizmetle etkileşiminden elde ettiği genel deneyimi ifade eder. Kullanılabilirlik, erişilebilirlik, performans ve estetik gibi faktörleri içerir. İyi bir UX, kullanıcı memnuniyetini artırır ve ürünün başarısına katkıda bulunur.
 
+### XSS *(Cross-Site Scripting)*
+
+Web uygulamalarında, kötü niyetli kullanıcıların diğer kullanıcıların tarayıcılarında zararlı kod çalıştırmasına izin veren bir güvenlik açığı türüdür. Genellikle kullanıcı tarafından sağlanan verilerin uygun şekilde doğrulanmaması veya temizlenmemesi nedeniyle ortaya çıkar. XSS saldırıları, kullanıcıların oturum bilgilerini çalmak, sahte içerik göstermek veya kötü amaçlı yazılım dağıtmak gibi zararlı eylemler gerçekleştirebilir.
+
 ### XML *(eXtensible Markup Language)*
 
 Veri depolama ve taşıma için tasarlanmış, etiket *(markup)* tabanlı işaretleme dilidir. İnsan ve makine tarafından okunabilir yapılandırılmış veriler oluşturur. Kendini tanımlayan etiketler kullanır ve hiyerarşik bir yapıya sahiptir. Web servisleri, konfigürasyon dosyaları ve veri alışverişinde kullanılır.
+
+### YAML *(YAML Ain't Markup Language)*
+
+Veri serileştirme ve yapılandırma için kullanılan, insan tarafından okunabilir bir veri formatıdır. JSON'a benzer şekilde veri yapılarını temsil eder ancak daha esnek ve okunabilir bir sözdizimi sunar. YAML, özellikle konfigürasyon dosyalarında ve veri alışverişinde tercih edilir. Örneğin docker-compose dosyaları YAML formatında yazılır.
 
 ---
 
