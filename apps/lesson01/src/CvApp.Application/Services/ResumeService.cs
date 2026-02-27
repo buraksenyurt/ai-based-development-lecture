@@ -2,6 +2,7 @@ using CvApp.Application.DTOs;
 using CvApp.Application.Interfaces;
 using CvApp.Domain.Aggregates;
 using CvApp.Domain.Entities;
+using CvApp.Domain.Exceptions;
 using CvApp.Domain.Interfaces;
 
 namespace CvApp.Application.Services;
@@ -44,7 +45,7 @@ public class ResumeService : IResumeService
     public async Task AddContactAsync(Guid resumeId, CreateContactRequest request, CancellationToken cancellationToken = default)
     {
         var resume = await _resumeRepository.GetByIdAsync(resumeId, cancellationToken)
-            ?? throw new InvalidOperationException($"Resume bulunamadı: {resumeId}");
+            ?? throw new NotFoundException(nameof(Resume), resumeId);
 
         var contact = Contact.Create(request.Kind, request.RelatedUser, request.Value);
         resume.AddContact(contact);
@@ -55,7 +56,7 @@ public class ResumeService : IResumeService
     public async Task RemoveContactAsync(Guid resumeId, Guid contactId, CancellationToken cancellationToken = default)
     {
         var resume = await _resumeRepository.GetByIdAsync(resumeId, cancellationToken)
-            ?? throw new InvalidOperationException($"Resume bulunamadı: {resumeId}");
+            ?? throw new NotFoundException(nameof(Resume), resumeId);
 
         resume.RemoveContact(contactId);
         await _resumeRepository.UpdateAsync(resume, cancellationToken);
