@@ -1,7 +1,7 @@
 services:
   mongodb:
     image: mongo:latest
-    container_name: mongodb
+    container_name: ai-mongodb
     restart: always
     ports:
       - "27017:27017"
@@ -11,10 +11,20 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: password
     networks:
-      - cv-app-network
+      - ai-app-network
+  
+  sonarqube:
+    image: sonarqube:latest
+    container_name: ai-sonarqube
+    environment:
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+    ports:
+      - "9005:9000"
+    networks:
+      - ai-app-network
 
 networks:
-  cv-app-network:
+  ai-app-network:
     driver: bridge
 
 volumes:
