@@ -10,6 +10,7 @@ Konya Gıda ve Tarım Üniversitesitesi Yazılım Müh. ve Pamukkale Üniversite
   - [Gün 02 - Exception Handling, Debugging ve Docker Kullanımı](#gün-02---exception-handling-debugging-ve-docker-kullanımı)
     - [Dikkat Edilmesi Gereken Noktalar](#dikkat-edilmesi-gereken-noktalar)
   - [Aman Dikkat](#aman-dikkat)
+  - [Ders Geçme Prosedürü](#ders-geçme-prosedürü)
   - [Uygulama Önerileri](#uygulama-önerileri)
 - [Terimler Sözlüğü](Dictionary.md)
 
@@ -234,6 +235,26 @@ fail: CvApp.Api.Filters.ApiExceptionFilterAttribute[0]
       MongoDB.Driver.MongoCommandException: Command find failed: Command find requires authentication.
 ```
 
+## Gün 03 - Bağımlılıkları Yönetmek ve Kod Kalitesini Ölçmek
+
+Bir yazılım projesinin kalitesi birçok kritere bağlıdır. Kod kalitesi, mimari uyum, test edilebilirlik, okunabilirlik *(readability)*, bakım kolaylığı *(maintainability)*, izlenebilirlik *(monitoring)* gibi kriterler bu faktörlerden sadece birkaçıdır. Zaman içerisinde projelerin kalitesini korumak için birçok yazılım prensibi ve tasarım kalıbı ortaya çıkmıştır. **SOLID** ilkeleri, **Clean Code** prensipleri, **Design Patterns** gibi kavramlar bu alanda önemli yer tutar. Hatta yanlış bilinen doğruları temsil etmek için **Anti-pattern** kavramları da tanımlanmıştır. Tüm bu prensipler, kalitesi yüksek, sürdürülebilir ve genişletilebilir yazılımlar geliştirmek için birer rehber niteliğindedir. Ancak bunları benimsemek ve uygulamak her zaman kolay değildir. Projeye yeni başlayan bir geliştirici için bu kavramların hepsini aynı anda uygulamak oldukça güçtür. Bu nedenle, bu derste daha çok bağımlılık yönetimi ve kod kalitesini ölçmek için kullanılan araçlar üzerinde durulmaya çalışılmıştır.
+
+Dilden ve platformdan bağımsız olarak kod tarafında bileşenler arasındaki bağımlılıkları yönetmek için farklı teknikler kullanılabilir. Örneğin `C#` ve `Java` gibi dilleri göz önüne aldığımızda **Dependency Inversion** prensibini uygulamak için çoğunlukla arayüzlerden *(interface)* yararlanılır. Bu sayede bir bileşenin diğerine olan bağımlılığı soyutlanır *(abstraction)* ve test edilebilirlik, bakım kolaylığı *(maintainability)* gibi avantajlar kazanılır. **Inversion of Control (IoC)** konteynerları arayüz gibi enstrümanların tanımladığı soyutlamaları ele alarak çalışır. .Net bir süredir dahili DI mekanizmaları ile çalışmakta ve bileşen bağımlılıklarının yönetimini oldukça kolaylaştırmaktadır. Tabii bu konuların tefarruatı ders müfredatımızın kapsamı dışındadır. Bu derste daha çok bir interface türünün nasıl tanımlandığı, implementasyonu ve çok ilkel bir *dependency inversion* örneğinde ele alınışı üzerinde örnek bir senaryo üzerinden durulmaya çalışılmıştır.
+
+**Gamepedia** olarak tanımlanan projeye eklenen kodlar yine docker-compose üzerinden ayağa kaldırılmış *Sonarqube* servisi ile analiz edilmiş ve kod kalitesi ile ilgili geri bildirimler alınmıştır. Tüm bunlarla ilgili olarak teknik borç *(Technical Debt)* kavramı üzerinde durulmuştur.
+
+Kullanılan Sonarqube komutları ise şöyle; *(token bilgisini kendi sisteminizdeki ile değiştirmeniz gerekecektir)*
+
+```bash
+dotnet sonarscanner begin /k:"ai-gamepedia" /d:sonar.host.url="http://localhost:9005"  /d:sonar.token="sqp_TOKEN_BİLGİSİ"
+
+dotnet build
+
+dotnet sonarscanner end /d:sonar.token="sqp_TOKEN_BİLGİSİ"
+```
+
+> Derste işlenen kodlar tekrardan gözden geçirilmiş ve aralara gerekli yorumlar eklenmiştir. Lütfen yorum satırlarını dikkatlice okyunuz ve kavramları araştırınız.
+
 ### Dikkat Edilmesi Gereken Noktalar
 
 Bknz: [Aman Dikkat](#aman-dikkat)
@@ -247,11 +268,29 @@ Bknz: [Aman Dikkat](#aman-dikkat)
 - İyi prompt'lar vermek, yapay zeka araçlarından kaliteli çıktılar almak için kritik öneme sahiptir. Prompt'larınızda açık ve net olun, gerekli detayları sağlayın ve mümkünse örnekler verin. Çıktıları mutlaka dikkatlice inceleyin, ispat arayın, doğruluğundan emin olun. Yapay zeka araçlarının ürettiği çıktıları denetleyen kodlar da geliştirebilirsiniz ;-)
 - Yapay zeka araçlarının ürettiği konfigurasyon içeriklerinde şifre, gizli anahtar gibi bilgiler varsa klasik metodolojide olduğu gibi bunları daha güvenli ortamlarda *(Vault, Azure Key Vault, AWS Secrets Manager gibi)* saklamayı tercih edin. Yapay zeka araçlarının ürettiği kodlarda bu tür bilgilerin hardcoded olarak yer almamasına da ayrıca dikkat edin.
 
+## Ders Geçme Prosedürü
+
+Bu dönem ilk kez işlenen müfredat kapsamında ders geçme kriterleri şöyle tanımlanmıştır: %40 Proje + &60 Final.
+
+Proje değerlendirmesi için aşağıdaki kriterler göz önünde bulundurulacaktır:
+
+| Kriter | Açıklama |
+| ------ | -------- |
+|**Takım** | En az 1 en fazla 4 kişilik takımlar oluşturulabilir. |
+|**Dil Modeli**|Pojede en az bir yapay zeka dil modeli aracı kullanılmalıdır. (Claude Sonnet 4.6, Gemini 3.1, Codex 5.2 vb) |
+|**Teknik Değerlendirme**| Clean Code prensiplerine uygunluk, SOLID prensiplerine uygunluk, mimari uyum, kodun okunabilirliği, test edilebilirliği gibi kriterler göz önünde bulundurulacaktır. |
+|**Dokümantasyon**| Proje ile ilgili mimari tasarım, kullanılan yapay zeka araçları, karşılaşılan zorluklar ve çözümler gibi konuları içeren bir README hazırlanmalıdır. |
+|**Veritabanı**| Projede en az bir veritabanı kullanılmalıdır. (SQL, NoSQL, In-Memory vb) |
+|**Sunum**|Dönem boyunca proje ile ilgili en az iki sunum *(10 dakikayı geçmeyecek şekilde)* yapılmalıdır|
+| **Teslim Tarihi** |Dönemin son dersi |
+
 ## Uygulama Önerileri
 
 Bu repodaki birçok doküman veya içerik yeni uygulamalar yazmak için bir başlangıç noktası olabilir. Bu fikirleri hakim olduğunuz programlama dili ve geliştirme platformları ve yapay zeka araçlarıyla birleştirerek kendi projelerinizi geliştirebilirsiniz. **Vibe Coding** pratiklerinden ziyade **Agentic Engineering** yaklaşımını benimseyerek hareket etmek daha doğru olur. Yani yapay zeka araçlarını birer yardımcı olarak kullanmak ve onların ürettiği çıktıları dikkatlice inceleyip gerektiğinde müdahale ederek ilerlemek daha verimli olacaktır. Bu süreçte kod güvenilirliği, teknik borç ve proje mimarisi gibi konulara dikkat etmek önemlidir.
 
 | Proje Fikri | Açıklama |
 | --- | --- |
-| Terimler Sözlüğü | Ders müfredatında geçen teknik terimlerin tanımlarını ve açıklamalarını içeren bir sözlük uygulaması. Kullanıcı terim arayabilir, yeni terimler ekleyebilir. Terimler merkezi bir veri sisteminde servis tabanlı çekilir. Düzenleme ve ekleme fonksiyonellikleri yetkiye *(Authorization)* bağlıdır. |
-| | |
+| **Terimler Sözlüğü** | Ders müfredatında geçen teknik terimlerin tanımlarını ve açıklamalarını içeren bir sözlük uygulaması. Kullanıcı terim arayabilir, yeni terimler ekleyebilir. Terimler merkezi bir veri sisteminde servis tabanlı çekilir. Düzenleme ve ekleme fonksiyonellikleri yetkiye *(Authorization)* bağlıdır. |
+| **Gamepedia** | Online popüler oyunlar ansiklopedisi. Bilinen efsane oyunlarla ilgili detaylı bilgilerin yer aldığı bir web uygulamasıdır. Oyunlara ait örnek ekran görüntüleri, geliştiricileri, stüydo bilgileri, kullanıcı puanları, aldığı ödüller vs. Ayrıca içinde bilgi yarışması da barındırır. Referans olarak **Steam** oyun platformunun web uygulaması baz alınabilir. |
+| **CV Bank** | CV'lerin saklandığı, yönetildiği, analiz edildiği bir uygulama. CV'ler JSON formatında saklanır. Kullanıcılar CV'lerini yükleyebilir, düzenleyebilir, silebilir. Yüklenen CV'ler yapay zeka araçları tarafından analiz edilerek özetlenebilir, kategorize edilebilir. |
+| **GeoQuiz** | Coğrafya temalı bir bilgi yarışması uygulaması. Kullanıcılar farklı zorluk seviyelerinde coğrafya sorularını cevaplayarak puan kazanır. Sorular yapay zeka araçları tarafından oluşturulabilir veya mevcut bir veri seti kullanılabilir |
