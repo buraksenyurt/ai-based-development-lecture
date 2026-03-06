@@ -2,4 +2,5 @@
   <Project Path="Gamepedia.ConsoleApp/Gamepedia.ConsoleApp.csproj" Id="555edaf5-c834-4bde-aad5-4ef44a659a5f" />
   <Project Path="Gamepedia.Data/Gamepedia.Data.csproj" Id="ccb867cb-2991-49b7-85ad-2dc8ffdd6c46" />
   <Project Path="Gamepedia.Domain/Gamepedia.Domain.csproj" />
+  <Project Path="Gamepedia.Application/Gamepedia.Application.csproj" />
 </Solution>
