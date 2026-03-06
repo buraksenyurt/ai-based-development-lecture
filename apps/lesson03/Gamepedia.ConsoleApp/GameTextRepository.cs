@@ -3,9 +3,25 @@ using Gamepedia.Domain;
 
 namespace Gamepedia.ConsoleApp;
 
+/*
+Test Double: Stub
+
+Bu sınıf basit bir Test Double (test yedeği) örneğidir. Yani daha spesifik ifade etmek gerekirse bir Stub'dır.
+Test mühendisliği kapsamında Stub benzeri başka kavramlar da vardır. Bunları şöyle özetleyebiliriz.
+
+Stub    :   Önceden belirlenmiş sabit yanıtlar döner; davranışı doğrulamaz.
+Mock    :   Hangi metodların kaç kez çağrıldığını doğrular (davranış doğrulama).
+Fake    :   Gerçekten çalışan ama basit bir implementasyon (örn. in-memory veri tabanı).
+Spy     :   Gerçek nesne gibi çalışır ama çağrıları kaydeder.
+
+GameTextRepository Stub + Fake karışımıdır. Gerçekten bellekte veri saklar (Fake) ama gerçek bir veri tabanı kullanmaz.
+
+Gerçek hayat senaryolarında bu tür sınıflar ya test projesine taşınır ya da Moq gibi kütüphaneler ile dinamik olarak üretilir.
+*/
+
 /// <summary>
-/// Oyunları bellekte tutan ve konsola yazan mock repository.
-/// Gerçek bir veri tabanı yerine test/demo amaçlı kullanılır.
+/// Oyunları bellekte tutan ve konsola yazan stub repository.
+/// Gerçek bir veri tabanı yerine geliştirme/demo amaçlı kullanılır.
 /// </summary>
 public class GameTextRepository : IGameRepository
 {

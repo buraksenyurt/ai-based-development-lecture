@@ -4,6 +4,10 @@ using Gamepedia.Domain;
 
 namespace Gamepedia.Application.Services;
 
+// GameService(IGameRepository gameRepository) ifadesi tipik bir Primary Constructor sözdizimidir.
+// Primary Constructor ile parametre doğrudan alan tanımında kullanılabilir.
+// Dependency Injection framework'ü (örn. Microsoft.Extensions.DependencyInjection)
+// bu yapıcı metodu(Constructor) otomatik olarak çağırır ve IGameRepository implementasyonunu enjekte eder.
 public class GameService(IGameRepository gameRepository) : IGameService
 {
     private readonly IGameRepository _gameRepository = gameRepository;
@@ -13,6 +17,9 @@ public class GameService(IGameRepository gameRepository) : IGameService
     /// </summary>
     public void RegisterGame(Game game)
     {
+        // Guard Clause (Koruma Cümlesi) Paterni:
+        // Geçersiz durumları metodun başında erken döndürme veya exception ile ele alır.
+        // Derin if-else zinciri yerine düz, okunabilir akış sağlar.
         if (string.IsNullOrWhiteSpace(game.Title))
             throw new ArgumentException("Oyun başlığı boş olamaz.", nameof(game));
 
