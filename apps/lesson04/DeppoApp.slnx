@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="DeppoApp.Application.Tests/DeppoApp.Application.Tests.csproj" />
+  <Project Path="DeppoApp.Application/DeppoApp.Application.csproj" Id="f0fdda90-4304-4296-b528-ef505c4fc3e9" />
+  <Project Path="DeppoApp.Data/DeppoApp.Data.csproj" />
+  <Project Path="DeppoApp.Domain.Tests/DeppoApp.Domain.Tests.csproj" />
+  <Project Path="DeppoApp.Domain/DeppoApp.Domain.csproj" />
+</Solution>
