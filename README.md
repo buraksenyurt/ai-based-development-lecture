@@ -81,7 +81,7 @@ Nihai amacımız orta ölçekte bir cv bankası uygulaması geliştirmek ve sür
 
 ## Gün 01 - CV Bank Projesi için Prototip Geliştirme
 
-İkinci dersimizde en temel seviyede mimari özet ve domain bilgileri içeren spec dokümanlar hazırlayarak ilerledik. [Lesson01](./apps/lesson01/docs/) klasöründen bu dokümanlara erişebilirsiniz.
+İkinci dersimizde en temel seviyede mimari özet ve domain bilgileri içeren temel dokümanlar hazırlayarak ilerledik. [Lesson01](./apps/lesson01/docs/) klasöründen bu dokümanlara erişebilirsiniz.
 
 YZ modeli olarak Claude Sonnet 4.6'yı kullandık. Prompt oturumuna [00-architecture-overiview](./apps/lesson01/docs/00-architecture-overiview.md) ve [01-domain-design](./apps/lesson01/docs/01-domain-design.md) dokümanlarını ekledik. Ardından aşağıdaki promptu işlettik.
 
@@ -236,15 +236,19 @@ fail: CvApp.Api.Filters.ApiExceptionFilterAttribute[0]
       MongoDB.Driver.MongoCommandException: Command find failed: Command find requires authentication.
 ```
 
+### Dikkat Edilmesi Gereken Noktalar
+
+Bknz: [Aman Dikkat](#aman-dikkat)
+
 ## Gün 03 - Bağımlılıkları Yönetmek ve Kod Kalitesini Ölçmek
 
 Bir yazılım projesinin kalitesi birçok kritere bağlıdır. Kod kalitesi, mimari uyum, test edilebilirlik, okunabilirlik *(readability)*, bakım kolaylığı *(maintainability)*, izlenebilirlik *(monitoring)* gibi kriterler bu faktörlerden sadece birkaçıdır. Zaman içerisinde projelerin kalitesini korumak için birçok yazılım prensibi ve tasarım kalıbı ortaya çıkmıştır. **SOLID** ilkeleri, **Clean Code** prensipleri, **Design Patterns** gibi kavramlar bu alanda önemli yer tutar. Hatta yanlış bilinen doğruları temsil etmek için **Anti-pattern** kavramları da tanımlanmıştır. Tüm bu prensipler, kalitesi yüksek, sürdürülebilir ve genişletilebilir yazılımlar geliştirmek için birer rehber niteliğindedir. Ancak bunları benimsemek ve uygulamak her zaman kolay değildir. Projeye yeni başlayan bir geliştirici için bu kavramların hepsini aynı anda uygulamak oldukça güçtür. Bu nedenle, bu derste daha çok bağımlılık yönetimi ve kod kalitesini ölçmek için kullanılan araçlar üzerinde durulmaya çalışılmıştır.
 
 Dilden ve platformdan bağımsız olarak kod tarafında bileşenler arasındaki bağımlılıkları yönetmek için farklı teknikler kullanılabilir. Örneğin `C#` ve `Java` gibi dilleri göz önüne aldığımızda **Dependency Inversion** prensibini uygulamak için çoğunlukla arayüzlerden *(interface)* yararlanılır. Bu sayede bir bileşenin diğerine olan bağımlılığı soyutlanır *(abstraction)* ve test edilebilirlik, bakım kolaylığı *(maintainability)* gibi avantajlar kazanılır. **Inversion of Control (IoC)** konteynerları arayüz gibi enstrümanların tanımladığı soyutlamaları ele alarak çalışır. .Net bir süredir dahili DI mekanizmaları ile çalışmakta ve bileşen bağımlılıklarının yönetimini oldukça kolaylaştırmaktadır. Tabii bu konuların tefarruatı ders müfredatımızın kapsamı dışındadır. Bu derste daha çok bir interface türünün nasıl tanımlandığı, implementasyonu ve çok ilkel bir *dependency inversion* örneğinde ele alınışı üzerinde örnek bir senaryo üzerinden durulmaya çalışılmıştır.
 
-**Gamepedia** olarak tanımlanan projeye eklenen kodlar yine docker-compose üzerinden ayağa kaldırılmış *Sonarqube* servisi ile analiz edilmiş ve kod kalitesi ile ilgili geri bildirimler alınmıştır. Tüm bunlarla ilgili olarak teknik borç *(Technical Debt)* kavramı üzerinde durulmuştur.
+**Gamepedia** olarak tanımlanan projeye eklenen kodlar yine **docker-compose** üzerinden ayağa kaldırılmış **Sonarqube** servisi ile analiz edilmiş ve kod kalitesi ile ilgili geri bildirimler alınmıştır. Tüm bunlarla ilgili olarak teknik borç *(Technical Debt)* kavramı üzerinde durulmuştur.
 
-Kullanılan Sonarqube komutları ise şöyle; *(token bilgisini kendi sisteminizdeki ile değiştirmeniz gerekecektir)*
+Kullanılan **Sonarqube** komutları ise şöyle; *(token bilgisini kendi sisteminizdeki ile değiştirmeniz gerekecektir)*
 
 ```bash
 dotnet sonarscanner begin /k:"ai-gamepedia" /d:sonar.host.url="http://localhost:9005"  /d:sonar.token="sqp_TOKEN_BİLGİSİ"
@@ -254,36 +258,67 @@ dotnet build
 dotnet sonarscanner end /d:sonar.token="sqp_TOKEN_BİLGİSİ"
 ```
 
-> Derste işlenen kodlar tekrardan gözden geçirilmiş ve aralara gerekli yorumlar eklenmiştir. Lütfen yorum satırlarını dikkatlice okyunuz ve kavramları araştırınız.
+> Derste işlenen kodlar tekrar gözden geçirilmiş ve aralara gerekli yorumlar eklenmiştir. *Lütfen yorum satırlarını dikkatlice okyunuz* ve bahsedilen kavramları araştırınız.
 
-### Dikkat Edilmesi Gereken Noktalar
+## Gün 04 - Yazılım Çözümlerinde Testin Önemi
 
-Bknz: [Aman Dikkat](#aman-dikkat)
+![Day 04](./images/day04_00.png)
+
+Yazılım geliştirme süreçlerinde testin önemli bir yeri vardır. Yazılan kodun beklentiler doğrultusunda çalıştığından emin olmak, hataları erken aşamada tespit etmek ve düzeltmek, kodun bakımını kolaylaştırmak gibi birçok avantaj sunar. Kodun kalitesinin artırılması açısından da biçilmiş kaftandır. Özellikle yapay zeka araçlarını veya metodolojilerini kullanarak kod üretirken, çıktıların beklediğimiz şekilde olduğundan emin olmak için de testlere başvurabiliriz. Günümüz yapay zeka asistanları koda bakarak eksik testleri yazabilmekte, var olan testleri analiz ederek kodun hangi bölümlerinin yeterince test edilmediğini tespit edebilmektedir. Ancak bu şekilde ilerliyor olsak da mutlaka yazılan testlerin anlamlı olup olmadığını gözden geçirmeliyiz.
+
+Pek tabii kodun belli standartlar üzerinde olmasını sağlamak, sorunlarını azaltmak için test metodolojileri tek başına bir ölçüt değildir. **Sonarqube** gibi araçlar ile teknik borcu ölçmek, **Code Review/Pull Request** süreçlerini işletmek veya **pair programming** gibi pratiklerle ilerlemek de kod kalitesini artırmak için başvurulabilecek diğer yöntemlerdir.
+
+Bu dersimizde diagramda görülen bazı temel kavramlara değinmeye çalıştık. Bu anlamda klasik test piramidinin başlıca katmanlarını konuştuk. [Şu klasörde yer alan örnek projede](./apps/lesson04) birim test *(Unit Test)* ve entegrasyon testlerini *(Integration Test)* basit birkaç örnekle deneyimledik. Referans olarak uçtan uca bir deneyim için **Hexagonal Architecture** yaklaşımını benimseyen şu örneği de inceleyebilirsiniz: [Hexagonal Architecture Example](https://excalidraw.com/#token=-70knstmC_nZTv-7BtgEU)
+Ayrıca **Test Driven Development *(TDD)*** ya da *Red-Green-Blue* yaklaşımının temel prensiplerine baktık.
+
+> todo@buraksenyurt: UI testlerinde kullanılan araçlara bir örnek yapalım. Sisteme ürün ekleme senaryosunda **Playwright** ile bir arayüz testi eklenebilir.
+
+Araştırılabilecek diğer kavramlar:
+
+- Behavior Driven Development (BDD)
+- User Acceptance Testing (UAT)
+- Test Containers
+
+## Gün 05 - Yazılım Mimarileri ve Temel Seviyede Bir Örnek *(Hexagonal Architecture)*
+
+## Gün 06 - Dağıtık Sistemler Hakkında Temel Bilgiler ve Basit Bir Senaryo Üzerinden İnceleme
+
+## Gün 07 - RAG (Retrieval Augmented Generation) Yaklaşımı I
+
+## Gün 08 - RAG (Retrieval Augmented Generation) Yaklaşımı II
+
+## Gün 09 - MCP (Model Context Protocol) Kavramı ve MCP Server Yazılması
+
+## Gün 10 - MCP Server'lar ile Çalışmak
+
+## Gün 11 - Spec Driven Development (SDD) Yaklaşımı ile Geliştirme Yapmak
+
+## Gün 12 - Proje Sunumları
 
 ## Aman Dikkat
 
 - Yapay zeka botları ile çalışırken şifre, gizli anahtar, kişisel veri gibi hassas bilgileri prompt'lara dahil etmekten kaçınmalısınız. Bu tür bilgilerin istemeden de olsa loglanması veya üçüncü taraflarla paylaşılması ciddi güvenlik risklerine yol açabilir. Lisanslı modeller kullanırken de mutlaka sözleşme şartlarını dikkatlice inceleyin ve gizlilik politikalarını anlayın.
 - Yapay zeka araçlarının ürettiği kodların güvenlik açıkları içermediğinden emin olmak için kodu dikkatlice inceleyin ve gerekirse güvenlik tarama araçları kullanarak analiz edin. Özellikle web uygulamaları geliştirirken SQL injection, XSS gibi yaygın güvenlik açıklarına karşı dikkatli olmak gerekiyor.
-- Kodun yüksek kalitede olduğunu garanti etmek için statik kod tarama araçlarından yararlanın. Örneğin, .NET projeleri için **SonarQube**, JavaScript projeleri için **ESLint** gibi araçlar ile kod kalitesini sıklıkla ölçün. Code Review ve Pull Request gibi süreçleri atlamayın, insan denetimi her zaman önemlidir.
-- Kendi yapabileceğimiz çok basit bir kod parçasını yapay zeka aracına yazdırmak yerine, yapay zeka araçlarını daha karmaşık, zaman alan, aynı taskın sürekli tekrar ettiği görevler için kullanmak daha verimli olabilir. Örneğin bir mongodb docker imaj tanımını resmi sitesinden alıp projeye uygulamayı yapay zeka aracına yazdırmak yerine, ayağa kaldırdığımız bir imajın çalışması ile ilgili içinden çıkamadığım bir hatayı çözmek için yapay zeka aracından yardım almak daha verimli olabilir.
-- İyi prompt'lar vermek, yapay zeka araçlarından kaliteli çıktılar almak için kritik öneme sahiptir. Prompt'larınızda açık ve net olun, gerekli detayları sağlayın ve mümkünse örnekler verin. Çıktıları mutlaka dikkatlice inceleyin, ispat arayın, doğruluğundan emin olun. Yapay zeka araçlarının ürettiği çıktıları denetleyen kodlar da geliştirebilirsiniz ;-)
+- Kodun yüksek kalitede olduğunu garanti etmek için statik kod tarama araçlarından yararlanın. Örneğin, .NET projeleri için **SonarQube**, **JavaScript** projeleri için **ESLint** gibi araçlar ile kod kalitesini sıklıkla ölçün. Code Review ve Pull Request gibi süreçleri atlamayın, insan denetimi her zaman önemlidir.
+- Kendi yapabileceğimiz çok basit bir kod parçasını yapay zeka aracına yazdırmak yerine, yapay zeka araçlarını daha karmaşık, zaman alan, aynı taskın sürekli tekrar ettiği görevler için kullanmak daha verimli olabilir. Örneğin bir **mongodb docker** imaj tanımını resmi sitesinden alıp projeye uygulamayı yapay zeka aracına yazdırmak yerine, ayağa kaldırdığımız bir imajın çalışması ile ilgili içinden çıkamadığım bir hatayı çözmek için yapay zeka aracından yardım almak daha verimli olabilir.
+- İyi **prompt**'lar vermek, yapay zeka araçlarından kaliteli çıktılar almak için kritik öneme sahiptir. Prompt'larınızda açık ve net olun, gerekli detayları sağlayın ve mümkünse örnekler verin. Çıktıları mutlaka dikkatlice inceleyin, ispat arayın, doğruluğundan emin olun. Yapay zeka araçlarının ürettiği çıktıları denetleyen kodlar da geliştirebilirsiniz ;-)
 - Yapay zeka araçlarının ürettiği konfigurasyon içeriklerinde şifre, gizli anahtar gibi bilgiler varsa klasik metodolojide olduğu gibi bunları daha güvenli ortamlarda *(Vault, Azure Key Vault, AWS Secrets Manager gibi)* saklamayı tercih edin. Yapay zeka araçlarının ürettiği kodlarda bu tür bilgilerin hardcoded olarak yer almamasına da ayrıca dikkat edin.
 
 ## Ders Geçme Prosedürü
 
-Bu dönem ilk kez işlenen müfredat kapsamında ders geçme kriterleri şöyle tanımlanmıştır: %40 Proje + &60 Final.
+Bu dönem ilk kez işlenen müfredat kapsamında ders geçme kriterleri şöyle tanımlanmıştır: %40 Proje + %60 Final.
 
 Proje değerlendirmesi için aşağıdaki kriterler göz önünde bulundurulacaktır:
 
 | Kriter | Açıklama |
 | ------ | -------- |
-|**Takım** | En az 1 en fazla 4 kişilik takımlar oluşturulabilir. |
-|**Dil Modeli**|Pojede en az bir yapay zeka dil modeli aracı kullanılmalıdır. (Claude Sonnet 4.6, Gemini 3.1, Codex 5.2 vb) |
-|**Teknik Değerlendirme**| Clean Code prensiplerine uygunluk, SOLID prensiplerine uygunluk, mimari uyum, kodun okunabilirliği, test edilebilirliği gibi kriterler göz önünde bulundurulacaktır. |
-|**Dokümantasyon**| Proje ile ilgili mimari tasarım, kullanılan yapay zeka araçları, karşılaşılan zorluklar ve çözümler gibi konuları içeren bir README hazırlanmalıdır. |
-|**Veritabanı**| Projede en az bir veritabanı kullanılmalıdır. (SQL, NoSQL, In-Memory vb) |
-|**Sunum**|Dönem boyunca proje ile ilgili en az iki sunum *(10 dakikayı geçmeyecek şekilde)* yapılmalıdır|
-| **Teslim Tarihi** |Dönemin son dersi |
+| **Takım** | En az 1 en fazla 4 kişilik takımlar oluşturulabilir. |
+| **Dil Modeli** | Pojede en az bir yapay zeka dil modeli aracı kullanılmalıdır. (Claude Sonnet 4.6, Gemini 3.1, Codex 5.2 vb) |
+| **Teknik Değerlendirme** | Clean Code prensiplerine uygunluk, SOLID prensiplerine uygunluk, mimari uyum, kodun okunabilirliği, test edilebilirliği gibi kriterler göz önünde bulundurulacaktır. |
+| **Dokümantasyon** | Proje ile ilgili mimari tasarım, kullanılan yapay zeka araçları, karşılaşılan zorluklar ve çözümler gibi konuları içeren bir README hazırlanmalıdır. |
+| **Veritabanı** | Projede en az bir veritabanı kullanılmalıdır. (SQL, NoSQL, In-Memory vb) |
+| **Sunum** | Dönem boyunca proje ile ilgili en az iki sunum *(10 dakikayı geçmeyecek şekilde)* yapılmalıdır |
+| **Teslim Tarihi** | Dönemin son dersi |
 
 ## Uygulama Önerileri
 
