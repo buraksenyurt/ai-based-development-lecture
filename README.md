@@ -10,6 +10,7 @@ Konya Gıda ve Tarım Üniversitesitesi Yazılım Müh. ve Pamukkale Üniversite
   - [Gün 02 - Exception Handling, Debugging ve Docker Kullanımı](#gün-02---exception-handling-debugging-ve-docker-kullanımı)
     - [Dikkat Edilmesi Gereken Noktalar](#dikkat-edilmesi-gereken-noktalar)
   - [Gün 03 - Bağımlılıkları Yönetmek ve Kod Kalitesini Ölçmek](#gün-03---bağımlılıkları-yönetmek-ve-kod-kalitesini-ölçmek)
+  - [Gün 04 - Yazılım Çözümlerinde Testin Önemi](#gün-04---yazılım-çözümlerinde-testin-önemi)
   - [Aman Dikkat](#aman-dikkat)
   - [Ders Geçme Prosedürü](#ders-geçme-prosedürü)
   - [Uygulama Önerileri](#uygulama-önerileri)
