@@ -4,6 +4,7 @@ Konya Gıda ve Tarım Üniversitesitesi Yazılım Müh. ve Pamukkale Üniversite
 
 - [Yapay Zeka Destekli Yazılım Geliştirme](#yapay-zeka-destekli-yazılım-geliştirme)
   - [Önsöz](#önsöz)
+  - [Yapay Zeka Alanındaki Anantar Terimler](#yapay-zeka-alanındaki-anantar-terimler)
   - [Gün 00 - Tanışma ve `Hello World` Uygulamasının Geliştirilmesi](#gün-00---tanışma-ve-hello-world-uygulamasının-geliştirilmesi)
     - [Bu çalışmadan çıkarılması gereken dersler](#bu-çalışmadan-çıkarılması-gereken-dersler)
   - [Gün 01 - CV Bank Projesi için Prototip Geliştirme](#gün-01---cv-bank-projesi-için-prototip-geliştirme)
@@ -18,7 +19,7 @@ Konya Gıda ve Tarım Üniversitesitesi Yazılım Müh. ve Pamukkale Üniversite
 
 ## Önsöz
 
-Yapay zeka araçları günümüzün hype konusu olsa da, bu araçların yazılım geliştirme süreçlerine entegrasyonu henüz tam olarak anlaşılmış değildir. Bu dersin amacı, yapay zeka destekli yazılım geliştirme süreçlerini anlamak ve bu süreçlerde karşılaşılabilecek zorlukları ele almaktır. Ders boyunca, yapay zeka araçlarının yazılım geliştirme süreçlerine nasıl entegre edileceği, avantajları/dezavantajları ve bu araçların kullanımı sırasında karşılaşılabilecek zorluklar üzerinde durulacaktır. Ayrıca, yapay zeka destekli yazılım geliştirme süreçlerinde güvenlik, teknik borç ve proje mimarisi gibi önemli konulara da değinilecektir. Dönem boyunca aşağıdaki soruların cevaplarını arayacağız:
+Yapay zeka araçları günümüzün en popüler konularında birisi olsa da, bu araçların yazılım geliştirme süreçlerine entegrasyonu henüz tam olarak anlaşılmış değil. Bu dersin amacı, yapay zeka destekli yazılım geliştirme süreçlerini anlamak ve bu süreçlerde karşılaşılabilecek zorlukları ele almaktır. Ders boyunca, yapay zeka araçlarının yazılım geliştirme süreçlerine nasıl entegre edileceği, avantajları/dezavantajları ve bu araçların kullanımı sırasında karşılaşılabilecek zorluklar üzerinde durulacaktır. Ayrıca, yapay zeka destekli yazılım geliştirme süreçlerinde güvenlik, teknik borç ve proje mimarisi gibi önemli konulara da değinilecektir. Dönem boyunca aşağıdaki soruların cevaplarını arayacağız:
 
 - Yapay zeka araçları hangi vakalarda yazılım geliştirme süreçlerine entegre edilebilir?
 - Yapay zeka araçlarının yazılım geliştirme süreçlerine entegrasyonunun avantajları ve dezavantajları nelerdir?
@@ -28,6 +29,32 @@ Yapay zeka araçları günümüzün hype konusu olsa da, bu araçların yazılı
 - Spec veya test odaklı geliştirme gibi metodolojiler yapay zeka destekli yazılım geliştirme süreçlerinde nasıl uygulanabilir?
 - Yapay zeka araçlarındaki sık değişimlere adapte olmak için ne gibi stratejiler izlenebilir?
 - Kaynak tüketimi yüksek yapay zeka araçlarını kullanırken maliyetleri kontrol altında tutmak için ne gibi önlemler alınabilir? Optimizasyon teknikleri nelerdir?
+
+## Yapay Zeka Alanındaki Anantar Terimler
+
+Yazılım geliştirme süreçlerinde yapay zeka araçlarından verimli şekilde yararlanmak için bazı temel terimlerin bilinmesi önemlidir. Bu terimler yapay zeka ile ilgili konularda başrolde yer alır. Tüm zamanların en üretken 200 mucidinden birisi olarak görülen **IBM Baş Mücitlerinden *(Master Inventor)*** [Martin Keen](https://www.ibm.com/think/insights/behind-the-scenes-with-tech-trailblazers-meet-martin-keen) yapay zeka konusundaki terminolojiyi kimya derslerinden aşina olduğumuz periyodik cetvelle ilişkilendiriyor.
+
+![AI Periodic Table](./images/AiPeriodicTable.png)
+
+Sütunlar beş ayrı grubu temsil etmekte. Bunları kısaca aşağıdaki gibi özetleyebiliriz.
+
+- **Reactive:** Değişen girdiyle çıktının da değiştiği etkileşime ait enstrümanları barındırır. Herkesin az çok aşina olduğu **prompt**'lar en temel istek gönderme biçimi tarifler. Modelin bir başka fonksiyonu çağırabilmesi, birden fazla modelin birbirini çağırarak çalışması gibi kavramlar da bu grupta yer alır.
+- **Retrieval:** Yapay zeka sistemlerinin bilgiyi nasl aradığı, sakladığı ve hatırladığı ile ilgili kavramlar yer alır. Örneğin metinlerin sayısal temsicileri *(embeddings)* ve bunların bir vektör uzayında temsil edilmesi ve benzerlik ölçümleri yapılarak  erişilmesi gibi kavramları bu grupta düşünebiliriz.
+- **Orhestration:** Tek bir birimin yapamayacağı işlerde birden fazla öğenin bir araya getirilerek işlendiği yöntemleri içerir. **RAG(Retrieval Augmented Generation)** yaklaşımı veya ihtiyaç duyulan tüm altyapıyı sunan **Framework**'ler bu grupta yer alır.
+- **Validation:** Sistemin güvenliğini, doğruluğunu ve etik standartlara uygunluğunu sağlamak için kullanılan yöntemler bu grupta yer alır. Yapay zekanın hatalı veya zararlı çıktılar üretmesini engellemek için gerekli araçlar söz konusudur. Guardrail araçları ile zararlı çıktıları engellemek mümkündür. Ayrıca sistemin kırılganlığını test etmek için **Red Teaming** gibi yöntemler kullanılır.
+- **Models:** Her şeyin etrafında döndüğü model ailesi bu gurupta yer alır. Büyük dil modellerinin yanısıra görüntü ve ses işleyebilen çoklu modeller ve akıl yürütme *(reasoning)* süreçleri ile gelişmiş düşünme *(thinking)* modellerini içerir.
+
+Tablonun satırları da 4 kategoriye ayrılır. Bunları aşağıdaki gibi özetleyebiliriz.
+
+- **Primitives:** Yapay zeka dünyasının en temel yapı taşlarını yerinde bir benzetmeyle atomlarını temsil eder. Buradaki öğeler daha küçük parçalara bölünemezler ve aslında tablodaki diğer karmaşık yapılar tarafından kullanılır onların temellerini oluştururlar. Örneğin **prompt**'lar yapay zeka araçlarına verilen girdilerin temel birimi olarak düşünülebilir. **Embeddings**'ler ise metinlerin sayısal temsilleri olarak yapay zeka sistemlerinin bilgiyi işlemesi için temel bir yapı sağlar. Pek tabii büyük dil modelleri de burada yer alır.
+- **Compositions:** Primitive'lerin bir araya getirilmesiyle oluşan daha karmaşık yapılar bu satırda yer alır. Genellikle yapım aşamasında bir modelin yanına yapılandırılmış çıktılar ve araç entegrasyonları eklenerek işlevsel bir süreç tesis edilir. Bu nedenle fonksiyon çağırma, vektör veritabanları, RAG ve Railguards gibi unsular burada yer alır.
+- **Emerging:** Günümüzde hızla evrilen ve yapay zeka ekosisteminin biraz da uç noktalarını temsil eden teknolojileri ifade eder. Halen gelişmekte olan bir alan gibi düşünülebilir. Örneğin yapay zekanın iş birliği yaptığı çoklu ajan sistemleri, modellerin iç mantığını anlamaya yarayan araçlar veya yanıt vermeden önce uzun süre muhakeme yapabilen düşünme modelleri burada yer alır.
+
+Bu bileşimler yine Martin tarafından örnek senaryolarda pekiştirilmiştir. Örneğin bir şirketin kendi iç dokümanlarını baz alarak geliştirdiği bir chat-bot uygulamasında RAG yaklaşımının nasıl kullanıldığı ve bu süreçte hangi araçların devreye girdiği aşağıdaki görselde olduğu gibi özetlenebilir.
+
+![RAG Scenario](./images/RAGScenario.png)
+
+Müfredat boyunca yukarıda bahsettiğimiz birçok kavrama değinme fırsatı bulacağız.
 
 ## Gün 00 - Tanışma ve `Hello World` Uygulamasının Geliştirilmesi
 
@@ -271,6 +298,41 @@ Pek tabii kodun belli standartlar üzerinde olmasını sağlamak, sorunlarını 
 
 Bu dersimizde diagramda görülen bazı temel kavramlara değinmeye çalıştık. Bu anlamda klasik test piramidinin başlıca katmanlarını konuştuk. [Şu klasörde yer alan örnek projede](./apps/lesson04) birim test *(Unit Test)* ve entegrasyon testlerini *(Integration Test)* basit birkaç örnekle deneyimledik. Referans olarak uçtan uca bir deneyim için **Hexagonal Architecture** yaklaşımını benimseyen şu örneği de inceleyebilirsiniz: [Hexagonal Architecture Example](https://excalidraw.com/#token=-70knstmC_nZTv-7BtgEU)
 Ayrıca **Test Driven Development *(TDD)*** ya da *Red-Green-Blue* yaklaşımının temel prensiplerine baktık.
+
+.Net tabanlı çözümümüzde solution oluşturmak ve proje eklemek için kullanabileceğimiz komutlar:
+
+```bash
+dotnet new sln -n DeppoApp
+dotnet new classlib -n DeppoApp.Domain
+dotnet new classlib -n DeppoApp.Application
+dotnet sln add DeppoApp.Domain/DeppoApp.Domain.csproj
+dotnet sln add DeppoApp.Application/DeppoApp.Application.csproj
+
+# test projelerini oluşturup eklemek için
+dotnet new xunit -n DeppoApp.Domain.Tests
+dotnet new xunit -n DeppoApp.Application.Tests
+dotnet sln add DeppoApp.Domain.Tests/DeppoApp.Domain.Tests.csproj
+dotnet sln add DeppoApp.Application.Tests/DeppoApp.Application.Tests.csproj
+
+# Solution içerisindeki tüm testleri koşmak için
+dotnet test
+```
+
+Eksik birim testlerin tamamlanması ve entegrasyon testleri için kullandığımız prompt'lar:
+
+**VS Code Copilot Tarafı (Model Claude Sonnet 4.6):**
+
+```text
+`Product` sınıfı için olası tüm birim testleri `ProductTests` bileşenine ekle.
+
+`DecreaseStock` metodundaki son değişikliğe göre testleri düzelt. Gerekli görüyorsan `Product` sınıfına yeni iş kuralları ekle.
+```
+
+**Visual Studio Copilot Tarafı(Model Claude Sonnet 4.6):**
+
+```text
+Write an integration tests for `CreateProduct(Guid, string, decimal, int)` method into new xUnit test project. Use `Moq` framework for mocking real database.
+```
 
 > todo@buraksenyurt: UI testlerinde kullanılan araçlara bir örnek yapalım. Sisteme ürün ekleme senaryosunda **Playwright** ile bir arayüz testi eklenebilir.
 
