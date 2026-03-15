@@ -5,45 +5,50 @@ Burası ders müfredatında incelenen konulara ait teknik terimlerin özetlendi�
 ## İçindekiler
 
 | # | Terim |
-|---|-------|
+| --- | ------- |
 | 1 | [.gitignore](#gitignore) |
-| 2 | [Bootstrap](#bootstrap) |
-| 3 | [Clean Architecture](#clean-architecture) |
-| 4 | [Code Review](#code-review) |
-| 5 | [Context](#context) |
-| 6 | [Cross-Origin Request Blocked](#cross-origin-request-blocked) |
-| 7 | [Dağıtık Sistemler *(Distributed Systems)*](#dağıtık-sistemler-distributed-systems) |
-| 8 | [GitHub Copilot](#github-copilot) |
-| 9 | [GitHub Repo](#github-repo) |
-| 10 | [gRPC *(Google Remote Procedure Call)*](#grpc-google-remote-procedure-call) |
-| 11 | [HTML *(Hypertext Markup Language)*](#html-hypertext-markup-language) |
-| 12 | [Javascript *(JS)*](#javascript-js) |
-| 13 | [JSON *(Javascript Object Notation)*](#json-javascript-object-notation) |
-| 14 | [Legacy System](#legacy-system) |
-| 15 | [Markdown Format](#markdown-format) |
-| 16 | [MCP *(Model Context Protocol)*](#mcp-model-context-protocol) |
-| 17 | [Prompt](#prompt) |
-| 18 | [Prompt Injection](#prompt-injection) |
-| 19 | [RAG *(Retrieval Augmented Generation)*](#rag-retrieval-augmented-generation) |
-| 20 | [RDBMS *(Relational Database Management System)*](#rdbms-relational-database-management-system) |
-| 21 | [Regex *(Regular Expressions)*](#regex-regular-expressions) |
-| 22 | [REST *(Representational State Transfer)*](#rest-representational-state-transfer) |
-| 23 | [Rich Entity](#rich-entity) |
-| 24 | [SOAP *(Simple Object Access Protocol)*](#soap-simple-object-access-protocol) |
-| 25 | [Spec-Oriented Programming](#spec-oriented-programming) |
-| 26 | [SQL Injection](#sql-injection) |
-| 27 | [Teknik Borç *(Technical Debt)*](#teknik-borç-technical-debt) |
-| 28 | [Tightly Coupled vs Loosely Coupled](#tightly-coupled-vs-loosely-coupled) |
-| 29 | [UX *(User Experience)*](#ux-user-experience) |
-| 30 | [XSS *(Cross-Site Scripting)*](#xss-cross-site-scripting) |
-| 31 | [XML *(eXtensible Markup Language)*](#xml-extensible-markup-language) |
-| 32 | [YAML *(YAML Ain't Markup Language)*](#yaml-yaml-aint-markup-language) |
+| 2 | [Assert](#assert) |
+| 3 | [Bootstrap](#bootstrap) |
+| 4 | [Clean Architecture](#clean-architecture) |
+| 5 | [Code Review](#code-review) |
+| 6 | [Context](#context) |
+| 7 | [Cross-Origin Request Blocked](#cross-origin-request-blocked) |
+| 8 | [Dağıtık Sistemler *(Distributed Systems)*](#dağıtık-sistemler-distributed-systems) |
+| 9 | [GitHub Copilot](#github-copilot) |
+| 10 | [GitHub Repo](#github-repo) |
+| 11 | [gRPC *(Google Remote Procedure Call)*](#grpc-google-remote-procedure-call) |
+| 12 | [HTML *(Hypertext Markup Language)*](#html-hypertext-markup-language) |
+| 13 | [Javascript *(JS)*](#javascript-js) |
+| 14 | [JSON *(Javascript Object Notation)*](#json-javascript-object-notation) |
+| 15 | [Legacy System](#legacy-system) |
+| 16 | [Markdown Format](#markdown-format) |
+| 17 | [MCP *(Model Context Protocol)*](#mcp-model-context-protocol) |
+| 18 | [Prompt](#prompt) |
+| 19 | [Prompt Injection](#prompt-injection) |
+| 20 | [RAG *(Retrieval Augmented Generation)*](#rag-retrieval-augmented-generation) |
+| 21 | [RDBMS *(Relational Database Management System)*](#rdbms-relational-database-management-system) |
+| 22 | [Regex *(Regular Expressions)*](#regex-regular-expressions) |
+| 23 | [REST *(Representational State Transfer)*](#rest-representational-state-transfer) |
+| 24 | [Rich Entity](#rich-entity) |
+| 25 | [SOAP *(Simple Object Access Protocol)*](#soap-simple-object-access-protocol) |
+| 26 | [Spec-Oriented Programming](#spec-oriented-programming) |
+| 27 | [SQL Injection](#sql-injection) |
+| 28 | [Teknik Borç *(Technical Debt)*](#teknik-borç-technical-debt) |
+| 29 | [Tightly Coupled vs Loosely Coupled](#tightly-coupled-vs-loosely-coupled) |
+| 30 | [UX *(User Experience)*](#ux-user-experience) |
+| 31 | [XSS *(Cross-Site Scripting)*](#xss-cross-site-scripting) |
+| 32 | [XML *(eXtensible Markup Language)*](#xml-extensible-markup-language) |
+| 33 | [YAML *(YAML Ain't Markup Language)*](#yaml-yaml-aint-markup-language) |
 
 ## Terimler
 
 ### .gitignore
 
 Git versiyon kontrol sisteminde hangi dosya ve klasörlerin takip edilmeyeceğini belirten yapılandırma dosyasıdır. Genellikle geçici dosyalar *(Temp files)*, bağımlılıklar *(node_modules)*, derleme çıktıları ve hassas bilgiler içeren dosyalar bu dosyaya eklenir. Her satıra bir kural yazılır ve wildcardlar (*) kullanılabilir. Genellikle proje başlangıcında oluşturulması önerilir.
+
+### Assert
+
+Testlerde, beklenen sonuç ile gerçek sonucu karşılaştırmak için kullanılan bir ifadedir. Assert, testin başarılı olup olmadığını belirler. Eğer assert başarısız olursa, test başarısız olarak kabul edilir ve genellikle bir hata mesajı üretilir. Birçok test framework'ünde testleri kolaylaştıran yardımcı metotlar bulunur, örneğin **assertEqual**, **assertTrue**, **assertFalse** vb. Bunlar framework'e göre farklılık gösterebilir ancak temel amaçları beklenen ve gerçek sonuçları karşılaştırmaktır.
 
 ### Bootstrap
 
@@ -168,6 +173,34 @@ Veri depolama ve taşıma için tasarlanmış, etiket *(markup)* tabanlı işare
 ### YAML *(YAML Ain't Markup Language)*
 
 Veri serileştirme ve yapılandırma için kullanılan, insan tarafından okunabilir bir veri formatıdır. JSON'a benzer şekilde veri yapılarını temsil eder ancak daha esnek ve okunabilir bir sözdizimi sunar. YAML, özellikle konfigürasyon dosyalarında ve veri alışverişinde tercih edilir. Örneğin docker-compose dosyaları YAML formatında yazılır.
+
+### Unit Test *(Birim Test)*
+
+Bir yazılım bileşeninin en küçük birimlerini izole ederek test etme sürecidir. Genellikle fonksiyonlar veya metodlar gibi bağımsız birimler üzerinde gerçekleştirilir. Unit testler, kodun doğru çalıştığını doğrulamak ve gelecekteki değişikliklerin mevcut işlevselliği bozmadığını garanti etmek için kullanılır.
+
+### Test Driven Development *(TDD)*
+
+Yazılım geliştirme sürecinde testlerin önce yazıldığı, ardından kodun bu testleri geçecek şekilde geliştirildiği bir metodolojidir. TDD, kodun doğruluğunu artırır ve tasarımın daha modüler ve test edilebilir olmasını sağlar. Genellikle üç temel renkle ifade edilen bir döngü izlenir: **Red (Test Fail)** - Testler başarısız olur, **Green (Test Pass)** - Testleri geçecek kadar kod yazılır, **Blue (Refactor)** - Kod temizlenir ve optimize edilir. İlk geliştirme süresini artırabilir ancak uzun vadede bakım maliyetlerini düşürür ve kod kalitesini artırır.
+
+### Entegrasyon Testi *(Integration Testing)*
+
+Entegrasyon testleri, birden fazla bileşenin veya modülün birlikte çalışmasını doğrulamak için yapılan testlerdir. Bu testler, bileşenlerin birbirleriyle doğru şekilde entegre olduğunu ve beklenen sonuçları ürettiğini kontrol eder. Entegrasyon testleri, birim testlerden sonra gerçekleştirilir ve sistemin genel işlevselliğini değerlendirmek için önemlidir.
+
+### Playwright
+
+Daha çok web uygulamalarının test otomasyonu için kullanılan bir araçtır. Modern web tarayıcılarını destekler. [Playwright](https://playwright.dev/) kullanıcı etkileşimlerini simüle ederek web uygulamalarının beklendiği şekilde çalışıp çalışmadığını test etmek için kullanılır. Özellikle end-to-end testlerde tercih edilir. Test runner, assertions, isolation , paralel test çalıştırma gibi birçok özelliği destekler.
+
+### Test Containers
+
+Test konteynerleri, test ortamlarını izole etmek ve yönetmek için kullanılan bir yaklaşımdır. Genellikle Docker gibi konteyner teknolojileri kullanılarak oluşturulan bu ortamlar, testlerin gerçek dünya koşullarına daha yakın bir şekilde çalışmasını sağlar. Test konteynerleri, veritabanları, mesajlaşma sistemleri veya diğer bağımlılıkları içerebilir ve testler tamamlandıktan sonra kolayca temizlenebilir. Örneğin, bir uygulamanın veritabanı entegrasyonunu test etmek için bir test konteyneri içinde geçici bir veritabanı oluşturulabilir ve böylece gerçek veritabanına zarar verme riski de olmadan ortama en yakın koşullarda testler icra edilir.
+
+### CAG *(Context Augmented Generation)*
+
+Yapay zeka modellerinin, belirli bir bağlamı *(context)* kullanarak daha doğru ve ilgili yanıtlar üretmesini sağlayan bir tekniktir. Model, verilen bir sorguya yanıt üretmeden önce ilgili bağlam bilgilerini alır ve bu bilgileri kullanarak yanıtını oluşturur. Burada temel amaç kullanıcının niyetini zenginleştirerek modelin belirli bir domain çerçevesinde cevaplar üretebilmesini sağlamaktır.  **RAG *(Retrieval Augmented Generation)*** ile benzer bir yaklaşım olmakla birlikte RAG, modelin harici veri kaynaklarından bilgi çekmesini sağlarken, CAG daha çok mevcut bağlam bilgisini kullanarak yanıt üretmeye odaklanır. RAG ilişkili bilgileri çalışma zamanında çekmeye odaklanırken, CAG önceden yüklenmiş statik veriyi baz alarak geniş bir bağlam bilgisini belleğe alır *(long-context memory)* ve bu bağlam bilgisini kullanarak yanıt üretmeye odaklanır. *RAG* daha çok büyük ve değişen veriler için tercih edilirken, *CAG* statik ve küçük verilerler çalışmak için tercih edilir.
+
+### Dependency Injection
+
+SOLID prensiplerinden Dependency Inversion Principle (DIP) ile yakından ilişkili olan bu kavram, bir sınıfın ihtiyaç duyduğu bağımlılıkları dışarıdan almasını sağlayan bir tasarım prensibi olarak karşımıza çıkar. Bu sayede sınıflar birbirlerine sıkı bağlı *(tight coupling)* olmaktan kurtulur ve daha esnek, test edilebilir ve bakım kolaylığı sağlayan bir yapı kurgulanır. Dependency Injection, genellikle constructor injection, setter injection veya interface injection gibi farklı yöntemlerle uygulanabilir.
 
 ---
 
