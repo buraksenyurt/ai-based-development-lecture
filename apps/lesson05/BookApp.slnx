@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="BookApp.Application.Tests/BookApp.Application.Tests.csproj" />
+  <Project Path="BookApp.Application/BookApp.Application.csproj" />
+  <Project Path="BookApp.Data/BookApp.Data.csproj" />
+  <Project Path="BookApp.Domain.Tests/BookApp.Domain.Tests.csproj" />
+  <Project Path="BookApp.Domain/BookApp.Domain.csproj" />
+</Solution>
