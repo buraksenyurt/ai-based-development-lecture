@@ -23,9 +23,22 @@ services:
     networks:
       - ai-app-network
 
+  qdrant:
+    image: qdrant/qdrant
+    container_name: ai-qdrant
+    ports:
+      - "6333:6333" # REST API Portu
+      - "6334:6334" # GRPC Portu
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    restart: always
+    networks:
+      - ai-app-network
+
 networks:
   ai-app-network:
     driver: bridge
 
 volumes:
   mongodb_data:
+  qdrant_storage:
