@@ -1,10 +1,10 @@
 # Yapay Zeka Destekli Yazılım Geliştirme
 
-Konya Gıda ve Tarım Üniversitesitesi Yazılım Müh. ve Pamukkale Üniversitesi Eletrik Elektronik ve Yönetim Bilişim Sistemleri bölümleri için açılmış derse ait doküman ve örnek uygulamaların yer aldığı repodur.
+Konya Gıda ve Tarım Üniversitesi Yazılım Mühendisliği ve Pamukkale Üniversitesi Elektrik-Elektronik Mühendisliği ve Yönetim Bilişim Sistemleri bölümleri için açılan derse ait doküman ve örnek uygulamaların yer aldığı bir depodur.
 
 - [Yapay Zeka Destekli Yazılım Geliştirme](#yapay-zeka-destekli-yazılım-geliştirme)
   - [Önsöz](#önsöz)
-  - [Yapay Zeka Alanındaki Anantar Terimler](#yapay-zeka-alanındaki-anantar-terimler)
+  - [Yapay Zeka Alanındaki Anahtar Terimler](#yapay-zeka-alanındaki-anahtar-terimler)
   - [Gün 00 - Tanışma ve `Hello World` Uygulamasının Geliştirilmesi](#gün-00---tanışma-ve-hello-world-uygulamasının-geliştirilmesi)
     - [Bu çalışmadan çıkarılması gereken dersler](#bu-çalışmadan-çıkarılması-gereken-dersler)
   - [Gün 01 - CV Bank Projesi için Prototip Geliştirme](#gün-01---cv-bank-projesi-için-prototip-geliştirme)
@@ -13,6 +13,9 @@ Konya Gıda ve Tarım Üniversitesitesi Yazılım Müh. ve Pamukkale Üniversite
   - [Gün 03 - Bağımlılıkları Yönetmek ve Kod Kalitesini Ölçmek](#gün-03---bağımlılıkları-yönetmek-ve-kod-kalitesini-ölçmek)
   - [Gün 04 - Yazılım Çözümlerinde Testin Önemi](#gün-04---yazılım-çözümlerinde-testin-önemi)
   - [Gün 05 - Yazılım Mimarileri ve Temel Seviyede Bir Örnek](#gün-05---yazılım-mimarileri-ve-temel-seviyede-bir-örnek)
+  - [Gün 06 - Dağıtık Sistemler Hakkında Temel Bilgiler ve Basit Bir Senaryo Üzerinden İnceleme](#gün-06---dağıtık-sistemler-hakkında-temel-bilgiler-ve-basit-bir-senaryo-üzerinden-i̇nceleme)
+  - [Gün 07 - RAG (Retrieval Augmented Generation) Yaklaşımı I](#gün-07---rag-retrieval-augmented-generation-yaklaşımı-i)
+    - [Bilgi Sağlama ve Bağlam (Context) Yönetimi](#bilgi-sağlama-ve-bağlam-context-yönetimi)
   - [Aman Dikkat](#aman-dikkat)
   - [Ders Geçme Prosedürü](#ders-geçme-prosedürü)
   - [Uygulama Önerileri](#uygulama-önerileri)
@@ -31,24 +34,24 @@ Yapay zeka araçları günümüzün en popüler konularında birisi olsa da, bu 
 - Yapay zeka araçlarındaki sık değişimlere adapte olmak için ne gibi stratejiler izlenebilir?
 - Kaynak tüketimi yüksek yapay zeka araçlarını kullanırken maliyetleri kontrol altında tutmak için ne gibi önlemler alınabilir? Optimizasyon teknikleri nelerdir?
 
-## Yapay Zeka Alanındaki Anantar Terimler
+## Yapay Zeka Alanındaki Anahtar Terimler
 
-Yazılım geliştirme süreçlerinde yapay zeka araçlarından verimli şekilde yararlanmak için bazı temel terimlerin bilinmesi önemlidir. Bu terimler yapay zeka ile ilgili konularda başrolde yer alır. Tüm zamanların en üretken 200 mucidinden birisi olarak görülen **IBM Baş Mücitlerinden *(Master Inventor)*** [Martin Keen](https://www.ibm.com/think/insights/behind-the-scenes-with-tech-trailblazers-meet-martin-keen) yapay zeka konusundaki terminolojiyi kimya derslerinden aşina olduğumuz periyodik cetvelle ilişkilendiriyor.
+Yazılım geliştirme süreçlerinde yapay zeka araçlarından verimli şekilde yararlanmak için bazı temel terimlerin bilinmesi önemlidir. Bu terimler yapay zeka ile ilgili konularda başrolde yer alır. Tüm zamanların en üretken 200 mucidinden biri olarak görülen **IBM Baş Mucitlerinden *(Master Inventor)*** [Martin Keen](https://www.ibm.com/think/insights/behind-the-scenes-with-tech-trailblazers-meet-martin-keen), yapay zeka konusundaki terminolojiyi kimya derslerinden aşina olduğumuz periyodik cetvelle ilişkilendirmektedir.
 
 ![AI Periodic Table](./images/AiPeriodicTable.png)
 
 Sütunlar beş ayrı grubu temsil etmekte. Bunları kısaca aşağıdaki gibi özetleyebiliriz.
 
-- **Reactive:** Değişen girdiyle çıktının da değiştiği etkileşime ait enstrümanları barındırır. Herkesin az çok aşina olduğu **prompt**'lar en temel istek gönderme biçimi tarifler. Modelin bir başka fonksiyonu çağırabilmesi, birden fazla modelin birbirini çağırarak çalışması gibi kavramlar da bu grupta yer alır.
-- **Retrieval:** Yapay zeka sistemlerinin bilgiyi nasl aradığı, sakladığı ve hatırladığı ile ilgili kavramlar yer alır. Örneğin metinlerin sayısal temsicileri *(embeddings)* ve bunların bir vektör uzayında temsil edilmesi ve benzerlik ölçümleri yapılarak  erişilmesi gibi kavramları bu grupta düşünebiliriz.
-- **Orhestration:** Tek bir birimin yapamayacağı işlerde birden fazla öğenin bir araya getirilerek işlendiği yöntemleri içerir. **RAG(Retrieval Augmented Generation)** yaklaşımı veya ihtiyaç duyulan tüm altyapıyı sunan **Framework**'ler bu grupta yer alır.
+- **Reactive:** Değişen girdiyle çıktının da değiştiği etkileşime ait enstrümanları barındırır. Herkesin az çok aşina olduğu **prompt**'lar en temel istek gönderme biçimini tarif eder. Modelin bir başka fonksiyonu çağırabilmesi, birden fazla modelin birbirini çağırarak çalışması gibi kavramlar da bu grupta yer alır.
+- **Retrieval:** Yapay zeka sistemlerinin bilgiyi nasıl aradığı, sakladığı ve hatırladığı ile ilgili kavramlar yer alır. Örneğin metinlerin sayısal temsilcileri *(embeddings)* ve bunların bir vektör uzayında temsil edilmesi ve benzerlik ölçümleri yapılarak erişilmesi gibi kavramları bu grupta düşünebiliriz.
+- **Orchestration:** Tek bir birimin yapamayacağı işlerde birden fazla öğenin bir araya getirilerek işlendiği yöntemleri içerir. **RAG (Retrieval Augmented Generation)** yaklaşımı veya ihtiyaç duyulan tüm altyapıyı sunan **Framework**'ler bu grupta yer alır.
 - **Validation:** Sistemin güvenliğini, doğruluğunu ve etik standartlara uygunluğunu sağlamak için kullanılan yöntemler bu grupta yer alır. Yapay zekanın hatalı veya zararlı çıktılar üretmesini engellemek için gerekli araçlar söz konusudur. Guardrail araçları ile zararlı çıktıları engellemek mümkündür. Ayrıca sistemin kırılganlığını test etmek için **Red Teaming** gibi yöntemler kullanılır.
-- **Models:** Her şeyin etrafında döndüğü model ailesi bu gurupta yer alır. Büyük dil modellerinin yanısıra görüntü ve ses işleyebilen çoklu modeller ve akıl yürütme *(reasoning)* süreçleri ile gelişmiş düşünme *(thinking)* modellerini içerir.
+- **Models:** Her şeyin etrafında döndüğü model ailesi bu grupta yer alır. Büyük dil modellerinin yanı sıra görüntü ve ses işleyebilen çoklu modeller ve akıl yürütme *(reasoning)* süreçleri ile gelişmiş düşünme *(thinking)* modellerini içerir.
 
 Tablonun satırları da 4 kategoriye ayrılır. Bunları aşağıdaki gibi özetleyebiliriz.
 
-- **Primitives:** Yapay zeka dünyasının en temel yapı taşlarını yerinde bir benzetmeyle atomlarını temsil eder. Buradaki öğeler daha küçük parçalara bölünemezler ve aslında tablodaki diğer karmaşık yapılar tarafından kullanılır onların temellerini oluştururlar. Örneğin **prompt**'lar yapay zeka araçlarına verilen girdilerin temel birimi olarak düşünülebilir. **Embeddings**'ler ise metinlerin sayısal temsilleri olarak yapay zeka sistemlerinin bilgiyi işlemesi için temel bir yapı sağlar. Pek tabii büyük dil modelleri de burada yer alır.
-- **Compositions:** Primitive'lerin bir araya getirilmesiyle oluşan daha karmaşık yapılar bu satırda yer alır. Genellikle yapım aşamasında bir modelin yanına yapılandırılmış çıktılar ve araç entegrasyonları eklenerek işlevsel bir süreç tesis edilir. Bu nedenle fonksiyon çağırma, vektör veritabanları, RAG ve Railguards gibi unsular burada yer alır.
+- **Primitives:** Yapay zeka dünyasının en temel yapı taşlarını yerinde bir benzetmeyle atomlarını temsil eder. Buradaki öğeler daha küçük parçalara bölünemezler ve aslında tablodaki diğer karmaşık yapılar tarafından kullanılır onların temellerini oluştururlar. Örneğin **prompt**'lar yapay zeka araçlarına verilen girdilerin temel birimi olarak düşünülebilir. **Embedding**'ler ise metinlerin sayısal temsilleri olarak yapay zeka sistemlerinin bilgiyi işlemesi için temel bir yapı sağlar. Pek tabii büyük dil modelleri de burada yer alır.
+- **Compositions:** Primitive'lerin bir araya getirilmesiyle oluşan daha karmaşık yapılar bu satırda yer alır. Genellikle yapım aşamasında bir modelin yanına yapılandırılmış çıktılar ve araç entegrasyonları eklenerek işlevsel bir süreç tesis edilir. Bu nedenle fonksiyon çağırma, vektör veritabanları, RAG ve Guardrails gibi unsurlar burada yer alır.
 - **Emerging:** Günümüzde hızla evrilen ve yapay zeka ekosisteminin biraz da uç noktalarını temsil eden teknolojileri ifade eder. Halen gelişmekte olan bir alan gibi düşünülebilir. Örneğin yapay zekanın iş birliği yaptığı çoklu ajan sistemleri, modellerin iç mantığını anlamaya yarayan araçlar veya yanıt vermeden önce uzun süre muhakeme yapabilen düşünme modelleri burada yer alır.
 
 Bu bileşimler yine Martin tarafından örnek senaryolarda pekiştirilmiştir. Örneğin bir şirketin kendi iç dokümanlarını baz alarak geliştirdiği bir chat-bot uygulamasında RAG yaklaşımının nasıl kullanıldığı ve bu süreçte hangi araçların devreye girdiği aşağıdaki görselde olduğu gibi özetlenebilir.
@@ -94,7 +97,7 @@ Web sunucusunu başlatmak için aşağıdaki komut kullanılabilir.
 npm run dev
 ```
 
-Nihai amacımız orta ölçekte bir cv bankası uygulaması geliştirmek ve süreçte yapay zeka araçlarını kullanmak. Başlangıç aşamasında bu uygulamanın yüksek seviyede nasıl görüneceğine dair bir diyagram çizdik.
+Nihai amacımız, orta ölçekte bir CV bankası uygulaması geliştirmek ve bu süreçte yapay zeka araçlarını kullanmaktır. Başlangıç aşamasında bu uygulamanın yüksek seviyede nasıl görüneceğine dair bir diyagram çizdik.
 
 ![High Level Diagram](./images/CvBankHighLevelDiagram.png)
 
@@ -104,7 +107,7 @@ Nihai amacımız orta ölçekte bir cv bankası uygulaması geliştirmek ve sür
 
 - Hayata geçirmek istediğimiz proje fikri için hakim olduğumuz programlama dili ve framework'leri tercih etmeliyiz.
 - AI agent'ları ile çalışırken açık ve net prompt'lar vermeliyiz.
-- Üretilen kodların herhangibir güvenlik açığı içermediğinden, teknik borç oluşturmadığından ve projenin genel mimarisine uygun olduğundan emin olmalıyız.
+- Üretilen kodların herhangi bir güvenlik açığı içermediğinden, teknik borç oluşturmadığından ve projenin genel mimarisine uygun olduğundan emin olmalıyız.
 - Üretilen programda harici paket bağımlılıkları varsa, bu paketlerin güvenilir ve güncel olduğundan emin olmalıyız. Güvenlik açıkları içerebilecek eski paketlerden kaçınmalıyız.
 - Komple bir proje yazdırmak yerine küçük parçalar halinde kod üretmenin daha verimli olabileceğini göz önüne alarak ilerlemeliyiz.
 
@@ -177,7 +180,7 @@ System.TimeoutException: A timeout occurred after 30006ms selecting a server usi
    at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
 ```
 
-> Exception yönetimi her ne kadar işi kolaylaştıran bir yol olsa da runtime maliyetlerini de düşünüerek **try...catch...finally** bloğuna ihtiyaç duymadan da bazı hatalarının yönetilebileceğini bilmemiz gerekir. Örneğin bir dosya üzerinde işlem yapan bir metot yazdığımızı düşünelim. Dosya üzerinde işlem yaparken dosyanın var olup olmadığını kontrol edebiliriz. Eğer dosya yoksa bu durumu bir istisna fırlatmak yerine, metot içerisinde yönetebiliriz. Bu sayede gereksiz yere **try...catch** bloğu kullanmayız, kodun okunurluğunu artırır, çalışma zamanını optimize ederiz. Ancak bazı hallerde istisna yönetimi kaçınılmaz olabilir. Örneğin, bir veritabanı bağlantısı kurarken, bağlantının başarısız olması gibi durumlarda istisna yönetimi kullanmak gerekebilir. Bu tür durumlarda, istisna yönetimi kullanarak hataları daha etkili bir şekilde ele alabilir ve uygulamanın çökmesini önleyebiliriz.
+> Exception yönetimi her ne kadar işi kolaylaştıran bir yol olsa da runtime maliyetlerini de düşünerek **try...catch...finally** bloğuna ihtiyaç duymadan da bazı hataların yönetilebileceğini bilmemiz gerekir. Örneğin bir dosya üzerinde işlem yapan bir metot yazdığımızı düşünelim. Dosya üzerinde işlem yaparken dosyanın var olup olmadığını kontrol edebiliriz. Eğer dosya yoksa bu durumu bir istisna fırlatmak yerine, metot içerisinde yönetebiliriz. Bu sayede gereksiz yere **try...catch** bloğu kullanmayız, kodun okunurluğunu artırır, çalışma zamanını optimize ederiz. Ancak bazı hallerde istisna yönetimi kaçınılmaz olabilir. Örneğin, bir veritabanı bağlantısı kurarken, bağlantının başarısız olması gibi durumlarda istisna yönetimi kullanmak gerekebilir. Bu tür durumlarda, istisna yönetimi kullanarak hataları daha etkili bir şekilde ele alabilir ve uygulamanın çökmesini önleyebiliriz.
 
 Ayrıca bir .net uygulamasında nasıl debug yapılır, tarayıcılarda **Developer Tools** kullanılarak ağ trafiği, request ve response bilgileri nasıl izlenir konularına değindik. Bunun yanında [HTTP statü kodlarının](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status) ne anlama geldiğine baktık.
 
@@ -273,7 +276,7 @@ Bknz: [Aman Dikkat](#aman-dikkat)
 
 Bir yazılım projesinin kalitesi birçok kritere bağlıdır. Kod kalitesi, mimari uyum, test edilebilirlik, okunabilirlik *(readability)*, bakım kolaylığı *(maintainability)*, izlenebilirlik *(monitoring)* gibi kriterler bu faktörlerden sadece birkaçıdır. Zaman içerisinde projelerin kalitesini korumak için birçok yazılım prensibi ve tasarım kalıbı ortaya çıkmıştır. **SOLID** ilkeleri, **Clean Code** prensipleri, **Design Patterns** gibi kavramlar bu alanda önemli yer tutar. Hatta yanlış bilinen doğruları temsil etmek için **Anti-pattern** kavramları da tanımlanmıştır. Tüm bu prensipler, kalitesi yüksek, sürdürülebilir ve genişletilebilir yazılımlar geliştirmek için birer rehber niteliğindedir. Ancak bunları benimsemek ve uygulamak her zaman kolay değildir. Projeye yeni başlayan bir geliştirici için bu kavramların hepsini aynı anda uygulamak oldukça güçtür. Bu nedenle, bu derste daha çok bağımlılık yönetimi ve kod kalitesini ölçmek için kullanılan araçlar üzerinde durulmaya çalışılmıştır.
 
-Dilden ve platformdan bağımsız olarak kod tarafında bileşenler arasındaki bağımlılıkları yönetmek için farklı teknikler kullanılabilir. Örneğin `C#` ve `Java` gibi dilleri göz önüne aldığımızda **Dependency Inversion** prensibini uygulamak için çoğunlukla arayüzlerden *(interface)* yararlanılır. Bu sayede bir bileşenin diğerine olan bağımlılığı soyutlanır *(abstraction)* ve test edilebilirlik, bakım kolaylığı *(maintainability)* gibi avantajlar kazanılır. **Inversion of Control (IoC)** konteynerları arayüz gibi enstrümanların tanımladığı soyutlamaları ele alarak çalışır. .Net bir süredir dahili DI mekanizmaları ile çalışmakta ve bileşen bağımlılıklarının yönetimini oldukça kolaylaştırmaktadır. Tabii bu konuların tefarruatı ders müfredatımızın kapsamı dışındadır. Bu derste daha çok bir interface türünün nasıl tanımlandığı, implementasyonu ve çok ilkel bir *dependency inversion* örneğinde ele alınışı üzerinde örnek bir senaryo üzerinden durulmaya çalışılmıştır.
+Dilden ve platformdan bağımsız olarak kod tarafında bileşenler arasındaki bağımlılıkları yönetmek için farklı teknikler kullanılabilir. Örneğin `C#` ve `Java` gibi dilleri göz önüne aldığımızda **Dependency Inversion** prensibini uygulamak için çoğunlukla arayüzlerden *(interface)* yararlanılır. Bu sayede bir bileşenin diğerine olan bağımlılığı soyutlanır *(abstraction)* ve test edilebilirlik, bakım kolaylığı *(maintainability)* gibi avantajlar kazanılır. **Inversion of Control (IoC)** konteynerları arayüz gibi enstrümanların tanımladığı soyutlamaları ele alarak çalışır. .Net bir süredir dahili DI mekanizmaları ile çalışmakta ve bileşen bağımlılıklarının yönetimini oldukça kolaylaştırmaktadır. Tabii bu konuların teferruatı ders müfredatımızın kapsamı dışındadır. Bu derste daha çok bir interface türünün nasıl tanımlandığı, implementasyonu ve çok ilkel bir *dependency inversion* örneğinde ele alınışı üzerinde örnek bir senaryo üzerinden durulmaya çalışılmıştır.
 
 **Gamepedia** olarak tanımlanan projeye eklenen kodlar yine **docker-compose** üzerinden ayağa kaldırılmış **Sonarqube** servisi ile analiz edilmiş ve kod kalitesi ile ilgili geri bildirimler alınmıştır. Tüm bunlarla ilgili olarak teknik borç *(Technical Debt)* kavramı üzerinde durulmuştur.
 
@@ -287,7 +290,7 @@ dotnet build
 dotnet sonarscanner end /d:sonar.token="sqp_TOKEN_BİLGİSİ"
 ```
 
-> Derste işlenen kodlar tekrar gözden geçirilmiş ve aralara gerekli yorumlar eklenmiştir. *Lütfen yorum satırlarını dikkatlice okyunuz* ve bahsedilen kavramları araştırınız.
+> Derste işlenen kodlar tekrar gözden geçirilmiş ve aralara gerekli yorumlar eklenmiştir. *Lütfen yorum satırlarını dikkatlice okuyunuz* ve bahsedilen kavramları araştırınız.
 
 ## Gün 04 - Yazılım Çözümlerinde Testin Önemi
 
@@ -394,11 +397,11 @@ Bu yaklaşımda modelin kullanabileceği veri setinin vektörel ifade edilişi �
 
 Derste işlediğimiz örnek senaryoda **python** ile bir doküman setinin parçalanıp, vektörel olarak ifade edilmesi, bu parçaların bir veritabanına kaydedilmesi adımı ele alınmıştır. **Text embedding** için **LM Studio** üzerinden host edilen **text-embedding-embeddinggemma-300m** kullanılmıştır. **Vektör** veritabanı olarak da **rust** ile yazılmış olan **Qdrant** tercih edilmiştir. Parçalama stratejisi olarak da basitçe karakter sayısına göre bölme tekniği benimsenmiştir. Parçalama stratejisi olarak daha sofistike yöntemler de tercih edilebilir. Örneğin, doğal dil işleme teknikleri kullanarak cümle veya paragraf bazında bölme yapılabilir. Kod parçalarının bölünmesinde ise semantik analiz yaparak fonksiyon, sınıf veya modül bazında bölme yapılabilir. Parçalama stratejisi, modelin bilgi deposundan çektiği parçaların kalitesini etkileyebilir. Dolayısıyla parçalama stratejisinin dikkatli bir şekilde seçilmesi ve uygulanması önemlidir.
 
-Bir vektör veritabanı hazırlandıktan sonra kullanıcılardan gelen prompt'larda bir işleme tabii tutulur. Yani **prompt** için de bir vektör hesaplaması yapılır ve bu vektörün bilgi deposundaki diğer vektörlerle olan mesafeleri ölçülür. En yakın olan parçalar modele gitmeden önce sistem prompt'a dahil edilir. Modelin bu parçaları muhakeme sürecine dahil ederek daha kaliteli çıktılar üretmesi beklenir. Elbette sistem prompt'larının gönderilmesi sırasında alınması gereken tedbirler de olabilir. Bilgi deposundan çekilen parçaların kalitesini ölçmek, hassas bilgilerin istemeden de olsa gönderilmesini engellemek, modelin bu parçaları nasıl kullandığını izlemek gibi önlemler alınabilir *(Guardrails)*. Bu sayede, RAG yaklaşımının avantajlarından yararlanırken ortaya çıkabilecek risklerin de önüne geçilebilir.
+Bir vektör veritabanı hazırlandıktan sonra kullanıcılardan gelen prompt'lar da bir işleme tabi tutulur. Yani **prompt** için de bir vektör hesaplaması yapılır ve bu vektörün bilgi deposundaki diğer vektörlerle olan mesafeleri ölçülür. En yakın olan parçalar modele gitmeden önce sistem prompt'a dahil edilir. Modelin bu parçaları muhakeme sürecine dahil ederek daha kaliteli çıktılar üretmesi beklenir. Elbette sistem prompt'larının gönderilmesi sırasında alınması gereken tedbirler de olabilir. Bilgi deposundan çekilen parçaların kalitesini ölçmek, hassas bilgilerin istemeden de olsa gönderilmesini engellemek, modelin bu parçaları nasıl kullandığını izlemek gibi önlemler alınabilir *(Guardrails)*. Bu sayede, RAG yaklaşımının avantajlarından yararlanırken ortaya çıkabilecek risklerin de önüne geçilebilir.
 
 > Bir modelin ürettiği çıktının firmanın kurumsal politikalarına uygunluğunu denetlemek ve veri sızıntılarını önlemek için [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails) gibi güvenlik katmanları ele alınmalıdır.
 
-Metinlerin birbirleri ile ilişkileri konusunda aşağıdaki şekilde ele alınabilir. Ana kelimelerimiz **tuz** ve **biber** olarak belirlenmiştir. İlk akla gelen ilişkiler yemeklerler ve doğal olarak baharatlarla ilgilidir. Ancak coğrafi olarak tuz kelimesinin geçtiği **Tuz Gölü** ya da rahmetli **Barış Manço**'nun *domates, biber, patlıcan* şarkısında geçen biber kelimesi ve hatta **hayatın tuzu biberi** ifadesi gibi farklı ilişkiler de ortaya çıkabilir. Modelin sorulan soruya göre doğru ilişkileri kurabilmesine yardımcı olabilecek düzenekler açısından bakıldığında destekleyici bilgi depolarının kalitesi önemli hale gelir.
+Metinlerin birbirleri ile ilişkileri konusu aşağıdaki şekildeki gibi ele alınabilir. Ana kelimelerimiz **tuz** ve **biber** olarak belirlenmiştir. İlk akla gelen ilişkiler yemeklerle ve doğal olarak baharatlarla ilgilidir. Ancak coğrafi olarak tuz kelimesinin geçtiği **Tuz Gölü** ya da rahmetli **Barış Manço**'nun *domates, biber, patlıcan* şarkısında geçen biber kelimesi ve hatta **hayatın tuzu biberi** ifadesi gibi farklı ilişkiler de ortaya çıkabilir. Modelin sorulan soruya göre doğru ilişkileri kurabilmesine yardımcı olabilecek düzenekler açısından bakıldığında destekleyici bilgi depolarının kalitesi önemli hale gelir.
 
 ![RAG 02](./images/day07_02.png)
 
@@ -410,12 +413,12 @@ Yapay zeka dil modelleri ile çalışırken Context, Cache-Augmented Generation,
 
 | **Özellik** | **Context** | **Cache-Augmented Generation** | **Retrieval-Augmented Generation** | **Model Context Protocol** |
 | --------- | --------- | ----------------------------- | --------------------------------- | ------------------------- |
-| **Çalışma Prensibi** | Tüm veriyi doğrudan prompt içine gömerek modele sunmak. | Devasa veriyi modelin önbelleiğine *(Key-Value Cache)* tek seferde yükleyip, üzerinden işlem yapmak. | Veriyi vektörlere bölüp, sadece soruyla anlamsa eşleşen parçalarını modele sunmak. | Modelin dış sistemlere standart bir protokol ile bağlanıp anlık işlem yapmasını sağlamak. |
-| **Kapasite** | Sınırlı *(Modelin token limiti kadar)* | Yüksek *(Modelin önbelleği kadar. 1, 2 milyon token)* | Sınırsız *(Vektöre veritabanının kapasitesi kadar)* | Yüksek *(Modelin işlem yapabileceği her türlü veri kaynağı)* |
+| **Çalışma Prensibi** | Tüm veriyi doğrudan prompt içine gömerek modele sunmak. | Devasa veriyi modelin önbelleğine *(Key-Value Cache)* tek seferde yükleyip, üzerinden işlem yapmak. | Veriyi vektörlere bölüp, sadece soruyla anlamsal eşleşen parçalarını modele sunmak. | Modelin dış sistemlere standart bir protokol ile bağlanıp anlık işlem yapmasını sağlamak. |
+| **Kapasite** | Sınırlı *(Modelin token limiti kadar)* | Yüksek *(Modelin önbelleği kadar. 1, 2 milyon token)* | Sınırsız *(Vektör veritabanının kapasitesi kadar)* | Yüksek *(Modelin işlem yapabileceği her türlü veri kaynağı)* |
 | **Maliyet ve Hız** | Her sorguda tüm veriyi baştan işlediği için yüksek maliyetli ve yavaş olabilir. | Veriyi tek seferde yükleyip, sonrasında hızlı işlem yapabilir. Ancak ilk yükleme maliyetlidir. | Sadece ilgili parçaları işlediği için genellikle daha hızlı ve düşük token maliyetlidir. | Modelin dış sistemlerle etkileşimine bağlı olarak değişkenlik gösterebilir. Genellikle hızlıdır ancak bu hız dış sistemlerin performansına bağlıdır. |
 | **Mimari Gereksinim** | LLM'in kendisi | Geniş bağlam ve önbellek yetenekleri olan bir LLM | LLM + Embedding modeli + Vektör veritabanı | LLM + MCP Server + Dış sistemler |
 | **Veri Güncelliği** | O an prompt'a dahil edilen veri kadar günceldir. | Önbellek *(Cache)* yenilenene kadar statik kalır, anlık olarak değişmez. | Vektör veritabanına yeni veri eklendikçe güncellenebilir. | Tamamen eş zamanlı ve canlıdır. |
-| **Kullanım Senaryoları** | Kısa bir dokümanı özetlemek, birkaç sayfalık belgeyi incelemek, büyük olmayan kod parçalarını analiz etmek. | Çok sık değişmeyen büyük kurumsal yönetmelikler veya devasa statik kod tabanlar. | Sürekli büyüyen ve değişen şirket analiz dokümanları, wiki'leri, geçmiş ticket aramaları. | Canlı veritabanından stok bilgisi çekme, github'a kod gönderme, dosya I/O operasyonları |
+| **Kullanım Senaryoları** | Kısa bir dokümanı özetlemek, birkaç sayfalık belgeyi incelemek, büyük olmayan kod parçalarını analiz etmek. | Çok sık değişmeyen büyük kurumsal yönetmelikler veya devasa statik kod tabanları. | Sürekli büyüyen ve değişen şirket analiz dokümanları, wiki'leri, geçmiş ticket aramaları. | Canlı veritabanından stok bilgisi çekme, GitHub'a kod gönderme, dosya I/O operasyonları |
 
 Derste ele aldığımız uygulamayı **Claude Sonnet 4.6** modeline, **vs code** arabiriminden aşağıdaki prompt'u vererek yazdırdık.
 
@@ -446,7 +449,7 @@ Create a new terminal application written in Python. The purpose of this app is;
 - Yapay zeka botları ile çalışırken şifre, gizli anahtar, kişisel veri gibi hassas bilgileri prompt'lara dahil etmekten kaçınmalısınız. Bu tür bilgilerin istemeden de olsa loglanması veya üçüncü taraflarla paylaşılması ciddi güvenlik risklerine yol açabilir. Lisanslı modeller kullanırken de mutlaka sözleşme şartlarını dikkatlice inceleyin ve gizlilik politikalarını anlayın.
 - Yapay zeka araçlarının ürettiği kodların güvenlik açıkları içermediğinden emin olmak için kodu dikkatlice inceleyin ve gerekirse güvenlik tarama araçları kullanarak analiz edin. Özellikle web uygulamaları geliştirirken SQL injection, XSS gibi yaygın güvenlik açıklarına karşı dikkatli olmak gerekiyor.
 - Kodun yüksek kalitede olduğunu garanti etmek için statik kod tarama araçlarından yararlanın. Örneğin, .NET projeleri için **SonarQube**, **JavaScript** projeleri için **ESLint** gibi araçlar ile kod kalitesini sıklıkla ölçün. Code Review ve Pull Request gibi süreçleri atlamayın, insan denetimi her zaman önemlidir.
-- Kendi yapabileceğimiz çok basit bir kod parçasını yapay zeka aracına yazdırmak yerine, yapay zeka araçlarını daha karmaşık, zaman alan, aynı taskın sürekli tekrar ettiği görevler için kullanmak daha verimli olabilir. Örneğin bir **mongodb docker** imaj tanımını resmi sitesinden alıp projeye uygulamayı yapay zeka aracına yazdırmak yerine, ayağa kaldırdığımız bir imajın çalışması ile ilgili içinden çıkamadığım bir hatayı çözmek için yapay zeka aracından yardım almak daha verimli olabilir.
+- Kendi yapabileceğimiz çok basit bir kod parçasını yapay zeka aracına yazdırmak yerine, yapay zeka araçlarını daha karmaşık, zaman alan, aynı görevin sürekli tekrar ettiği işler için kullanmak daha verimli olabilir. Örneğin bir **mongodb docker** imaj tanımını resmi sitesinden alıp projeye uygulamayı yapay zeka aracına yazdırmak yerine, ayağa kaldırdığımız bir imajın çalışması ile ilgili içinden çıkamadığımız bir hatayı çözmek için yapay zeka aracından yardım almak daha verimli olabilir.
 - İyi **prompt**'lar vermek, yapay zeka araçlarından kaliteli çıktılar almak için kritik öneme sahiptir. Prompt'larınızda açık ve net olun, gerekli detayları sağlayın ve mümkünse örnekler verin. Çıktıları mutlaka dikkatlice inceleyin, ispat arayın, doğruluğundan emin olun. Yapay zeka araçlarının ürettiği çıktıları denetleyen kodlar da geliştirebilirsiniz ;-)
 - Yapay zeka araçlarının ürettiği konfigurasyon içeriklerinde şifre, gizli anahtar gibi bilgiler varsa klasik metodolojide olduğu gibi bunları daha güvenli ortamlarda *(Vault, Azure Key Vault, AWS Secrets Manager gibi)* saklamayı tercih edin. Yapay zeka araçlarının ürettiği kodlarda bu tür bilgilerin hardcoded olarak yer almamasına da ayrıca dikkat edin.
 
@@ -459,7 +462,7 @@ Proje değerlendirmesi için aşağıdaki kriterler göz önünde bulundurulacak
 | Kriter | Açıklama |
 | ------ | -------- |
 | **Takım** | En az 1 en fazla 4 kişilik takımlar oluşturulabilir. |
-| **Dil Modeli** | Pojede en az bir yapay zeka dil modeli aracı kullanılmalıdır. (Claude Sonnet 4.6, Gemini 3.1, Codex 5.2 vb) |
+| **Dil Modeli** | Projede en az bir yapay zeka dil modeli aracı kullanılmalıdır. (Claude Sonnet 4.6, Gemini 3.1, Codex 5.2 vb) |
 | **Teknik Değerlendirme** | Clean Code prensiplerine uygunluk, SOLID prensiplerine uygunluk, mimari uyum, kodun okunabilirliği, test edilebilirliği gibi kriterler göz önünde bulundurulacaktır. |
 | **Dokümantasyon** | Proje ile ilgili mimari tasarım, kullanılan yapay zeka araçları, karşılaşılan zorluklar ve çözümler gibi konuları içeren bir README hazırlanmalıdır. |
 | **Veritabanı** | Projede en az bir veritabanı kullanılmalıdır. (SQL, NoSQL, In-Memory vb) |
@@ -473,6 +476,6 @@ Bu repodaki birçok doküman veya içerik yeni uygulamalar yazmak için bir baş
 | Proje Fikri | Açıklama |
 | --- | --- |
 | **Terimler Sözlüğü** | Ders müfredatında geçen teknik terimlerin tanımlarını ve açıklamalarını içeren bir sözlük uygulaması. Kullanıcı terim arayabilir, yeni terimler ekleyebilir. Terimler merkezi bir veri sisteminde servis tabanlı çekilir. Düzenleme ve ekleme fonksiyonellikleri yetkiye *(Authorization)* bağlıdır. |
-| **Gamepedia** | Online popüler oyunlar ansiklopedisi. Bilinen efsane oyunlarla ilgili detaylı bilgilerin yer aldığı bir web uygulamasıdır. Oyunlara ait örnek ekran görüntüleri, geliştiricileri, stüydo bilgileri, kullanıcı puanları, aldığı ödüller vs. Ayrıca içinde bilgi yarışması da barındırır. Referans olarak **Steam** oyun platformunun web uygulaması baz alınabilir. |
+| **Gamepedia** | Online popüler oyunlar ansiklopedisi. Bilinen efsane oyunlarla ilgili detaylı bilgilerin yer aldığı bir web uygulamasıdır. Oyunlara ait örnek ekran görüntüleri, geliştiricileri, stüdyo bilgileri, kullanıcı puanları, aldığı ödüller vs. Ayrıca içinde bilgi yarışması da barındırır. Referans olarak **Steam** oyun platformunun web uygulaması baz alınabilir. |
 | **CV Bank** | CV'lerin saklandığı, yönetildiği, analiz edildiği bir uygulama. CV'ler JSON formatında saklanır. Kullanıcılar CV'lerini yükleyebilir, düzenleyebilir, silebilir. Yüklenen CV'ler yapay zeka araçları tarafından analiz edilerek özetlenebilir, kategorize edilebilir. |
 | **GeoQuiz** | Coğrafya temalı bir bilgi yarışması uygulaması. Kullanıcılar farklı zorluk seviyelerinde coğrafya sorularını cevaplayarak puan kazanır. Sorular yapay zeka araçları tarafından oluşturulabilir veya mevcut bir veri seti kullanılabilir |
