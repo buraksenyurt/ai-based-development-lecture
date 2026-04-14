@@ -18,6 +18,8 @@ Konya Gıda ve Tarım Üniversitesi Yazılım Mühendisliği ve Pamukkale Ünive
     - [Bilgi Sağlama ve Bağlam (Context) Yönetimi](#bilgi-sağlama-ve-bağlam-context-yönetimi)
   - [Aman Dikkat](#aman-dikkat)
   - [Ders Geçme Prosedürü](#ders-geçme-prosedürü)
+    - [Proje Değerlendirmesi](#proje-değerlendirmesi)
+    - [Final Sınavı](#final-sınavı)
   - [Uygulama Önerileri](#uygulama-önerileri)
 - [Terimler Sözlüğü](Dictionary.md)
 
@@ -300,7 +302,8 @@ Yazılım geliştirme süreçlerinde testin önemli bir yeri vardır. Yazılan k
 
 Pek tabii kodun belli standartlar üzerinde olmasını sağlamak, sorunlarını azaltmak için test metodolojileri tek başına bir ölçüt değildir. **Sonarqube** gibi araçlar ile teknik borcu ölçmek, **Code Review/Pull Request** süreçlerini işletmek veya **pair programming** gibi pratiklerle ilerlemek de kod kalitesini artırmak için başvurulabilecek diğer yöntemlerdir.
 
-Bu dersimizde diagramda görülen bazı temel kavramlara değinmeye çalıştık. Bu anlamda klasik test piramidinin başlıca katmanlarını konuştuk. [Şu klasörde yer alan örnek projede](./apps/lesson04) birim test *(Unit Test)* ve entegrasyon testlerini *(Integration Test)* basit birkaç örnekle deneyimledik. Referans olarak uçtan uca bir deneyim için **Hexagonal Architecture** yaklaşımını benimseyen şu örneği de inceleyebilirsiniz: [Hexagonal Architecture Example](https://excalidraw.com/#token=-70knstmC_nZTv-7BtgEU)
+Bu dersimizde diagramda görülen bazı temel kavramlara değinmeye çalıştık. Bu anlamda klasik test piramidinin başlıca katmanlarını konuştuk. [Şu klasörde yer alan örnek projede](./apps/lesson04) birim test *(Unit Test)* ve entegrasyon testlerini *(Integration Test)* basit birkaç örnekle deneyimledik. Referans olarak uçtan uca bir deneyim için **Hexagonal Architecture** yaklaşımını benimseyen şu örneği de inceleyebilirsiniz: [Hexagonal Architecture Example](https://github.com/buraksenyurt/HexagonalArchitecture_101)
+
 Ayrıca **Test Driven Development *(TDD)*** ya da *Red-Green-Blue* yaklaşımının temel prensiplerine baktık.
 
 .Net tabanlı çözümümüzde solution oluşturmak ve proje eklemek için kullanabileceğimiz komutlar:
@@ -457,6 +460,8 @@ Create a new terminal application written in Python. The purpose of this app is;
 
 Bu dönem ilk kez işlenen müfredat kapsamında ders geçme kriterleri şöyle tanımlanmıştır: %40 Proje + %60 Final.
 
+### Proje Değerlendirmesi
+
 Proje değerlendirmesi için aşağıdaki kriterler göz önünde bulundurulacaktır:
 
 | Kriter | Açıklama |
@@ -468,6 +473,10 @@ Proje değerlendirmesi için aşağıdaki kriterler göz önünde bulundurulacak
 | **Veritabanı** | Projede en az bir veritabanı kullanılmalıdır. (SQL, NoSQL, In-Memory vb) |
 | **Sunum** | Dönem boyunca proje ile ilgili en az iki sunum *(10 dakikayı geçmeyecek şekilde)* yapılmalıdır |
 | **Teslim Tarihi** | Dönemin son dersi |
+
+### Final Sınavı
+
+Final sınavında dönem boyunca işlenen konularla ilgili sorular yer alacaktır. Örnek sorulara [buradan](./Exam00.md) bakabilirsiniz.
 
 ## Uygulama Önerileri
 
