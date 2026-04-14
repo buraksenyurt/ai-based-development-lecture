@@ -78,6 +78,134 @@ Statik kod tarayıcısı bu kodla ilgili bir ihlal tespit etmiştir. Sizce bu ih
 - C) Kodun karmaşıklığı çok yüksektir *(High Cognitive Complexity)*
 - D) Programda kullanılmayan gereksiz kodlar vardır *(Dead Code/ Unused Variables)*
 
+## Soru 6
+
+Projede geliştirilen bir kod parçasını gözden geçirmeniz ve yorumlamanız isteniyor. Söz konusu kod parçası aşağıdaki gibidir.
+
+```csharp
+public void ProcessOrder(Order order)
+{
+    if (order != null)
+    {
+        if (order.Items.Count > 0)
+        {
+            foreach (var item in order.Items)
+            {
+                if (item.Price > 100)
+                {
+                    if (order.Customer.IsVIP)
+                    {
+                        item.Discount = 20;
+                    }
+                    else
+                    {
+                        item.Discount = 10;
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+Koda baktığınızda burnuzuza kötü kokular *(Code Smells)* gelmektedir. Sizce bu kod parçasında statik kod tarama aracına da takılacak ne gibi bir sorun vardır?
+
+- A) Program kodunda zayıf isimlendirme standartları yer almaktadır *(Naming Convention Violation)*
+- B) Kötü niyetli kullanıcılar tarafından kaynak sızıntısı oluşabilir *(Resource Leak)*
+- C) Kod tekrarı söz konusudur *(Code Duplication)*
+- D) Yüksek düzeyde bilişsel kod karmaşıklığı içermektedir *(High Cognitive Complexity)*
+
+## Soru 7
+
+Sisteme giriş yapan kullanıcılar kod tarafında aşağıdaki metot ile doğrulanmaktadır.
+
+```csharp
+public User GetUser(string username)
+{
+    string query = "SELECT * FROM Users WHERE Username = '" + username + "'";
+    return dbContext.ExecuteQuery(query);
+}
+```
+
+Program kodu CI/CD hattına alındıktan sonra çalışan statik kod tarayıcısı ise bu metotta `Blocker` seviyesinde bir bulgu tespit etmiştir. Sizce bu bulgunun sebebi aşağıdakilerden hangisidir?
+
+- A) Sihirli sayı *(Magic Number)* kullanımı yer almaktadır
+- B) SQL ifadesi doğrudan string birleştirme yöntemiyle oluşturulmuştur ve bu nedenle SQL Injection saldırılarına açıktır *(Security Vulnerability - SQL Injection)*
+- C) Parametre adı isimlendirme standartlarına uyulmamaktadır *(Naming Convention Violation)*
+- D) Metod içerisinde beklenmedik çalışma zamanı istisnaları ele alınmamaktadır *(Unhandled Exception)*
+
+## Soru 8
+
+Müşteri kayıtlarını sisteme ekleyen bir servis sınıfında aşağıdaki gibi bir metod yer almaktadır.
+
+```csharp
+public void CreateCustomer(string firstName, string lastName, string email, string phone, string addressLine1, string city, string country, string zipCode, DateTime dateOfBirth, bool isPremium)
+{
+    // Kayıt işlemleri...
+}
+```
+
+`Clean Code` prensiplerine göre bu kodu ideal hale getirmek için aşağıdaki stratejilerden hangisini önerirsiniz?
+
+- A) Metot içerisinde kullanılmayan parametreler varsa bunların kaldırılmasını öneririm
+- B) Metodun parametre listesini daha okunabilir hale getirmek için bir `Customer` sınıfı oluşturup bu sınıfın bir örneğini parametre olarak göndermeyi öneririm
+- C) Metodun parametre listesini daha okunabilir hale getirmek için `Builder` tasarım desenini kullanarak bir `CustomerBuilder` sınıfı oluşturmayı öneririm
+- D) Hiçbir değişiklik yapmadan mevcut haliyle bırakmayı öneririm çünkü metodun parametre yapısı zaten yeterince açık ve anlaşılır
+
+## Soru 9
+
+Çocuklara matematiği sevdirmek için geliştirilen bir eğitim uygulaması üzerinde kod kontrolü yapmakla görevlendirildiniz ve kodun bir parçasında daire alanının hesaplanması ile ilgili aşağıdaki gibi yazılmış olan metotla karşılaştınız. Ne var ki bu kod parçasında sizi rahatsız eden bir şey var. Sizce bu kod parçasında ne gibi bir sorun vardır?
+
+```csharp
+public double CalculateCircleArea(double radius)
+{
+    return 3.14159265359 * radius * radius;
+}
+```
+
+- A) Daire alanı hesaplamasında kullanılan PI değeri hatalı verilmiştir.
+- B) Daire alanı hesaplamasında kullanılan formül yanlıştır.
+- C) radius paramtresi için Null kontrolü yapılmamıştır ve bu nedenle NullReferenceException hatası oluşabilir.
+- D) Daire alanı hesaplamasında kullanılan sayısal değer sihirli sayı *(Magic Number)* olarak kodun içerisine gömülmüştür. Bunun yerine bir sabit *(Constant)* ve hatta **Math.PI* enstrümanı kullanılarak kodun okunurluğunu artırıp bakımını kolaylaştırabiliriz.
+
+## Soru 10
+
+Yapay zeka dil modelleri *(LLM - Large Language Models)* çalıştığınız kurumun içeride kullandığı özel kodlama standartlarını, mimari kararları, geliştirme metodolojilerini veya iş akışlarını bilmez. Asistanın size doğru cevap verebilmesi için, sorduğunuz soruyla birlikte ilgili doküman parçalarının bağlama *(context)* dahil edilmesi gerektiğine karar verdiniz. Bu nedenle kullanıcı sorgusunu mevcut bilgi tabanından veriler getirerek zenginleştiren ve modeli bu özel bilgiyle besleyen bir metodolojide ilerlemeyi planlıyorsunuz. Aşağıdaki stratejilerden hangisini tercih edersiniz?
+
+- A) Retreival Augmented Generation *(RAG)* yaklaşımını benimsemek ve modeli kullanıcı sorgusuyla birlikte ilgili doküman parçalarını da içeren bir bilgi getirme mekanizmasıyla beslemek
+- B) Behaviror Driven Development *(BDD)* yaklaşımını benimsemek ve modeli kullanıcı hikayeleri, kabul kriterleri ve test senaryoları gibi yapılarla beslemek
+- C) Prompt Engineering yaklaşımını benimsemek ve modeli kullanıcı sorgusuyla birlikte ilgili doküman parçalarını da içeren zenginleştirilmiş promptlarla beslemek
+- D) Test Driven Development *(TDD)* yaklaşımını benimsemek ve modeli kullanıcı sorgusuyla birlikte ilgili doküman parçalarını da içeren test senaryolarıyla beslemek
+
+## Soru 11
+
+GitHub Copilot gibi bir yapay zeka asistanından uygulamada yer alan ürün yönetimi sınıfı ile ilgili olası tüm birim testleri *(Unit Test)* oluşturmasını istediniz. Asistan saniyeler içinde size yirmiden fazla test kodu üretti. Yapay zekanın bu kodu üretmesi sonrasında teknik borç yaratmamak adına bir yazılım mühendisinin izlemesi gereken en doğru yol hangisidir?
+
+- A) Üretilen testleri doğrudan projeye ekleyip, hatalı olanları manuel olarak projenin dışına almak.
+- B) Testlerin iş gereksinimlerini tamamıyla kapsayıp kapsamadığını analiz etmek ve anlamlı olup olmadıklarını satır satır gözden geçirmek *(Code Review)*.
+- C) Yapay zeka kodlarının her zaman güvenlik açıkları barındırabileceğini varsayarak üretilen tüm kodları silmek.
+- D) Sadece hata fırlatan testleri inceleyip, başarılı çalışan testleri gözden geçirmeden yayına almak.
+
+## Soru 12
+
+Komut satırında çalışan bir Copilot ajanı ile yepyeni bir .NET Solution yapısı kurduğunuz düşünün. Çözümünüz `Hexagonal Architecture` prensiplerine uygun olarak tasarlanmış olsun. Veritabanı tarafında `Postgresql` kullanıyorsunuz ve O/RM *(Object Relational Mapper)* olarak da `Entity Framework Core` tercih ediyorsunuz. Mimari olarak kayıt altına alınmasını istediğiniz bazı kararlar var bunları Claude Sonnet ile oluşturmaya karar verdiniz. `VS Code` arabirminden şu prompt'u verdiniz "Projeyi analiz et ve bu yapıya uygun `Architecture Decision Record (ADR)` dokümanlarını otomatik olarak oluştur."
+
+Bir yapay zeka asistanının mimari karar dokümanları üretmesi ile ilgili olarak aşağıdakilerden hangisi söylenebilir?
+
+- A) Yapay zekanın ürettiği kararlar kesinlikle uygulanmalıdır çünkü büyük dil modelleri kurumsal olarak kabul görmüş mimari standarlarla eğitilmiştir.
+- B) Yapay zeka kodu analiz edemez, bu sebeple böyle bir komut her zaman hata döndürür.
+- C) Asistan tarafından oluşturulan `ADR` dokümanları taslak olarak kabul edilmeli ve kararlar mutlaka yazılım mimarı/geliştirici tarafından doğrulanıp onaylanmalıdır.
+- D) Sadece Python projeleri yapay zeka tarafından analiz edilebilir, .NET projelerinde böyle bir özellik yoktur.
+
+## Soru 13
+
+Yapay zeka destekli yazılım geliştirme süreçlerinde, geliştiricilerin yapay zeka asistanlarından gelen çıktıları dikkatlice inceleyip gerektiğinde müdahale ederek ilerlemeleri önemlidir. Bu süreçte kod güvenilirliği, teknik borç ve proje mimarisi gibi konulara dikkat etmek gerekmektedir. Bu bağlamda, Newtonsoft' un oldukça popüler olan Json kütüphanesini projenizde kullanmak istediğinizi düşünün. Projeyi `Nuget` paket yöneticisi ile sisteme ekledikten sonra şu prompt'u verdiniz: "Bu kütüphaneyi kullanarak bir JSON serileştirme ve deserileştirme işlemi gerçekleştiren örnek bir kod parçası oluştur." Ancak kodu çalıştırdığınızda yapay zeka asistanınızın aslında var olmayan, hatalı ve uydurma bilgilerle son derece mantıklı ve bir o kadarda kendinden emin bir şekilde kod ürettiğini gördünüz. Bu durum literatürde ne şekilde tanımlanır?
+
+- A) Dil modeli token sınırını aşmıştır ve bu nedenle eksik bilgiyle kod üretmiştir.
+- B) Yapay zeka halüsinasyon *(Hallucination)* sorunu yaşamış var olmayan veya hatalı bilgileri gerçekmiş gibi sunarak kod üretmiştir.
+- C) Yapay zeka asistanınızın eğitim verisi güncel değildir ve bu nedenle eski bir sürümle ilgili kod üretmiştir.
+- D) Yapay zeka asistanınızın API anahtarı süresi dolmuştur ve bu nedenle eksik bilgiyle kod üretmiştir.
+
 DEVAM EDECEK
 
 ## Cevap Anahtarı
@@ -89,3 +217,11 @@ DEVAM EDECEK
 | 3       | D           |
 | 4       | C           |
 | 5       | D           |
+| 6       | D           |
+| 7       | B           |
+| 8       | B           |
+| 9       | D           |
+| 10      | A           |
+| 11      | B           |
+| 12      | C           |
+| 13      | B           |
