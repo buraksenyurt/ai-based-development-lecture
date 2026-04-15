@@ -206,6 +206,61 @@ Yapay zeka destekli yazılım geliştirme süreçlerinde, geliştiricilerin yapa
 - C) Yapay zeka asistanınızın eğitim verisi güncel değildir ve bu nedenle eski bir sürümle ilgili kod üretmiştir.
 - D) Yapay zeka asistanınızın API anahtarı süresi dolmuştur ve bu nedenle eksik bilgiyle kod üretmiştir.
 
+## Soru 14
+
+`RAG (Retrieval-Augmented Generation)` yaklaşımını benimseyen bir yapay zeka uygulamasında, sisteme yüklenen belgeler parçalama *(Chunking)* işleminden geçirilir ve bir `Embedding modeli` kullanılarak sayısal vektörlere dönüştürülüp vektör veritabanına kaydedilir. Kullanıcı bir soru sorduğunda, bu soru da vektöre çevrilir ve veritabanındaki en alakalı metin parçalarını bulmak için **"vektörel benzerlik"** hesaplanır.
+
+Aşağıda, yüksek boyutlu vektör uzaylarında iki vektör *(A ve B)* arasındaki benzerliği ölçmek için kullanılan yaygın bir yöntemin formülü verilmiştir. Bu formülde iki vektörün iç çarpımı *(dot product)*, vektörlerin büyüklüklerinin *(magnitudes)* çarpımına bölünmektedir:
+
+$$ \text{Similarity}(A, B) = \cos(\theta) = \frac{A \cdot B}{\|A\| \|B\|} $$
+
+Özellikle `RAG` tabanlı sistemlerde metinlerin uzunluğundan bağımsız olarak anlamsal yönlerini *(açılarını)* karşılaştırmak için oldukça sık tercih edilen bu yöntem şıklardan hangisidir?
+
+- A) Cosine Similarity
+- B) Jaccard Similarity
+- C) Euclidean Distance
+- D) Manhattan Distance
+
+## Soru 15
+
+Veri bilimi ekibinin `Python` ve `PyTorch` kullanarak harika bir makine öğrenmesi modeli geliştirip ve eğittiğini düşünelim. Ne var ki ana sunucu altyapısı .NET ve Go tabanlı çalışıyor. Modeli `Python` bağımlılıklarıyla canlıya almak yerine dilden ve framework'ten bağımsız, optimize edilmiş bir formata dönüştürüp doğrudan C# içerisinden yüksek performansla çalıştırmak *(inferencing)* istiyorsunuz. Derin öğrenme modellerinin farklı framework'ler *(TensorFlow, PyTorch vb.)* ve programlama dilleri arasında taşınabilmesini sağlayan açık kaynaklı standart aşağıdakilerden hangisidir?
+
+- A) ONNX *(Open Neural Network Exchange)*
+- B) JSON Web Token *(JWT)*
+- C) Parquet
+- D) YAML
+
+## Soru 16
+
+Bir yapay zeka uygulamasının pyhton ile yazılmış yapılandırma dosyasında aşağıdaki değişkenler tanımlanmıştır:
+
+```python
+LM_STUDIO_BASE_URL = "http://127.0.0.1:1234/v1"
+EMBEDDING_MODEL = "text-embedding-embeddinggemma-300m"
+EMBEDDING_DIM = 768
+
+QDRANT_HOST = "localhost"
+QDRANT_PORT = 6333
+QDRANT_COLLECTION = "documents"
+
+CHUNK_SIZE = 500
+CHUNK_OVERLAP = 50
+
+SUPPORTED_EXTENSIONS = {".txt", ".md", ".pdf", ".docx"}
+```
+
+Tanımlı yapılandırma değerleri ve `RAG` mimarisinin çalışma prensiplerine göre aşağıdaki ifadelerden hangileri doğrudur?
+
+- I. Büyük belgeler sisteme yüklenirken 500 birimlik *(token/karakter)* parçalara ayrılacak; ancak cümlelerin veya paragraf bağlamının ortadan bölünmemesi *(anlam kaybı yaşanmaması)* için ardışık her bir parça, bir öncekinin 50 birimlik kısmını içerecek *(overlap)* şekilde kesişecektir.
+- II. `Qdrant` veritabanında `documents` adıyla oluşturulacak olan koleksiyonun *(collection)* vektör boyutu mutlaka **768** olarak ayarlanmalıdır. Aksi takdirde modelin ürettiği vektörler veritabanına kaydedilemez.
+- III. Sistem `PDF` ve `DOCX` gibi zengin içerikli dosyaları desteklediği için, bu dosyalar hiçbir metin ayıklama *(text parsing/extraction)* işlemine tabi tutulmadan doğrudan `Qdrant` veritabanına ikili *(binary)* formatta kaydedilecektir.
+- IV. Verilen URL ve model ismine bakıldığında, metinleri matematiksel vektörlere dönüştürme işlemi için dışarıdan bir bulut API'si *(örn. OpenAI)* değil, yerel *(localhost)* ortamda barındırılan bir dil modeli kullanılmaktadır.
+
+- A) Yalnızca I ve II
+- B) Yalnızca II ve IV
+- C) I, II ve IV
+- D) Hepsi
+
 DEVAM EDECEK
 
 ## Cevap Anahtarı
@@ -225,3 +280,6 @@ DEVAM EDECEK
 | 11      | B           |
 | 12      | C           |
 | 13      | B           |
+| 14      | A           |
+| 15      | A           |
+| 16      | C           |
