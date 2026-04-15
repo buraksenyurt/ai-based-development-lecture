@@ -25,13 +25,13 @@ Konya Gıda ve Tarım Üniversitesi Yazılım Mühendisliği ve Pamukkale Ünive
 
 ## Önsöz
 
-Yapay zeka araçları günümüzün en popüler konularında birisi olsa da, bu araçların yazılım geliştirme süreçlerine entegrasyonu henüz tam olarak anlaşılmış değil. Bu dersin amacı, yapay zeka destekli yazılım geliştirme süreçlerini anlamak ve bu süreçlerde karşılaşılabilecek zorlukları ele almaktır. Ders boyunca, yapay zeka araçlarının yazılım geliştirme süreçlerine nasıl entegre edileceği, avantajları/dezavantajları ve bu araçların kullanımı sırasında karşılaşılabilecek zorluklar üzerinde durulacaktır. Ayrıca, yapay zeka destekli yazılım geliştirme süreçlerinde güvenlik, teknik borç ve proje mimarisi gibi önemli konulara da değinilecektir. Dönem boyunca aşağıdaki soruların cevaplarını arayacağız:
+Yapay zeka araçları günümüzün en popüler konularından biri olsa da, bu araçların yazılım geliştirme süreçlerine entegrasyonu henüz tam olarak anlaşılmış değil. Bu dersin amacı, yapay zeka destekli yazılım geliştirme süreçlerini anlamak ve bu süreçlerde karşılaşılabilecek zorlukları ele almaktır. Ders boyunca, yapay zeka araçlarının yazılım geliştirme süreçlerine nasıl entegre edileceği, avantajları/dezavantajları ve bu araçların kullanımı sırasında karşılaşılabilecek zorluklar üzerinde durulacaktır. Ayrıca, yapay zeka destekli yazılım geliştirme süreçlerinde güvenlik, teknik borç ve proje mimarisi gibi önemli konulara da değinilecektir. Dönem boyunca aşağıdaki soruların cevaplarını arayacağız:
 
 - Yapay zeka araçları hangi vakalarda yazılım geliştirme süreçlerine entegre edilebilir?
 - Yapay zeka araçlarının yazılım geliştirme süreçlerine entegrasyonunun avantajları ve dezavantajları nelerdir?
 - Bir yapay zeka aracının ürettiği çıktıda hangi konulara dikkat etmek gerekir? Riskler nelerdir? Risklerden nasıl kaçınılır?
 - Yapay zeka destekli yazılım geliştirme süreçlerinde güvenlik, teknik borç ve proje mimarisi gibi konular nasıl ele alınmalıdır?
-- İdeal veya ideala yakın, hata payı düşük çıktıları elde etmek için ne gibi metodolojiler izlenebilir? Hangi teknikler kullanılır?
+- İdeal veya ideale yakın, hata payı düşük çıktıları elde etmek için ne gibi metodolojiler izlenebilir? Hangi teknikler kullanılır?
 - Spec veya test odaklı geliştirme gibi metodolojiler yapay zeka destekli yazılım geliştirme süreçlerinde nasıl uygulanabilir?
 - Yapay zeka araçlarındaki sık değişimlere adapte olmak için ne gibi stratejiler izlenebilir?
 - Kaynak tüketimi yüksek yapay zeka araçlarını kullanırken maliyetleri kontrol altında tutmak için ne gibi önlemler alınabilir? Optimizasyon teknikleri nelerdir?
@@ -42,7 +42,7 @@ Yazılım geliştirme süreçlerinde yapay zeka araçlarından verimli şekilde 
 
 ![AI Periodic Table](./images/AiPeriodicTable.png)
 
-Sütunlar beş ayrı grubu temsil etmekte. Bunları kısaca aşağıdaki gibi özetleyebiliriz.
+Sütunlar beş ayrı grubu temsil etmektedir. Bunları kısaca aşağıdaki gibi özetleyebiliriz.
 
 - **Reactive:** Değişen girdiyle çıktının da değiştiği etkileşime ait enstrümanları barındırır. Herkesin az çok aşina olduğu **prompt**'lar en temel istek gönderme biçimini tarif eder. Modelin bir başka fonksiyonu çağırabilmesi, birden fazla modelin birbirini çağırarak çalışması gibi kavramlar da bu grupta yer alır.
 - **Retrieval:** Yapay zeka sistemlerinin bilgiyi nasıl aradığı, sakladığı ve hatırladığı ile ilgili kavramlar yer alır. Örneğin metinlerin sayısal temsilcileri *(embeddings)* ve bunların bir vektör uzayında temsil edilmesi ve benzerlik ölçümleri yapılarak erişilmesi gibi kavramları bu grupta düşünebiliriz.
@@ -52,7 +52,7 @@ Sütunlar beş ayrı grubu temsil etmekte. Bunları kısaca aşağıdaki gibi ö
 
 Tablonun satırları da 4 kategoriye ayrılır. Bunları aşağıdaki gibi özetleyebiliriz.
 
-- **Primitives:** Yapay zeka dünyasının en temel yapı taşlarını yerinde bir benzetmeyle atomlarını temsil eder. Buradaki öğeler daha küçük parçalara bölünemezler ve aslında tablodaki diğer karmaşık yapılar tarafından kullanılır onların temellerini oluştururlar. Örneğin **prompt**'lar yapay zeka araçlarına verilen girdilerin temel birimi olarak düşünülebilir. **Embedding**'ler ise metinlerin sayısal temsilleri olarak yapay zeka sistemlerinin bilgiyi işlemesi için temel bir yapı sağlar. Pek tabii büyük dil modelleri de burada yer alır.
+- **Primitives:** Yapay zeka dünyasının en temel yapı taşlarını, yerinde bir benzetmeyle atomlarını temsil eder. Buradaki öğeler daha küçük parçalara bölünemezler ve aslında tablodaki diğer karmaşık yapılar tarafından kullanılır; onların temellerini oluştururlar. Örneğin **prompt**'lar yapay zeka araçlarına verilen girdilerin temel birimi olarak düşünülebilir. **Embedding**'ler ise metinlerin sayısal temsilleri olarak yapay zeka sistemlerinin bilgiyi işlemesi için temel bir yapı sağlar. Pek tabii büyük dil modelleri de burada yer alır.
 - **Compositions:** Primitive'lerin bir araya getirilmesiyle oluşan daha karmaşık yapılar bu satırda yer alır. Genellikle yapım aşamasında bir modelin yanına yapılandırılmış çıktılar ve araç entegrasyonları eklenerek işlevsel bir süreç tesis edilir. Bu nedenle fonksiyon çağırma, vektör veritabanları, RAG ve Guardrails gibi unsurlar burada yer alır.
 - **Emerging:** Günümüzde hızla evrilen ve yapay zeka ekosisteminin biraz da uç noktalarını temsil eden teknolojileri ifade eder. Halen gelişmekte olan bir alan gibi düşünülebilir. Örneğin yapay zekanın iş birliği yaptığı çoklu ajan sistemleri, modellerin iç mantığını anlamaya yarayan araçlar veya yanıt vermeden önce uzun süre muhakeme yapabilen düşünme modelleri burada yer alır.
 
@@ -64,14 +64,14 @@ Müfredat boyunca yukarıda bahsettiğimiz birçok kavrama değinme fırsatı bu
 
 ## Gün 00 - Tanışma ve `Hello World` Uygulamasının Geliştirilmesi
 
-Bu ilk dersimizde **JSON** veri formatında tasarlanmış bir cv dosyasının analiz edilerek **HTML** formatında bir web sayfasına dönüştürülmesi üzerine çalışıldı. Anthropic'in **Claude Sonnet 4.5** modelini kullanarak bu dönüşümü gerçekleştirmek için çeşitli prompt'lar denedik.
+Bu ilk dersimizde **JSON** veri formatında tasarlanmış bir CV dosyasının analiz edilerek **HTML** formatında bir web sayfasına dönüştürülmesi üzerine çalışıldı. Anthropic'in **Claude Sonnet 4.5** modelini kullanarak bu dönüşümü gerçekleştirmek için çeşitli prompt'lar denedik.
 
 İlk derste kullandığımız prompt'lar:
 
 ```text
 Bu JSON içeriğini analiz et ve bir html sayfası hazırla.
 
-Kullanıcı dostu bir arabirim sağla.
+Kullanıcı dostu bir arayüz sağla.
 HTML 5 standartlarını kullan.
 Custom CSS kullanma. Bunun yerine Bootstrap kütüphanesini kullan.
 JSON içeriğini okumak için Javascript kullan.
@@ -87,7 +87,7 @@ Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remot
 Bir web sunucusu çalıştırmak gerekir mi?
 ```
 
-ve bunun üstüne **Node.js**'in **http-server** paketini kullanarak basit bir web sunucusu kurmasını istedik.
+ve bunun üzerine **Node.js**'in **http-server** paketini kullanarak basit bir web sunucusu kurmasını istedik.
 
 ```text
 Sunucuyu komut satırından başlatmak yerine bir nodejs uygulaması ile başlatmak istiyorum.
@@ -103,7 +103,7 @@ Nihai amacımız, orta ölçekte bir CV bankası uygulaması geliştirmek ve bu 
 
 ![High Level Diagram](./images/CvBankHighLevelDiagram.png)
 
-**Ödev:** Amacımız bu diagrama göre projemizi bir adım daha ileri götürmek. Nereden başlarsınız ve Agent'a nasıl bir prompt verirsiniz?
+**Ödev:** Amacımız bu diyagrama göre projemizi bir adım daha ileri götürmek. Nereden başlarsınız ve Agent'a nasıl bir prompt verirsiniz?
 
 ### Bu çalışmadan çıkarılması gereken dersler
 
@@ -117,17 +117,17 @@ Nihai amacımız, orta ölçekte bir CV bankası uygulaması geliştirmek ve bu 
 
 İkinci dersimizde en temel seviyede mimari özet ve domain bilgileri içeren temel dokümanlar hazırlayarak ilerledik. [Lesson01](./apps/lesson01/docs/) klasöründen bu dokümanlara erişebilirsiniz.
 
-YZ modeli olarak Claude Sonnet 4.6'yı kullandık. Prompt oturumuna [00-architecture-overiview](./apps/lesson01/docs/00-architecture-overiview.md) ve [01-domain-design](./apps/lesson01/docs/01-domain-design.md) dokümanlarını ekledik. Ardından aşağıdaki promptu işlettik.
+YZ modeli olarak Claude Sonnet 4.6'yı kullandık. Prompt oturumuna [00-architecture-overiview](./apps/lesson01/docs/00-architecture-overiview.md) ve [01-domain-design](./apps/lesson01/docs/01-domain-design.md) dokümanlarını ekledik. Ardından aşağıdaki prompt'u işlettik.
 
 ```text
 Bu dokümanları analiz et ve sadece backend tarafı için gerekli Solution'ı oluştur.
 ```
 
-Beklediğimiz gibi .net 10 tabanlı bir solution oluşturuldu. Klasör bazlı bir ayrım olmasa da projeler **Clean Architecture** yaklaşımında belirtildiği gibi **Domain**, **Application**, **Infrastructure** ve **Presentation** katmanlarına ayrıldı. Domain katmanında User, Contact gibi entity'ler ve Resume gibi aggregate'ler tanımlandı. **API** katmanında ise **REST API** standartlarına uygun ve Resume aggregate'ine yönelik **CRUD *(Create, Read, Update, Delete)*** operasyonlarını içeren bir **Controller** oluşturulduğu görüldü.
+Beklediğimiz gibi **.NET 10** tabanlı bir solution oluşturuldu. Klasör bazlı bir ayrım olmasa da projeler **Clean Architecture** yaklaşımında belirtildiği gibi **Domain**, **Application**, **Infrastructure** ve **Presentation** katmanlarına ayrıldı. Domain katmanında User, Contact gibi entity'ler ve Resume gibi aggregate'ler tanımlandı. **API** katmanında ise **REST API** standartlarına uygun ve Resume aggregate'ine yönelik **CRUD *(Create, Read, Update, Delete)*** operasyonlarını içeren bir **Controller** oluşturulduğu görüldü.
 
-Ayrıca veri tabanı tarafı için MongoDb tercih edildiği ve bağlantı ayarlarının `appsettings.json` dosyasına eklendiği görüldü. Domain tasarımında **ContactType** adında bir enum tanımlanarak iletişim türlerinin sınırlı bir küme ile ifade edildiği gözlemlendi.
+Ayrıca veritabanı tarafı için MongoDB tercih edildiği ve bağlantı ayarlarının `appsettings.json` dosyasına eklendiği görüldü. Domain tasarımında **ContactType** adında bir enum tanımlanarak iletişim türlerinin sınırlı bir küme ile ifade edildiği gözlemlendi.
 
-Solution ilk seferde derlenmedi zira eksik Nuget paketleri vardı. Ancak ajan sorunları kendisi düzelterek projeyi derlenebilir hale getirdi. Projeyi çalıştırdığımızda **Swagger** arayüzünde tanımlı endpoint'lerin beklendiği gibi göründüğü ve çalıştığı görüldü.
+Solution ilk seferde derlenmedi; zira eksik NuGet paketleri vardı. Ancak ajan sorunları kendisi düzelterek projeyi derlenebilir hale getirdi. Projeyi çalıştırdığımızda **Swagger** arayüzünde tanımlı endpoint'lerin beklendiği gibi göründüğü ve çalıştığı görüldü.
 
 ![Swagger Runtime](./images/day01_00.png)
 
@@ -138,7 +138,7 @@ Ancak;
 
 ## Gün 02 - Exception Handling, Debugging ve Docker Kullanımı
 
-Bu derste **Swagger** üzerinden yaptığımız API testleri sırasında aldığımız çalışma zamanı hatalarına istinaden **.Net** gibi yönetimli ortamlarda *(Managed Environment)* istisna/hata yönetiminin nasıl ele alındığına değindik. Özellikle **Exception** mesajlarındaki **Call Stack loglarının** nasıl okunması gerektiğine baktık ki gözlerimizi acıtan **Call Stack** içeriği de aşağıdaki gibiydi ancak satır satır yorumladık.
+Bu derste **Swagger** üzerinden yaptığımız API testleri sırasında aldığımız çalışma zamanı hatalarına istinaden **.NET** gibi yönetimli ortamlarda *(Managed Environment)* istisna/hata yönetiminin nasıl ele alındığına değindik. Özellikle **Exception** mesajlarındaki **Call Stack log'larının** nasıl okunması gerektiğine baktık ki gözlerimizi acıtan **Call Stack** içeriği de aşağıdaki gibiydi; ancak satır satır yorumladık.
 
 ```text
 System.TimeoutException: A timeout occurred after 30006ms selecting a server using CompositeServerSelector{ Selectors = ReadPreferenceServerSelector{ ReadPreference = { Mode : Primary } }, LatencyLimitingServerSelector{ AllowedLatencyRange = 00:00:00.0150000 }, OperationsCountServerSelector }. Client view of cluster state is { ClusterId : "1", Type : "Unknown", State : "Disconnected", Servers : [{ ServerId: "{ ClusterId : 1, EndPoint : "Unspecified/localhost:27017" }", EndPoint: "Unspecified/localhost:27017", ReasonChanged: "Heartbeat", State: "Disconnected", ServerVersion: , TopologyVersion: , Type: "Unknown", HeartbeatException: "MongoDB.Driver.MongoConnectionException: An exception occurred while opening a connection to the server.
@@ -184,15 +184,15 @@ System.TimeoutException: A timeout occurred after 30006ms selecting a server usi
 
 > Exception yönetimi her ne kadar işi kolaylaştıran bir yol olsa da runtime maliyetlerini de düşünerek **try...catch...finally** bloğuna ihtiyaç duymadan da bazı hataların yönetilebileceğini bilmemiz gerekir. Örneğin bir dosya üzerinde işlem yapan bir metot yazdığımızı düşünelim. Dosya üzerinde işlem yaparken dosyanın var olup olmadığını kontrol edebiliriz. Eğer dosya yoksa bu durumu bir istisna fırlatmak yerine, metot içerisinde yönetebiliriz. Bu sayede gereksiz yere **try...catch** bloğu kullanmayız, kodun okunurluğunu artırır, çalışma zamanını optimize ederiz. Ancak bazı hallerde istisna yönetimi kaçınılmaz olabilir. Örneğin, bir veritabanı bağlantısı kurarken, bağlantının başarısız olması gibi durumlarda istisna yönetimi kullanmak gerekebilir. Bu tür durumlarda, istisna yönetimi kullanarak hataları daha etkili bir şekilde ele alabilir ve uygulamanın çökmesini önleyebiliriz.
 
-Ayrıca bir .net uygulamasında nasıl debug yapılır, tarayıcılarda **Developer Tools** kullanılarak ağ trafiği, request ve response bilgileri nasıl izlenir konularına değindik. Bunun yanında [HTTP statü kodlarının](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status) ne anlama geldiğine baktık.
+Ayrıca bir **.NET** uygulamasında nasıl debug yapılır, tarayıcılarda **Developer Tools** kullanılarak ağ trafiği ile request ve response bilgilerinin nasıl izlendiği konularına değindik. Bunun yanında [HTTP statü kodlarının](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status) ne anlama geldiğine baktık.
 
-Projede veritabanı olarak **MongoDb** kullanmaya karar vermiştik. Sisteme mongodb ortamını kurmak yerine local ortamda bir **[docker](https://github.com/docker)** image kullandık. Daha sonradan çalıştığımız çözüme yeni servisler ekleyebileceğimiz için mongodb servisini bir [docker-compose](./docker-compose.yml) dosyası içerisine aldık. Docker compose dosyasında tanımlı olan servisleri ayağa kaldırmak oldukça basit. Bunun için terminalden aşağıdaki komutu çalıştırmak yeterli.
+Projede veritabanı olarak **MongoDB** kullanmaya karar vermiştik. Sisteme MongoDB ortamını kurmak yerine yerel *(local)* ortamda bir **[Docker](https://github.com/docker)** image'ı kullandık. Daha sonra çalıştığımız çözüme yeni servisler ekleyebileceğimiz için MongoDB servisini bir [docker-compose](./docker-compose.yml) dosyası içine aldık. Docker Compose dosyasında tanımlı olan servisleri ayağa kaldırmak oldukça basit. Bunun için terminalden aşağıdaki komutu çalıştırmak yeterli.
 
 ```bash
 docker-compose up -d
 ```
 
-**Windows** ve **MacOS** gibi ortamlarda **[Docker Desktop](https://docs.docker.com/get-started/get-docker/)** uygulaması ile docker imajları ve container'lar görsel bir arayüz üzerinden de yönetilebilir. **Linux** platformunda ise daha çok terminal üzerinden yönetim yapılır. Bazı temel ve ihtiyaç duyabileceğimiz komutların kullanımına ait basit örnekleri aşağıda bulabilirsiniz. Diğer yandan [Docker resmi sitesinde](https://docs.docker.com/get-started/docker_cheatsheet.pdf) faydalı bir **CLI Cheat Sheet** bulunmaktadır.
+**Windows** ve **macOS** gibi ortamlarda **[Docker Desktop](https://docs.docker.com/get-started/get-docker/)** uygulaması ile Docker imajları ve container'lar görsel bir arayüz üzerinden de yönetilebilir. **Linux** platformunda ise daha çok terminal üzerinden yönetim yapılır. Bazı temel ve ihtiyaç duyabileceğimiz komutların kullanımına ait basit örnekleri aşağıda bulabilirsiniz. Diğer yandan [Docker resmî sitesinde](https://docs.docker.com/get-started/docker_cheatsheet.pdf) faydalı bir **CLI Cheat Sheet** bulunmaktadır.
 
 ```bash
 # Bir container başlatmak için
@@ -257,7 +257,7 @@ Prompt 2: Create a docker-compose file on root folder and add mongodb service.
 Prompt 3: This docker-compose should be run on different network because we have different docker environments.
 ```
 
-MongoDb erişimi sırasında aldığımız Authentication hatası nedeniyle şu prompt'u kullandık:
+MongoDB erişimi sırasında aldığımız Authentication hatası nedeniyle şu prompt'u kullandık:
 
 ```text
 Case: Runtime exception
@@ -278,11 +278,11 @@ Bknz: [Aman Dikkat](#aman-dikkat)
 
 Bir yazılım projesinin kalitesi birçok kritere bağlıdır. Kod kalitesi, mimari uyum, test edilebilirlik, okunabilirlik *(readability)*, bakım kolaylığı *(maintainability)*, izlenebilirlik *(monitoring)* gibi kriterler bu faktörlerden sadece birkaçıdır. Zaman içerisinde projelerin kalitesini korumak için birçok yazılım prensibi ve tasarım kalıbı ortaya çıkmıştır. **SOLID** ilkeleri, **Clean Code** prensipleri, **Design Patterns** gibi kavramlar bu alanda önemli yer tutar. Hatta yanlış bilinen doğruları temsil etmek için **Anti-pattern** kavramları da tanımlanmıştır. Tüm bu prensipler, kalitesi yüksek, sürdürülebilir ve genişletilebilir yazılımlar geliştirmek için birer rehber niteliğindedir. Ancak bunları benimsemek ve uygulamak her zaman kolay değildir. Projeye yeni başlayan bir geliştirici için bu kavramların hepsini aynı anda uygulamak oldukça güçtür. Bu nedenle, bu derste daha çok bağımlılık yönetimi ve kod kalitesini ölçmek için kullanılan araçlar üzerinde durulmaya çalışılmıştır.
 
-Dilden ve platformdan bağımsız olarak kod tarafında bileşenler arasındaki bağımlılıkları yönetmek için farklı teknikler kullanılabilir. Örneğin `C#` ve `Java` gibi dilleri göz önüne aldığımızda **Dependency Inversion** prensibini uygulamak için çoğunlukla arayüzlerden *(interface)* yararlanılır. Bu sayede bir bileşenin diğerine olan bağımlılığı soyutlanır *(abstraction)* ve test edilebilirlik, bakım kolaylığı *(maintainability)* gibi avantajlar kazanılır. **Inversion of Control (IoC)** konteynerları arayüz gibi enstrümanların tanımladığı soyutlamaları ele alarak çalışır. .Net bir süredir dahili DI mekanizmaları ile çalışmakta ve bileşen bağımlılıklarının yönetimini oldukça kolaylaştırmaktadır. Tabii bu konuların teferruatı ders müfredatımızın kapsamı dışındadır. Bu derste daha çok bir interface türünün nasıl tanımlandığı, implementasyonu ve çok ilkel bir *dependency inversion* örneğinde ele alınışı üzerinde örnek bir senaryo üzerinden durulmaya çalışılmıştır.
+Dilden ve platformdan bağımsız olarak kod tarafında bileşenler arasındaki bağımlılıkları yönetmek için farklı teknikler kullanılabilir. Örneğin `C#` ve `Java` gibi dilleri göz önüne aldığımızda **Dependency Inversion** prensibini uygulamak için çoğunlukla arayüzlerden *(interface)* yararlanılır. Bu sayede bir bileşenin diğerine olan bağımlılığı soyutlanır *(abstraction)* ve test edilebilirlik, bakım kolaylığı *(maintainability)* gibi avantajlar kazanılır. **Inversion of Control (IoC)** konteynerleri arayüz gibi enstrümanların tanımladığı soyutlamaları ele alarak çalışır. **.NET** bir süredir dahili DI mekanizmaları ile çalışmakta ve bileşen bağımlılıklarının yönetimini oldukça kolaylaştırmaktadır. Tabii bu konuların teferruatı ders müfredatımızın kapsamı dışındadır. Bu derste daha çok bir interface türünün nasıl tanımlandığı, implementasyonu ve çok ilkel bir *dependency inversion* örneğinde ele alınışı üzerinde, örnek bir senaryo üzerinden durulmaya çalışılmıştır.
 
-**Gamepedia** olarak tanımlanan projeye eklenen kodlar yine **docker-compose** üzerinden ayağa kaldırılmış **Sonarqube** servisi ile analiz edilmiş ve kod kalitesi ile ilgili geri bildirimler alınmıştır. Tüm bunlarla ilgili olarak teknik borç *(Technical Debt)* kavramı üzerinde durulmuştur.
+**Gamepedia** olarak tanımlanan projeye eklenen kodlar yine **docker-compose** üzerinden ayağa kaldırılmış **SonarQube** servisi ile analiz edilmiş ve kod kalitesi ile ilgili geri bildirimler alınmıştır. Tüm bunlarla ilgili olarak teknik borç *(Technical Debt)* kavramı üzerinde durulmuştur.
 
-Kullanılan **Sonarqube** komutları ise şöyle; *(token bilgisini kendi sisteminizdeki ile değiştirmeniz gerekecektir)*
+Kullanılan **SonarQube** komutları ise şöyle; *(token bilgisini kendi sisteminizdeki ile değiştirmeniz gerekecektir)*
 
 ```bash
 dotnet sonarscanner begin /k:"ai-gamepedia" /d:sonar.host.url="http://localhost:9005"  /d:sonar.token="sqp_TOKEN_BİLGİSİ"
@@ -302,11 +302,11 @@ Yazılım geliştirme süreçlerinde testin önemli bir yeri vardır. Yazılan k
 
 Pek tabii kodun belli standartlar üzerinde olmasını sağlamak, sorunlarını azaltmak için test metodolojileri tek başına bir ölçüt değildir. **Sonarqube** gibi araçlar ile teknik borcu ölçmek, **Code Review/Pull Request** süreçlerini işletmek veya **pair programming** gibi pratiklerle ilerlemek de kod kalitesini artırmak için başvurulabilecek diğer yöntemlerdir.
 
-Bu dersimizde diagramda görülen bazı temel kavramlara değinmeye çalıştık. Bu anlamda klasik test piramidinin başlıca katmanlarını konuştuk. [Şu klasörde yer alan örnek projede](./apps/lesson04) birim test *(Unit Test)* ve entegrasyon testlerini *(Integration Test)* basit birkaç örnekle deneyimledik. Referans olarak uçtan uca bir deneyim için **Hexagonal Architecture** yaklaşımını benimseyen şu örneği de inceleyebilirsiniz: [Hexagonal Architecture Example](https://github.com/buraksenyurt/HexagonalArchitecture_101)
+Bu dersimizde diyagramda görülen bazı temel kavramlara değinmeye çalıştık. Bu anlamda klasik test piramidinin başlıca katmanlarını konuştuk. [Şu klasörde yer alan örnek projede](./apps/lesson04) birim test *(Unit Test)* ve entegrasyon testlerini *(Integration Test)* basit birkaç örnekle deneyimledik. Referans olarak uçtan uca bir deneyim için **Hexagonal Architecture** yaklaşımını benimseyen şu örneği de inceleyebilirsiniz: [Hexagonal Architecture Example](https://github.com/buraksenyurt/HexagonalArchitecture_101)
 
 Ayrıca **Test Driven Development *(TDD)*** ya da *Red-Green-Blue* yaklaşımının temel prensiplerine baktık.
 
-.Net tabanlı çözümümüzde solution oluşturmak ve proje eklemek için kullanabileceğimiz komutlar:
+**.NET** tabanlı çözümümüzde solution oluşturmak ve proje eklemek için kullanabileceğimiz komutlar:
 
 ```bash
 dotnet new sln -n DeppoApp
@@ -357,7 +357,7 @@ Bu dersimizde yazılım mimarileri konusunda genel ve yüzeysel bilgiler vermeye
 
 Bu senaryoda bir bayi, yedek parça siparişi vermek istediğinde, sistemdeki stok durumunu kontrol eder. Eğer stokta yeterli miktarda ürün varsa, sipariş doğrudan işlenir. Ancak stokta yeterli ürün yoksa, sistem tedarikçi firmaya otomatik olarak bir sipariş oluşturur ve bayiyi bilgilendirir. Bu süreçte stok yönetimi, sipariş yönetimi ve tedarikçi entegrasyonu gibi farklı bileşenler devreye girebilir.
 
-Kurumsal çaptaki uygulamalar bilinen belli başlı yazılım mimarileri çerçevesinde tasarlanır. **Layered Architecture**, **Microservices Architecture**, **Event-Driven Architecture**, **Serverless Architecture** gibi farklı mimari yaklaşımlar vardır. Her bir mimari yaklaşımının avantajları ve dezavantajları bulunur. Örneğin, Layered Architecture basit ve anlaşılır bir yapıya sahipken, Microservices Architecture daha esnek ve ölçeklenebilir çözümler sunabilir ancak yönetimi, kurulumu farklı yetkinlikler gerektirebilir. Bu nedenle, projenin ihtiyaçlarına, ekibin yetkinliklerine ve diğer faktörlere bağlı olarak en uygun mimari yaklaşımını seçmek önemlidir. Karar verme noktasında **Richards & Ford'un, Fundamentals of Software Architecture** kitabı referans olarak kullanılabilir. Mimarileri dağıtık ve monolitik olmak üzere iki ana kategoriye ayıran kitaba göre farklı özellikler nezninde bu mimarilerin avantajları ve dezavantajları aşağıdaki tablo ile özetlenebilir.
+Kurumsal çaptaki uygulamalar bilinen belli başlı yazılım mimarileri çerçevesinde tasarlanır. **Layered Architecture**, **Microservices Architecture**, **Event-Driven Architecture**, **Serverless Architecture** gibi farklı mimari yaklaşımlar vardır. Her mimari yaklaşımın avantajları ve dezavantajları bulunur. Örneğin, Layered Architecture basit ve anlaşılır bir yapıya sahipken, Microservices Architecture daha esnek ve ölçeklenebilir çözümler sunabilir; ancak yönetimi ve kurulumu farklı yetkinlikler gerektirebilir. Bu nedenle, projenin ihtiyaçlarına, ekibin yetkinliklerine ve diğer faktörlere bağlı olarak en uygun mimari yaklaşımı seçmek önemlidir. Karar verme noktasında **Richards & Ford'un, Fundamentals of Software Architecture** kitabı referans olarak kullanılabilir. Mimarileri dağıtık ve monolitik olmak üzere iki ana kategoriye ayıran kitaba göre, farklı özellikler nezdinde bu mimarilerin avantajları ve dezavantajları aşağıdaki tablo ile özetlenebilir.
 
 | **Özellik** | **Layered** | **Pipeline** | **Mikro Kernel** | **Service Based** | **Event Driven** | **Space Based** | **Service Oriented** | **Microservices** |
 | --------- | --------- | ---------- | -------------- | --------------- | -------------- | ------------- | ------------------ | --------------- |
@@ -377,38 +377,38 @@ Kurumsal çaptaki uygulamalar bilinen belli başlı yazılım mimarileri çerçe
 
 Derste işlenen diğer konular:
 
-- **Github** sayfasında **Copilot Agent** kullanılarak lesson05 altında 3-tier mimarisine uygun örnek bir proje açılması istendi. Bu çalışmada copilot'ın ayrı bir **branch** açması, bu branch üstünden **code review** ve **pull request** işletilmesi gibi süreçler ele alındı. Bu senaryoda kullanılan prompt ise şu şekilde : *Create a new folder which name is lesson05 and than create a simple 3-tier based .net solution structure on this folder.*
+- **GitHub** sayfasında **Copilot Agent** kullanılarak lesson05 altında 3-tier mimarisine uygun örnek bir proje açılması istendi. Bu çalışmada Copilot'ın ayrı bir **branch** açması, bu branch üzerinden **code review** ve **pull request** işletilmesi gibi süreçler ele alındı. Bu senaryoda kullanılan prompt ise şu şekilde: *Create a new folder which name is lesson05 and than create a simple 3-tier based .net solution structure on this folder.*
 - **Copilot CLI** aracından aynı solution için verilen plan dahilinde **[Architecture Decision Record (ADR)](https://martinfowler.com/bliki/ArchitectureDecisionRecord.html)** dokümanlarının oluşturulması istendi. **ADR**'ların ne olduğu, nasıl yazılması gerektiği ve neden önemli olduklarından bahsedildi. Pek tabii ajan tarafından oluşturulan dokümanların mutlaka gözden geçirilmesi, gerektiğinde müdahale edilmesi ve kararların mimari prensiplere uygun şekilde alınması gerektiğini bir kez daha vurgulayalım. Komut satırı aracı üzerinden kullanılan prompt ise şöyle:  */plan Analyse .net solution on lesson05. Create required `Architecture Decision Records` documents according the applied structure.*
 
-> ADR dokümanları ile ilgili şunları söyleyebiliriz. Geri dönülmesi zor olan karalar ADR'a girer. Örneğin PostgreSQL'den başka bir bir veritabanına geçmek kolay değil ve ciddi bir efor gerektiriyorsa bu bir risk teşkil eder ve bu nedenle bu karar ADR'a girmelidir. Ancak bir logging framework'ünden başka bir logging framework'üne geçmek çok kolay ise bu karar ADR'a girmeyebilir. ADR'ların amacı, mimari kararların neden alındığını, hangi alternatiflerin değerlendirildiğini ve bu kararların ne gibi sonuçlara yol açabileceğini belgelemektir. Bu sayede, gelecekte benzer kararlar alınırken geçmişteki deneyimlerden yararlanılabilir ve aynı hataların tekrarlanması önlenebilir.
+> ADR dokümanları ile ilgili şunları söyleyebiliriz. Geri dönülmesi zor olan kararlar ADR'a girer. Örneğin PostgreSQL'den başka bir veritabanına geçmek kolay değil ve ciddi bir efor gerektiriyorsa bu bir risk teşkil eder ve bu nedenle bu karar ADR'a girmelidir. Ancak bir logging framework'ünden başka bir logging framework'üne geçmek çok kolaysa bu karar ADR'a girmeyebilir. ADR'ların amacı, mimari kararların neden alındığını, hangi alternatiflerin değerlendirildiğini ve bu kararların ne gibi sonuçlara yol açabileceğini belgelemektir. Bu sayede, gelecekte benzer kararlar alınırken geçmişteki deneyimlerden yararlanılabilir ve aynı hataların tekrarlanması önlenebilir.
 
 ## Gün 06 - Dağıtık Sistemler Hakkında Temel Bilgiler ve Basit Bir Senaryo Üzerinden İnceleme
 
 ## Gün 07 - RAG (Retrieval Augmented Generation) Yaklaşımı I
 
-Yapay zeka tabanlı süreçlerde klasik akış aşağıdaki şekilde görüldüğü gibidir. Kullanıcılar bir **prompt** hazırlar ve yapay zeka modeline gönderirler. Model, verilen prompt'a göre bir çıktı üretir ve bu çıktı kullanıcıya geri döner. Günümüz yapay zeka modellerinin çoğu ön tarafta bir arabirim sağlar. Bu basit bir chat penceresi olabileceği gibi geliştirme ortamındaki bir eklenti de olabilir. Tüm bu araçlar kullanıcı ve yapay zeka dil modeli arasındaki oturum *(session)* sırasında sürece farklı materyalleri eklenmesine de olanak tanır. **Context** olarak da ifade edebileceğimiz bu bölümde yardımcı belgeler prompt ile birlikte dil modeline ulaşır.
+Yapay zeka tabanlı süreçlerde klasik akış aşağıdaki şekilde görüldüğü gibidir. Kullanıcılar bir **prompt** hazırlar ve yapay zeka modeline gönderirler. Model, verilen prompt'a göre bir çıktı üretir ve bu çıktı kullanıcıya geri döner. Günümüz yapay zeka modellerinin çoğu ön tarafta bir arayüz sağlar. Bu, basit bir chat penceresi olabileceği gibi geliştirme ortamındaki bir eklenti de olabilir. Tüm bu araçlar, kullanıcı ve yapay zeka dil modeli arasındaki oturum *(session)* sırasında sürece farklı materyallerin eklenmesine de olanak tanır. **Context** olarak da ifade edebileceğimiz bu bölümde yardımcı belgeler prompt ile birlikte dil modeline ulaşır.
 
 ![RAG 00](./images/day07_00.png)
 
-Ne var ki genel dil modelleri önceden eğitilmiş verilerden ya da sağladığı araç desteği ile internet aramalarından yola çıkarak muhakeme *(reasoning)* sürecine girerler. Dil modelinin belli bir çerçevede çalışmasını istediğimiz durumlarda **context** içeriğini etkili bir şekilde hazırlamak da önemlidir. Kullanıcının isteğine konuyla ilgili ne kadar parça varsa dahil olması çıktının kalitesini artırabilir ve modelin daha iyi muhakeme yapmasına olanak tanır. Dil modellerinin deterministik olduğu ifade edilse de halisnasyon göme ve bağlamı unutma eğilimleri vardır. Dolayısıyla aynı prompt için aynı dil modeli üzerinden farklı şekilde çıktılar üretilebilir. Sonuç aynı olsa da gidiş yolu ve detayda farklılaşmalar görülebilir. Bu nedenle bazı senaryolarda **RAG *(Retrieval Augmented Generation)*** yaklaşımını benimsemek daha iyi sonuçlar verebilir. **RAG** tekniğinde dil modeline verilen prompt'a ilaveten, modelin muhakeme yaparken kullanabileceği bir bilgi deposu da sağlanır. Bu bilgi deposu, modelin daha doğru ve tutarlı çıktılar üretmesine yardımcı olur. RAG yaklaşımında, modelin bilgi deposundan ilgili parçaları çekerek muhakeme sürecine dahil etmesi beklenir. Bu sayede, modelin deterministik olmayan doğası nedeniyle ortaya çıkabilecek tutarsızlıkların önüne geçilebilir ve daha kaliteli çıktılar elde edilebilir. Aşağıdaki şekilde bu kurgu basitçe ele alınmaya çalışılmaktadır.
+Ne var ki genel dil modelleri önceden eğitilmiş verilerden ya da sağladığı araç desteği ile internet aramalarından yola çıkarak muhakeme *(reasoning)* sürecine girerler. Dil modelinin belli bir çerçevede çalışmasını istediğimiz durumlarda **context** içeriğini etkili bir şekilde hazırlamak da önemlidir. Kullanıcının isteğine konuyla ilgili ne kadar parça varsa dahil edilmesi, çıktının kalitesini artırabilir ve modelin daha iyi muhakeme yapmasına olanak tanır. Dil modellerinin deterministik olduğu ifade edilse de halüsinasyon görme ve bağlamı unutma eğilimleri vardır. Dolayısıyla aynı prompt için aynı dil modeli üzerinden farklı çıktılar üretilebilir. Sonuç aynı olsa da gidiş yolu ve detayda farklılaşmalar görülebilir. Bu nedenle bazı senaryolarda **RAG *(Retrieval Augmented Generation)*** yaklaşımını benimsemek daha iyi sonuçlar verebilir. **RAG** tekniğinde dil modeline verilen prompt'a ilaveten, modelin muhakeme yaparken kullanabileceği bir bilgi deposu da sağlanır. Bu bilgi deposu, modelin daha doğru ve tutarlı çıktılar üretmesine yardımcı olur. RAG yaklaşımında modelin, bilgi deposundan ilgili parçaları çekerek muhakeme sürecine dahil etmesi beklenir. Bu sayede, modelin deterministik olmayan doğası nedeniyle ortaya çıkabilecek tutarsızlıkların önüne geçilebilir ve daha kaliteli çıktılar elde edilebilir. Aşağıdaki şekilde bu kurgu basitçe ele alınmaktadır.
 
 ![RAG 01](./images/day07_01.png)
 
-Bu yaklaşımda modelin kullanabileceği veri setinin vektörel ifade edilişi çok önemlidir. Kavramlar arası yakınlıkların ölçümü için matematiği doğasından yararlanılır. Herhangi bir paragrafın, bir terimin, kod tabanındaki semantik bir ifadenin ilişkili olduğu diğer parçaların tespitinde embedding araçlarından yararlanılarak mesafeler ölçümlenir. Modelin muhakeme sürecine dahil ettiği parçaların kalitesi, modelin ürettiği çıktının kalitesini doğrudan etkiler. Bu nedenle, bilgi deposunun iyi hazırlanması ve modelin bu bilgi deposundan doğru parçaları çekebilmesi için etkili bir vektörel ifade yöntemi kullanılması önemlidir. Bu da embedding modeline, seçilen parçalama *(chunking)* stratejisine bağlıdır.
+Bu yaklaşımda modelin kullanabileceği veri setinin vektörel olarak ifade edilişi çok önemlidir. Kavramlar arası yakınlıkların ölçümü için matematiğin doğasından yararlanılır. Herhangi bir paragrafın, bir terimin, kod tabanındaki semantik bir ifadenin ilişkili olduğu diğer parçaların tespitinde embedding araçlarından yararlanılarak mesafeler ölçülür. Modelin muhakeme sürecine dahil ettiği parçaların kalitesi, modelin ürettiği çıktının kalitesini doğrudan etkiler. Bu nedenle, bilgi deposunun iyi hazırlanması ve modelin bu bilgi deposundan doğru parçaları çekebilmesi için etkili bir vektörel ifade yöntemi kullanılması önemlidir. Bu da embedding modeline ve seçilen parçalama *(chunking)* stratejisine bağlıdır.
 
-> Mesafeler genellikle **Kosinüs Benzerliği *(Cosine Similarity)*** veya **Öklid Mesafesi *(Euclidean Distance)*** gibi matematik yöntemlerle ölçülür ve vektörler arasındaki benzerlik veya uzaklık hesaplanır. Bu sayede, modelin bilgi deposundan çektiği parçaların prompt ile ne kadar ilişkili olduğu da değerlendirilebilir. Kosinüs benzerliği, iki vektör arasındaki açıyı ölçerken, Öklid mesafesi ise iki vektör arasındaki düz çizgi mesafesini ölçer. Hangi yöntemin kullanılacağı, uygulamanın ihtiyaçlarına ve veri setinin özelliklerine bağlı olarak değişebilir.
+> Mesafeler genellikle **Kosinüs Benzerliği *(Cosine Similarity)*** veya **Öklid Mesafesi *(Euclidean Distance)*** gibi matematik yöntemlerle ölçülür ve vektörler arasındaki benzerlik veya uzaklık hesaplanır. Bu sayede, modelin bilgi deposundan çektiği parçaların prompt ile ne kadar ilişkili olduğu da değerlendirilebilir. Kosinüs benzerliği, iki vektör arasındaki açıyı ölçerken, Öklid mesafesi ise iki vektör arasındaki düz çizgi mesafesini ölçer. Hangi yöntemin kullanılacağı, uygulamanın ihtiyaçlarına ve veri setinin özelliklerine bağlı olarak değişebilir. Öklid uzaklığı *(Euclidean Distance)* iki nokta arasındaki fiziksel mesafeyi *(doğrudan uzaklığı)* ölçerken ve metnin uzunluğundan *(vektörün büyüklüğünden)* olumsuz etkilenirken; Kosinüs Benzerliği vektörlerin uzaydaki açısına *(yönüne)* bakar. Bu sayede biri çok uzun diğeri çok kısa ama aynı konudan bahseden iki metni **"birbirine çok benzer"** olarak doğru bir şekilde eşleştirebilir.
 
-Derste işlediğimiz örnek senaryoda **python** ile bir doküman setinin parçalanıp, vektörel olarak ifade edilmesi, bu parçaların bir veritabanına kaydedilmesi adımı ele alınmıştır. **Text embedding** için **LM Studio** üzerinden host edilen **text-embedding-embeddinggemma-300m** kullanılmıştır. **Vektör** veritabanı olarak da **rust** ile yazılmış olan **Qdrant** tercih edilmiştir. Parçalama stratejisi olarak da basitçe karakter sayısına göre bölme tekniği benimsenmiştir. Parçalama stratejisi olarak daha sofistike yöntemler de tercih edilebilir. Örneğin, doğal dil işleme teknikleri kullanarak cümle veya paragraf bazında bölme yapılabilir. Kod parçalarının bölünmesinde ise semantik analiz yaparak fonksiyon, sınıf veya modül bazında bölme yapılabilir. Parçalama stratejisi, modelin bilgi deposundan çektiği parçaların kalitesini etkileyebilir. Dolayısıyla parçalama stratejisinin dikkatli bir şekilde seçilmesi ve uygulanması önemlidir.
+Derste işlediğimiz örnek senaryoda **Python** ile bir doküman setinin parçalanıp vektörel olarak ifade edilmesi, bu parçaların bir veritabanına kaydedilmesi adımı ele alınmıştır. **Text embedding** için **LM Studio** üzerinden host edilen **text-embedding-embeddinggemma-300m** kullanılmıştır. **Vektör** veritabanı olarak da **Rust** ile yazılmış olan **Qdrant** tercih edilmiştir. Parçalama stratejisi olarak da basitçe karakter sayısına göre bölme tekniği benimsenmiştir. Daha sofistike parçalama stratejileri de tercih edilebilir. Örneğin, doğal dil işleme teknikleri kullanarak cümle veya paragraf bazında bölme yapılabilir. Kod parçalarının bölünmesinde ise semantik analiz yaparak fonksiyon, sınıf veya modül bazında bölme yapılabilir. Parçalama stratejisi, modelin bilgi deposundan çektiği parçaların kalitesini etkileyebilir. Dolayısıyla parçalama stratejisinin dikkatli bir şekilde seçilmesi ve uygulanması önemlidir.
 
 Bir vektör veritabanı hazırlandıktan sonra kullanıcılardan gelen prompt'lar da bir işleme tabi tutulur. Yani **prompt** için de bir vektör hesaplaması yapılır ve bu vektörün bilgi deposundaki diğer vektörlerle olan mesafeleri ölçülür. En yakın olan parçalar modele gitmeden önce sistem prompt'a dahil edilir. Modelin bu parçaları muhakeme sürecine dahil ederek daha kaliteli çıktılar üretmesi beklenir. Elbette sistem prompt'larının gönderilmesi sırasında alınması gereken tedbirler de olabilir. Bilgi deposundan çekilen parçaların kalitesini ölçmek, hassas bilgilerin istemeden de olsa gönderilmesini engellemek, modelin bu parçaları nasıl kullandığını izlemek gibi önlemler alınabilir *(Guardrails)*. Bu sayede, RAG yaklaşımının avantajlarından yararlanırken ortaya çıkabilecek risklerin de önüne geçilebilir.
 
 > Bir modelin ürettiği çıktının firmanın kurumsal politikalarına uygunluğunu denetlemek ve veri sızıntılarını önlemek için [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails) gibi güvenlik katmanları ele alınmalıdır.
 
-Metinlerin birbirleri ile ilişkileri konusu aşağıdaki şekildeki gibi ele alınabilir. Ana kelimelerimiz **tuz** ve **biber** olarak belirlenmiştir. İlk akla gelen ilişkiler yemeklerle ve doğal olarak baharatlarla ilgilidir. Ancak coğrafi olarak tuz kelimesinin geçtiği **Tuz Gölü** ya da rahmetli **Barış Manço**'nun *domates, biber, patlıcan* şarkısında geçen biber kelimesi ve hatta **hayatın tuzu biberi** ifadesi gibi farklı ilişkiler de ortaya çıkabilir. Modelin sorulan soruya göre doğru ilişkileri kurabilmesine yardımcı olabilecek düzenekler açısından bakıldığında destekleyici bilgi depolarının kalitesi önemli hale gelir.
+Metinlerin birbirleriyle ilişkileri konusu aşağıdaki şekilde ele alınabilir. Ana kelimelerimiz **tuz** ve **biber** olarak belirlenmiştir. İlk akla gelen ilişkiler yemeklerle ve doğal olarak baharatlarla ilgilidir. Ancak coğrafi olarak tuz kelimesinin geçtiği **Tuz Gölü** ya da rahmetli **Barış Manço**'nun *Domates, Biber, Patlıcan* şarkısında geçen biber kelimesi ve hatta **hayatın tuzu biberi** ifadesi gibi farklı ilişkiler de ortaya çıkabilir. Modelin sorulan soruya göre doğru ilişkileri kurabilmesine yardımcı olabilecek düzenekler açısından bakıldığında, destekleyici bilgi depolarının kalitesi önemli hale gelir.
 
 ![RAG 02](./images/day07_02.png)
 
-**RAG** burada özetlediğimiz kadarıyla iyi bir yaklaşım olsa da handikapları da vardır. En büyük sorunlardan birisi vektörel olarak yakın bulunan parçaların her zaman anlamsal olarak doğru cevabı içermemesidir. Bu nedenle vektör aramasından dönen sonuçların modele gitmeden önce belki bir re-ranking ile tekrardan sıralanması gerekebilir.
+**RAG** burada özetlediğimiz kadarıyla iyi bir yaklaşım olsa da handikapları da vardır. En büyük sorunlardan biri, vektörel olarak yakın bulunan parçaların her zaman anlamsal olarak doğru cevabı içermemesidir. Bu nedenle vektör aramasından dönen sonuçların modele gitmeden önce belki bir re-ranking ile tekrar sıralanması gerekebilir.
 
 ### Bilgi Sağlama ve Bağlam (Context) Yönetimi
 
@@ -423,7 +423,7 @@ Yapay zeka dil modelleri ile çalışırken Context, Cache-Augmented Generation,
 | **Veri Güncelliği** | O an prompt'a dahil edilen veri kadar günceldir. | Önbellek *(Cache)* yenilenene kadar statik kalır, anlık olarak değişmez. | Vektör veritabanına yeni veri eklendikçe güncellenebilir. | Tamamen eş zamanlı ve canlıdır. |
 | **Kullanım Senaryoları** | Kısa bir dokümanı özetlemek, birkaç sayfalık belgeyi incelemek, büyük olmayan kod parçalarını analiz etmek. | Çok sık değişmeyen büyük kurumsal yönetmelikler veya devasa statik kod tabanları. | Sürekli büyüyen ve değişen şirket analiz dokümanları, wiki'leri, geçmiş ticket aramaları. | Canlı veritabanından stok bilgisi çekme, GitHub'a kod gönderme, dosya I/O operasyonları |
 
-Derste ele aldığımız uygulamayı **Claude Sonnet 4.6** modeline, **vs code** arabiriminden aşağıdaki prompt'u vererek yazdırdık.
+Derste ele aldığımız uygulamayı **Claude Sonnet 4.6** modeline, **VS Code** arayüzünden aşağıdaki prompt'u vererek yazdırdık.
 
 ```text
 Create a new terminal application written in Python. The purpose of this app is; Analyse documents, convert them into vectors via text embedding and store them into QDrant Db.
@@ -435,7 +435,7 @@ Create a new terminal application written in Python. The purpose of this app is;
 - Measure the calculation time and give a summary result to user.
 ```
 
-> Vektör veritabanını ve içerdiği koleksiyonları incelemek için `http://localhost:6333/dashboard/#/collections` adresine gidilebilir. Burada koleksiyonun içeriği, her bir parçanın hangi dokümana ait olduğu, vektörlerin boyutları vb bilgilere erişilebilir. Ayrıca görsel graph diagramları ile parçaların birbirleri ile olan ilişkileri de incelenebilir.
+> Vektör veritabanını ve içerdiği koleksiyonları incelemek için `http://localhost:6333/dashboard/#/collections` adresine gidilebilir. Burada koleksiyonun içeriği, her bir parçanın hangi dokümana ait olduğu, vektörlerin boyutları vb. bilgilere erişilebilir. Ayrıca görsel graph diagramları ile parçaların birbirleriyle olan ilişkileri de incelenebilir.
 
 ## Gün 08 - RAG (Retrieval Augmented Generation) Yaklaşımı II
 
@@ -452,9 +452,9 @@ Create a new terminal application written in Python. The purpose of this app is;
 - Yapay zeka botları ile çalışırken şifre, gizli anahtar, kişisel veri gibi hassas bilgileri prompt'lara dahil etmekten kaçınmalısınız. Bu tür bilgilerin istemeden de olsa loglanması veya üçüncü taraflarla paylaşılması ciddi güvenlik risklerine yol açabilir. Lisanslı modeller kullanırken de mutlaka sözleşme şartlarını dikkatlice inceleyin ve gizlilik politikalarını anlayın.
 - Yapay zeka araçlarının ürettiği kodların güvenlik açıkları içermediğinden emin olmak için kodu dikkatlice inceleyin ve gerekirse güvenlik tarama araçları kullanarak analiz edin. Özellikle web uygulamaları geliştirirken SQL injection, XSS gibi yaygın güvenlik açıklarına karşı dikkatli olmak gerekiyor.
 - Kodun yüksek kalitede olduğunu garanti etmek için statik kod tarama araçlarından yararlanın. Örneğin, .NET projeleri için **SonarQube**, **JavaScript** projeleri için **ESLint** gibi araçlar ile kod kalitesini sıklıkla ölçün. Code Review ve Pull Request gibi süreçleri atlamayın, insan denetimi her zaman önemlidir.
-- Kendi yapabileceğimiz çok basit bir kod parçasını yapay zeka aracına yazdırmak yerine, yapay zeka araçlarını daha karmaşık, zaman alan, aynı görevin sürekli tekrar ettiği işler için kullanmak daha verimli olabilir. Örneğin bir **mongodb docker** imaj tanımını resmi sitesinden alıp projeye uygulamayı yapay zeka aracına yazdırmak yerine, ayağa kaldırdığımız bir imajın çalışması ile ilgili içinden çıkamadığımız bir hatayı çözmek için yapay zeka aracından yardım almak daha verimli olabilir.
+- Kendi yapabileceğimiz çok basit bir kod parçasını yapay zeka aracına yazdırmak yerine, yapay zeka araçlarını daha karmaşık, zaman alan, aynı görevin sürekli tekrar ettiği işler için kullanmak daha verimli olabilir. Örneğin bir **MongoDB Docker** imaj tanımını resmî sitesinden alıp projeye uygulamayı yapay zeka aracına yazdırmak yerine, ayağa kaldırdığımız bir imajın çalışması ile ilgili içinden çıkamadığımız bir hatayı çözmek için yapay zeka aracından yardım almak daha verimli olabilir.
 - İyi **prompt**'lar vermek, yapay zeka araçlarından kaliteli çıktılar almak için kritik öneme sahiptir. Prompt'larınızda açık ve net olun, gerekli detayları sağlayın ve mümkünse örnekler verin. Çıktıları mutlaka dikkatlice inceleyin, ispat arayın, doğruluğundan emin olun. Yapay zeka araçlarının ürettiği çıktıları denetleyen kodlar da geliştirebilirsiniz ;-)
-- Yapay zeka araçlarının ürettiği konfigurasyon içeriklerinde şifre, gizli anahtar gibi bilgiler varsa klasik metodolojide olduğu gibi bunları daha güvenli ortamlarda *(Vault, Azure Key Vault, AWS Secrets Manager gibi)* saklamayı tercih edin. Yapay zeka araçlarının ürettiği kodlarda bu tür bilgilerin hardcoded olarak yer almamasına da ayrıca dikkat edin.
+- Yapay zeka araçlarının ürettiği konfigürasyon içeriklerinde şifre, gizli anahtar gibi bilgiler varsa klasik metodolojide olduğu gibi bunları daha güvenli ortamlarda *(Vault, Azure Key Vault, AWS Secrets Manager gibi)* saklamayı tercih edin. Yapay zeka araçlarının ürettiği kodlarda bu tür bilgilerin hardcoded olarak yer almamasına da ayrıca dikkat edin.
 
 ## Ders Geçme Prosedürü
 
@@ -480,7 +480,7 @@ Final sınavında dönem boyunca işlenen konularla ilgili sorular yer alacaktı
 
 ## Uygulama Önerileri
 
-Bu repodaki birçok doküman veya içerik yeni uygulamalar yazmak için bir başlangıç noktası olabilir. Bu fikirleri hakim olduğunuz programlama dili ve geliştirme platformları ve yapay zeka araçlarıyla birleştirerek kendi projelerinizi geliştirebilirsiniz. **Vibe Coding** pratiklerinden ziyade **Agentic Engineering** yaklaşımını benimseyerek hareket etmek daha doğru olur. Yani yapay zeka araçlarını birer yardımcı olarak kullanmak ve onların ürettiği çıktıları dikkatlice inceleyip gerektiğinde müdahale ederek ilerlemek daha verimli olacaktır. Bu süreçte kod güvenilirliği, teknik borç ve proje mimarisi gibi konulara dikkat etmek önemlidir.
+Bu repodaki birçok doküman veya içerik, yeni uygulamalar yazmak için bir başlangıç noktası olabilir. Bu fikirleri hâkim olduğunuz programlama dili, geliştirme platformları ve yapay zeka araçlarıyla birleştirerek kendi projelerinizi geliştirebilirsiniz. **Vibe Coding** pratiklerinden ziyade **Agentic Engineering** yaklaşımını benimseyerek hareket etmek daha doğru olur. Yani yapay zeka araçlarını birer yardımcı olarak kullanmak ve onların ürettiği çıktıları dikkatlice inceleyip gerektiğinde müdahale ederek ilerlemek daha verimli olacaktır. Bu süreçte kod güvenilirliği, teknik borç ve proje mimarisi gibi konulara dikkat etmek önemlidir.
 
 | Proje Fikri | Açıklama |
 | --- | --- |
