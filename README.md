@@ -523,6 +523,19 @@ Bir MCP sunucusunu geliştirme ortamlarında, CLI araçlarında veya diğer uygu
 
 > .NET platformunda bir MCP sunucusu geliştirmekle ilgili [şu yazıya](https://buraksenyurt.github.io/2026/03/07/microsoft-dotnet-platformunda-bir-mcp-server-yazmak/) bakılabilir.
 
+**MCP** standardı güncel olarak iki tip veri taşıma *(Transport)* mekanizmasını destekler: Standard Input/Output *(Stdio)* ve SSE *(Server-Sent Events)*. 
+
+- **Stdio:**
+  - **Çalışma şekli;** İstemci taraf *(Vs Code, Copilot CLI vb.)* ile MCP sunucusu arasında veri alışverişi, standart giriş/çıkış akışları üzerinden gerçekleşir. MCP sunucusu arka planda bir alt process olarak çalışır ve veri iletimi JSON-RPC mesajları ile gerçekleşir.
+  - **Avantajları;** Kurulumu ve entegrasyonu genellikle daha basittir, özellikle yerel geliştirme ortamlarında hızlıca test etmek için idealdir, ağ yapılandırması gerektirmez, port çakışması olmaz veya güvenlik duvarı sorunları yaşanmaz.
+  - **Dezavantajları;** Sadece yerel kullanım için uygundur, uzak sunucularla iletişim kurmak mümkün değildir, ölçeklenebilirlik sınırlıdır, yüksek trafik altında performans sorunları yaşanabilir.
+  - **Kullanım senaryoları;** Sunucu ve istemcinin aynı makinede çalıştığı durumlar, hızlı prototipleme ve geliştirme süreçleri, basit araç entegrasyonları.
+- **SSE (Server-Sent Events):**
+  - **Çalışma şekli;** MCP sunucusu bir Web API olarak çalışır. İstemci sunucuya HTTP üzerinden bir bağlantı açar ve sunucu, SSE protokolünü kullanarak istemciye asenkron mesajlar gönderir.
+  - **Avantajları;** Ağ üzerinden çalışır. Dil modeli nerede olursa olsun internet veya intranet üzerinden bağlanabilir.
+  - **Dezavantajları;** Kurulumu ve entegrasyonu daha karmaşıktır. Araya bir ağ katmanı girdiğinden gecikmeler *(latency)* olabilir ve daha da önemlisi authentication/authorization eklemek gerejir, çünkü aksi halde herhangi biri sunucuya bağlanıp araçları kullanabilir.
+  - **Kullanım senaryoları;** Internet veya intranet üzerinden merkezi bir MCP sunucusuna ihtiyaç duyulan durumlar, birden fazla istemcinin aynı MCP sunucusunu kullanacağı senaryolar.
+
 ## Gün 10 - MCP Server'lar ile Çalışmak
 
 ## Gün 11 - Spec Driven Development (SDD) Yaklaşımı ile Geliştirme Yapmak
