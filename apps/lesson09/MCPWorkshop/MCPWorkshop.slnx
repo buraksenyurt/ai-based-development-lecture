@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="BenchmarkService/BenchmarkService.csproj" />
-  <Project Path="McpServer/McpServer.csproj" Id="3149938a-982c-4643-a610-14e6c11ee19a" />
+  <Project Path="McpServerSSE/McpServerSSE.csproj" />
+  <Project Path="McpServerStdio/McpServerStdio.csproj" />
 </Solution>

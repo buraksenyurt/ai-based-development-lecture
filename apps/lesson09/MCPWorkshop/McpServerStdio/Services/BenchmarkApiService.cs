@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Json;
 
-namespace McpServer.Services;
+namespace McpServerStdio.Services;
 
 public class BenchmarkApiService(IHttpClientFactory httpClientFactory, string baseUrl)
 {

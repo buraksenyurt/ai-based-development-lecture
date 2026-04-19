@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ModelContextProtocol.Protocol;
 
 /*
     Örnek promptlar:
@@ -28,8 +29,20 @@ builder.Services.AddSingleton(sp =>
 });
 
 builder.Services
-    .AddMcpServer()
+    .AddMcpServer(options=>{
+        options.ServerInfo = new Implementation
+        {
+            Name = "BenchmarkServer_Stdio",
+            Version = "1.0.0"
+        };
+    })
     .WithStdioServerTransport()
     .WithToolsFromAssembly();
 
-await builder.Build().RunAsync();
+var app = builder.Build();
+
+Console.Error.WriteLine("[MCP SERVER INFO] BenchmarkServer_Stdio başlatılıyor...");
+Console.Error.WriteLine($"[MCP SERVER INFO] Hedef API: {apiUrl}");
+Console.Error.WriteLine("[MCP SERVER INFO] Stdio üzerinden LLM istemcisi bekleniyor...");
+
+await app.RunAsync();

@@ -1,8 +1,8 @@
-﻿using McpServer.Services;
+﻿using McpServerStdio.Services;
 using ModelContextProtocol.Server;
 using System.ComponentModel;
 
-namespace McpServer.Tools;
+namespace McpServerStdio.Tools;
 
 [McpServerToolType]
 public class BenchmarkTools
