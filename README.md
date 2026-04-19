@@ -498,9 +498,30 @@ python main.py --model "qwen/qwen3-14bs"
 
 ## Gün 09 - MCP (Model Context Protocol) Kavramı ve MCP Server Yazılması
 
-GELECEK BÖLÜM...
+Klasik bir Web API hizmetini göz önüne alalım. Bu senaryoda bir istemcinin JSON, XML gibi standart formatlarda veri gönderip alması söz konusudur. İstemci *(client)* ve sunucu *(server)* arasındaki iletişim genellikle HTTP protokolü üzerinden gerçekleşir. İstemciler sunucu üzerindeki belirli endpoint'lere istek gönderir. REST mimarisi açısından bakıldığında bu endpoint'ler genellikle kaynaklara karşılık gelir ve HTTP metodlarıyla *(GET, POST, PUT, DELETE gibi)* işlem yapılır. Bu süreçte istemciler genellikle sunucunun sunduğu API'leri keşfetmek ve kullanmak için dokümantasyonlara başvururlar.
+
+Yapay zeka asistanları da benzer bir şekilde harici araçlara erişmek istediklerinde, bu araçların nasıl kullanılacağını anlamak için keşifte bulunmak durumundadırlar. Bu keşifle hangi araçları kullanabileceklerini ve bu araçlarla nasıl etkileşim kurabileceklerini öğrenirler. İşte bu noktada **Model Context Protocol (MCP)** devreye girmektedir.
 
 ![MCP High Level Diagram](./images/day09_00.png)
+
+**MCP (Model Context Protocol)**, yapay zeka araçlarına standart bir yolla harici araç *(tool)* desteği sunmak amacıyla **Anthropic** tarafından geliştirilmiş bir protokoldür. Bu protokol sayesinde yapay zeka asistanları, önceden tanımlanmış araç setlerini otomatik olarak keşfedebilir ve belirli bir çerçeve içerisinde çeşitli işlemleri *(örneğin arka plandaki REST API'leri çağırarak veri okuma veya tetikleme işlemleri)* gerçekleştirebilir. Bu yapı sayesinde yapay zeka modelleri sadece kendi öğretildikleri durağan veri setlerine bağlı kalmaktan kurtulur; ihtiyaç duydukları güncel ve kaliteli bağlama *(context)* MCP sunucuları üzerinden güvenle erişebilirler.
+
+Genel mimaride üç temel bileşen yer alır: **MCP Host** *(VS Code AI asistanları, GitHub CLI vb. gibi uygulamalar)*, **MCP Client** *(bağlantı ve bağlam yönetimini üstlenen istemci)* ve **MCP Server** *(istemcilere araç seti sunan servis)*.
+
+MCP sunucuları ne tür senaryolarda kullanılabilir?
+
+- Canlı veritabanlarından bilgi çekme: Örneğin, bir e-ticaret sitesinin stok durumunu gerçek zamanlı olarak sorgulamak, yorumlatmak, öngörü almak.
+- Harici API'lerle entegrasyon: Örneğin hisse senedi işlemleri yapan bir uygulamada, gerçek zamanlı borsa verilerini çekmek veya bir ödeme sağlayıcısının API'sini kullanarak ödeme işlemi gerçekleştirmek.
+- Bir dosya sisteminde belirli bir dosyanın içeriğini okumak veya yazmak.
+- Diğer araçlarla entegrasyon: Örneğin, bir CI/CD aracını tetikleyerek bir dağıtım *(deployment)* sürecini başlatmak.
+
+gibi pek çok senaryoda **MCP** sunucuları devreye girebilir. Burada kafa karıştırıcı nokta, söz konusu operasyonları MCP arkasındaki araçlarla doğrudan iletişime geçerek yapabiliyor olmamızdır. Aradaki fark şudur; **MCP** sunucuları, yapay zeka asistanlarının bu araçları keşfetmesine ve kullanmasına olanak tanır. Böylece bir yapay zeka asistanının API'nin izin verdiği çerçevede hareket edebilmesi ve dolayısıyla daha kontrollü bir bağlam üzerinden işlem yapması sağlanabilir.
+
+Bir MCP sunucusunu geliştirme ortamlarında, CLI araçlarında veya diğer uygulamalarda kullanmak mümkündür. Klasik olarak girilen bir prompt, içeriğine göre uygun MCP sunucusu ile eşleştirilir ve bu sunucu üzerinden gerekli araçlar çağrılarak işlem gerçekleştirilir *(VS Code arabirimindeki Extensions sekmesinde `@mcp` etiketiyle arama yaparak MCP birçok mcp sunucusu keşfedilebilir)*.
+
+.NET platformunda bir MCP sunucusu geliştirmek için `ModelContextProtocol` NuGet paketi oldukça pratik bir kullanım sunar. Sınıflara `[McpServerToolType]` ve metotlara `[McpServerTool]` nitelikleri *(attributes)* eklenerek fonksiyonlar, parametre açıklamalarıyla birlikte yapay zekaya tanıtılır. Hazırlanan bu sunucu `mcp.json` dosyası üzerinden VS Code gibi editörlere entegre edildiğinde, Copilot gibi bir asistan kullanıcının doğal dil sorgularını yorumlayıp gerekli arka plan araçlarını uygun argümanlarla kolayca çalıştırabilir.
+
+> .NET platformunda bir MCP sunucusu geliştirmekle ilgili [şu yazıya](https://buraksenyurt.github.io/2026/03/07/microsoft-dotnet-platformunda-bir-mcp-server-yazmak/) bakılabilir.
 
 ## Gün 10 - MCP Server'lar ile Çalışmak
 
