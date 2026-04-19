@@ -6,6 +6,16 @@ var app = builder.Build();
 var workspacePath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..", "Workspace"));
 if (!Directory.Exists(workspacePath)) Directory.CreateDirectory(workspacePath);
 
+static string CreateReportFileName(string reportName)
+{
+    var invalidChars = Path.GetInvalidFileNameChars();
+    var sanitizedName = string.Concat(reportName.Where(ch => !invalidChars.Contains(ch)));
+
+    return string.IsNullOrWhiteSpace(sanitizedName)
+        ? "benchmark_report.md"
+        : $"{sanitizedName}.md";
+}
+
 /* 
     Mock verimiz.
     Şirkete özel benchmark sonuçları ve raporları temsil ettiğini düşünelim.
@@ -15,7 +25,8 @@ var benchmarkResults = new List<BenchmarkResult>
 {
     new("LogParser_Zig", "Manual_Chunking", 100_000_000, 1420, 45.5, "v0.13.0"),
     new("LogParser_DotNet10", "Buffered_Read", 100_000_000, 1850, 120.2, "10.0.100"),
-    new("LogParser_Rust", "Memory_Mapped", 100_000_000, 1380, 38.0, "1.78")
+    new("LogParser_Rust", "Memory_Mapped", 100_000_000, 1380, 38.0, "1.78"),
+    new("LogParser_Batch", "Batch_Processing", 100_000_000, 1600, 60.0, "v1.0.0")
 };
 
 app.MapGet("/api/benchmarks", () => Results.Ok(benchmarkResults));
@@ -28,7 +39,7 @@ app.MapGet("/api/benchmarks/{name}", (string name) =>
 
 app.MapPost("/api/reports", async ([FromBody] ReportDto report) =>
 {
-    var fileName = $"{report.ReportName}_{DateTime.Now:yyyyMMdd_HHmm}.md";
+    var fileName = CreateReportFileName(report.ReportName);
     var filePath = Path.Combine(workspacePath, fileName);
 
     await File.WriteAllTextAsync(filePath, report.MarkdownContent);
