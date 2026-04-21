@@ -17,6 +17,11 @@ Konya Gıda ve Tarım Üniversitesi Yazılım Mühendisliği ve Pamukkale Ünive
   - [Gün 07 - RAG (Retrieval Augmented Generation) Yaklaşımı I](#gün-07---rag-retrieval-augmented-generation-yaklaşımı-i)
     - [Bilgi Sağlama ve Bağlam (Context) Yönetimi](#bilgi-sağlama-ve-bağlam-context-yönetimi)
   - [Gün 08 - RAG (Retrieval Augmented Generation) Yaklaşımı II](#gün-08---rag-retrieval-augmented-generation-yaklaşımı-ii)
+  - [Gün 09 - MCP (Model Context Protocol) Kavramı ve MCP Server Yazılması](#gün-09---mcp-model-context-protocol-kavramı-ve-mcp-server-yazılması)
+  - [Gün 10 - MCP Server'lar ile Çalışmak](#gün-10---mcp-serverlar-ile-çalışmak)
+  - [Gün 11 - Custom Agent ve Skill Yapıları ile Çalışmak](#gün-11---custom-agent-ve-skill-yapıları-ile-çalışmak)
+    - [Custom Agents](#custom-agents)
+    - [Skill'ler](#skills)
   - [Aman Dikkat](#aman-dikkat)
   - [Ders Geçme Prosedürü](#ders-geçme-prosedürü)
     - [Proje Değerlendirmesi](#proje-değerlendirmesi)
@@ -523,7 +528,7 @@ Bir MCP sunucusunu geliştirme ortamlarında, CLI araçlarında veya diğer uygu
 
 > .NET platformunda bir MCP sunucusu geliştirmekle ilgili [şu yazıya](https://buraksenyurt.github.io/2026/03/07/microsoft-dotnet-platformunda-bir-mcp-server-yazmak/) bakılabilir.
 
-**MCP** standardı güncel olarak iki tip veri taşıma *(Transport)* mekanizmasını destekler: Standard Input/Output *(Stdio)* ve SSE *(Server-Sent Events)*. 
+**MCP** standardı güncel olarak iki tip veri taşıma *(Transport)* mekanizmasını destekler: Standard Input/Output *(Stdio)* ve SSE *(Server-Sent Events)*.
 
 - **Stdio:**
   - **Çalışma şekli;** İstemci taraf *(Vs Code, Copilot CLI vb.)* ile MCP sunucusu arasında veri alışverişi, standart giriş/çıkış akışları üzerinden gerçekleşir. MCP sunucusu arka planda bir alt process olarak çalışır ve veri iletimi JSON-RPC mesajları ile gerçekleşir.
@@ -538,9 +543,87 @@ Bir MCP sunucusunu geliştirme ortamlarında, CLI araçlarında veya diğer uygu
 
 ## Gün 10 - MCP Server'lar ile Çalışmak
 
-## Gün 11 - Spec Driven Development (SDD) Yaklaşımı ile Geliştirme Yapmak
+ÖRNEKLER EKLENECEK
 
-## Gün 12 - Proje Sunumları
+## Gün 11 - Custom Agent ve Skill Yapıları ile Çalışmak
+
+Yapay zeka destekli yazılım geliştirme süreçlerinde kullandığımız birçok teknik ve araç vardır. Sadece prompt girerek ilerlemek, yüksek kapasiteleri context pencerelerine sahip modellerle çalışırken yeterli olabilir. Ancak daha karmaşık senaryolarda, yapay zeka asistanlarının yeteneklerini genişletmek ve bağlamı zenginleştirmek için farklı araçlara ve tekniklere ihtiyaç duyulur. **MCP *(Model Context Protocol)*** sunucularından yararlanmak, **RAG *(Retrieval Augmented Generation)*** tabanlı geliştirme hatları tesis etmek, **Fine-Tuning** ile domain özel eğitilmiş modelleri kullanmak bunlardan bazılarıdır. Diğer yandan kendi özelleştirdiğimiz ajanları *(Custom Agents)* ve yetenek setlerini *(Skills)* geliştirmek de mümkündür ve giderek daha çok senaryoda tercih edilmektedir.
+
+Yapay zeka ajanları ile insan belleğinin çalışma şekli arasında da yakın ilişkiler kurmak mümkündür. Burada insan belleğinin üç farklı katmanı ele alınabilir;
+
+- **Semantic Memory:** Türkiye'nin başkenti Ankara'dır bilgisine sahip olmak gibi genel kültür bilgileri bu katmanda yer alır. AI ajanları açısından bakıldığında bu katman **RAG** tekniğiyle desteklenebilir. Zira Türkiye, başkent, Ankara gibi kavramların birbirleriyle ilişkisi vektörel olarak ifade edilebilir ve bu sayede modelin muhakeme sürecine dahil edilebilir.
+- **Episodic Memory:** Geçmişte yaşanmış olaylara dair anıların tutulduğu katmandır. Örneğin, dün akşam ne yediğimiz, geçen hafta sinemaya gidip gitmediğimiz veya geçen yaz Ankara'da olduğumuz gibi bilgiler bu katmanda saklanır. AI ajanları açısından bakıldığında bu katman bir çeşit log bilgisidir ve bugünkü modellerin sahip olduğu büyük bağlam pencereleri sayesinde bu tür bilgilerin tutulması ve muhakeme sürecine dahil edilmesi mümkün olmuştur *(Bu ders içeriğinin hazırlandığı tarih itibariyle örneğin GPT 5.4 modeli aynı session içerisindeki tek bir konuşmada 400 bin token'a kadar olan bilgiyi hatırlayabilmektedir. Bu değer Claude Sonnet 4.6 için 200 bin token civarındadır)*.
+- **Procedural Memory:** Nasıl bisiklete binileceği, araba sürüleceği gibi becerilerin saklandığı katmandır. AI ajanları açısından bakıldığında bu katman **Custom Agents** veya **Skills** gibi yapılarla desteklenebilir.
+
+### Custom Agents
+
+EKLENECEK
+
+### Skills
+
+Günümüzde büyük dil modelleri ile çalışırken bağlamı zenginleştirmek ve modelin yeteneklerini genişletmek için çeşitli araçlar ve teknikler kullanılır. Bir süredir gündemde olan araçlardan birisi de **Skill**'lerdir. **Skill**'ler, yapay zeka ajanlarına yeni yetenekler ve uzmanlıklar kazandırmak için çeşitli talimatları ve kaynakları *(resources)* içeren birer modül olarak tanımlanabilir. **Anthropic** tarafından geliştirilen ve [açık kaynak olarak sunulan](https://agentskills.io/home) bu özellik tüm dil modelleri tarafından desteklenen bir standart olarak da değerlendirilmektedir.
+
+Bir **skill** aslında en az bir **markdown** dosyası ve varsa yardımcı kaynaklardan *(çalıştırılabilir kod parçaları, şablonlar, referans dokümlanlar vb)* oluşan bir modül olarak düşünülebilir. Aşağıda örnek bir **skill** yapısı görülmektedir.
+
+```text
+mcp-builder/
+├── SKILL.md
+├── scripts/
+    ├── connections.py
+    ├── evaluation.py
+    ├── requirements.txt
+    └── examples.json
+├── references/
+    ├── evaluation.md
+    ├── best_practices.md
+    └── architecture.md
+```
+
+**SKILL.md** dosyası iki parçadan oluştur. **Frontmatter** ve **body** kısımları. **Frontmatter** kısmı **yaml** formatında yazılır ve ajanların kullanabileceği bazı meta bilgileri içerir. Genellikle skill'in adı *(name)* ve açıklaması *(description)* gibi temel bilgileri içerir. **Body** kısmı ise skill'in kendisiyle ilgili detaylı bilgileri içerir. Bu bölümde skill'in ne işe yaradığı, nasıl kullanılacağı, hangi kaynaklara sahip olduğu gibi bilgiler yer alır. Örnek olması açısından yine Anthropic tarafından sağlanan [bu github hesabındaki örnek modül](https://github.com/anthropics/skills/tree/main/skills/mcp-builder) incelenebilir.
+
+```text
+---
+name: MCP Builder
+description: A skill to help build MCP servers.
+---
+# Development Guidelines
+## Overview
+...
+...
+
+# Reference Files
+## Documentation Library
+...
+## Example Codes
+...
+```
+
+Bir **Skill** aslında **Progressive Disclosure** tekniğiyle çalışır. Yani, skill'in içeriği, ajan tarafından ihtiyaç duyuldukça açığa çıkarılır. Ajan, bir görevi yerine getirirken belirli bir yeteneğe ihtiyaç duyduğunda, ilgili skill'in içeriğini değerlendirir ve bu içeriği kullanarak ilgili görevi yerine getirir. Bu süreç üç aşamalıdır. Birinci aşamada dokümanını **frontmatter** bilgisi devreye girir. Ajan bu bilgilere göre hangi skill'in hangi görevlere uygun olduğunu değerlendirir. İkinci aşamada ise ajan, görevi yerine getirmek için gerekli olan bilgileri **body** kısmından açığa çıkarır. Üçüncü aşamada ise eğer varsa referans kaynaklara erişilir ve görevin yerine getirilmesi için bu kaynaklardan da yararlanılır.
+
+**Skill**'ler oldukça güçlü araçlardır. Tanımları gereği dosya sistemine erişebilir, kod işletebilirler. Bu nedenle güvenlik açısından dikkatli bir şekilde tasarlanmaları gerekir. Dikkat edilmediği takdirde **Prompt Injection**, **Tool Poisoning**, **Malware Injection** gibi saldırılara maruz kalınabilir. Bu tür saldırıları önlemek için skill'lerin erişebileceği kaynakları sınırlamak, açığa çıkarılan bilgileri dikkatli bir şekilde kontrol etmek ve güvenlik duvarları *(Guardrails)* gibi ek önlemler almak önemlidir.
+
+Buraya kadar tanımladığımız birçok kavram var. Bunlar zaman zaman birbirlerine karıştırılabilir ve hangisi ne zaman kullanılmalı sorusu açıkta kalabilir. Aşağıdaki kısım bu kavramların bize sağladığı imkanları ve birbirleriyle olan ilişkilerini özetlemektedir.
+
+| **Kavram** | **Tanım** | **Ne sağlar?** |
+| ---------- | --------- | --------- |
+| **MCP (Model Context Protocol)** | Yapay zeka asistanlarının harici araçlara standart bir yolla erişmesini sağlayan bir protokol. | Bir yapay zeka ajanının hangi araçlara erişebileceğini ve bu araçları nasıl kullanabileceğini belirler. |
+| **RAG (Retrieval Augmented Generation)** | Yapay zeka modellerinin bilgi deposundan çekilen parçaları muhakeme sürecine dahil ederek daha kaliteli çıktılar üretmesini sağlayan yaklaşım. | Yapay zeka ajanına bir şeyin nasıl yapılacağını öğretmez, sadece mevcut bilgileri referans almasını sağlar. |
+| **Fine-Tuning** | Bir dil modelinin belirli bir domain veya görev için özel olarak eğitilmesi süreci. *(Pahalıdır, model değişirse yeniden üretim gerektirir)* | Modelin belirli bir alanda daha iyi performans göstermesini sağlar. |
+| **Skill** | Yapay zeka ajanlarına yeni yetenekler ve uzmanlıklar kazandırmak için çeşitli talimatları ve kaynakları içeren modül. | Bir şeylerin nasıl, hangi sırada ve değerlendirmeye yapılması gerektiğini belirler. |
+| **Custom Agent** | Belirli bir hedefi gerçekleştirmek üzere araçlar, hafıza (RAG) ve yeteneklerle (Skills) donatılmış, planlama yapabilen özelleştirilmiş yapay zeka birimi. | Orkestra şefidir. Sadece cevap üretmekle kalmaz; otonom kararlar alarak çok adımlı karmaşık görevleri uçtan uca yönetir ve aksiyon alır. |
+
+Buna göre yukarıdaki teknikler arasında aşağıdaki ilişkiler de kurulabilir;
+
+- **RAG:** Ajan neleri biliyor? *(Hafıza, bilgi deposu)*
+- **MCP:** Ajan dış dünyayla nasıl konuşuyor? *(Araçlara erişim, iletişim protokolü)*
+- **Skill:** Ajan söz konusu araçları hangi yöntemle kullanıyor. *(Uzmanlıklar, talimatnameler)*
+- **Custom Agent:** Tüm bu kaynakları okuyan, araçları kullana ve görevi gerektiğinde inisiyatif alarak tamamlayabilen karar verici. *(Orkestrasyon, planlama)*
+
+## Gün 12 - Spec Driven Development (SDD) Yaklaşımı ile Geliştirme Yapmak
+
+## Gün 13 - Yapay Zeka Destekli Yazılım Geliştirmede Güvenlik
+
+## Gün 14 - Proje Sunumları
 
 ## Aman Dikkat
 
@@ -550,6 +633,7 @@ Bir MCP sunucusunu geliştirme ortamlarında, CLI araçlarında veya diğer uygu
 - Kendi yapabileceğimiz çok basit bir kod parçasını yapay zeka aracına yazdırmak yerine, yapay zeka araçlarını daha karmaşık, zaman alan, aynı görevin sürekli tekrar ettiği işler için kullanmak daha verimli olabilir. Örneğin bir **MongoDB Docker** imaj tanımını resmî sitesinden alıp projeye uygulamayı yapay zeka aracına yazdırmak yerine, ayağa kaldırdığımız bir imajın çalışması ile ilgili içinden çıkamadığımız bir hatayı çözmek için yapay zeka aracından yardım almak daha verimli olabilir.
 - İyi **prompt**'lar vermek, yapay zeka araçlarından kaliteli çıktılar almak için kritik öneme sahiptir. Prompt'larınızda açık ve net olun, gerekli detayları sağlayın ve mümkünse örnekler verin. Çıktıları mutlaka dikkatlice inceleyin, ispat arayın, doğruluğundan emin olun. Yapay zeka araçlarının ürettiği çıktıları denetleyen kodlar da geliştirebilirsiniz ;-)
 - Yapay zeka araçlarının ürettiği konfigürasyon içeriklerinde şifre, gizli anahtar gibi bilgiler varsa klasik metodolojide olduğu gibi bunları daha güvenli ortamlarda *(Vault, Azure Key Vault, AWS Secrets Manager gibi)* saklamayı tercih edin. Yapay zeka araçlarının ürettiği kodlarda bu tür bilgilerin hardcoded olarak yer almamasına da ayrıca dikkat edin.
+- Özellikle **SKILL** gibi araçlar dosya sistemine erişip kod çalıştırabilirler. Bu nedenle dikkatli kullanılmaları ve Guardrails gibi güvenlik önlemleriyle desteklenmeleri önemlidir. Skill'lerin ne tür işlemler yapabileceğini, hangi kaynaklara erişebileceğini ve bu işlemlerin güvenli olup olmadığını dikkatlice değerlendirin.
 
 ## Ders Geçme Prosedürü
 
