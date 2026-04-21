@@ -25,19 +25,24 @@ builder.Services
     {
         options.ServerInfo = new Implementation
         {
-            Name = "BenchmarkServer_SSE",
-            Version = "1.0.0"
+            Name = "Benchmark MCP Server",
+            Version = "1.0.0",
         };
     })
     .WithHttpTransport()
+    //.WithHttpTransport(options =>
+    //{
+    //    options.EnableLegacySse = true; // Legacy SSE desteğini de ekler (Obsolete oldu)
+    //    // Streamable HTTP desteği olmayan istemciler için işe yarar.
+    //})
     .WithToolsFromAssembly();
 
 var app = builder.Build();
 
-app.MapMcp("/sse");
+app.MapMcp("/mcp"); // Varsayılan olarak Streamable HTTP transport kullanılır, ama aynı zamanda legacy SSE'yi de destekler.
 
-Console.WriteLine("[MCP SERVER INFO] BenchmarkServer_SSE başlatılıyor...");
+Console.WriteLine("[MCP SERVER INFO] Benchmark MCP Server başlatılıyor...");
 Console.WriteLine($"[MCP SERVER INFO] Hedef API: {apiUrl}");
-Console.WriteLine("[MCP SERVER INFO] SSE endpoint: /sse");
+Console.WriteLine("[MCP SERVER INFO] Streaming endpoint: /mcp");
 
 app.Run();
