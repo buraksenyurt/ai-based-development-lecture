@@ -528,7 +528,7 @@ Bir MCP sunucusunu geliştirme ortamlarında, CLI araçlarında veya diğer uygu
 
 > .NET platformunda bir MCP sunucusu geliştirmekle ilgili [şu yazıya](https://buraksenyurt.github.io/2026/03/07/microsoft-dotnet-platformunda-bir-mcp-server-yazmak/) bakılabilir.
 
-**MCP** standardı güncel olarak üç tip veri taşıma *(Transport)* mekanizmasını destekler: Standard Input/Output *(Stdio)*, **[SSE](https://www.utcp.io/protocols/sse) *(Server-Sent Events)*** ve **[Streamable HTTP](https://www.utcp.io/protocols/streamable-http)** *(Mart 2025'te HTTP ve SSE kullanımının alternatifi olarak eklenmiştir)*. Her bir mekanizmanın çalışma şekli, avantajları, dezavantajları ve kullanım senaryoları farklıdır.
+**MCP** standardı güncel olarak üç tip veri taşıma *(Transport)* mekanizmasını destekler: Standard Input/Output *(Stdio)*, **[SSE](https://www.utcp.io/protocols/sse) *(Server-Sent Events)*** ve **[Streamable HTTP](https://www.utcp.io/protocols/streamable-http)** *(Mart 2025'te HTTP ve SSE kullanımının alternatifi olarak eklenmiştir)*.
 
 - **Stdio:**
   - **Çalışma şekli;** İstemci taraf *(Vs Code, Copilot CLI vb.)* ile MCP sunucusu arasında veri alışverişi, standart giriş/çıkış akışları üzerinden gerçekleşir. MCP sunucusu arka planda bir alt process olarak çalışır ve veri iletimi JSON-RPC mesajları ile gerçekleşir.
@@ -539,12 +539,12 @@ Bir MCP sunucusunu geliştirme ortamlarında, CLI araçlarında veya diğer uygu
   - **Çalışma şekli;** MCP sunucusu bir Web API olarak çalışır. İstemci sunucuya HTTP üzerinden bir bağlantı açar ve sunucu, SSE protokolünü kullanarak istemciye asenkron mesajlar gönderir.
   - **Avantajları;** Ağ üzerinden çalışır. Dil modeli nerede olursa olsun internet veya intranet üzerinden bağlanabilir.
   - **Dezavantajları;** Kurulumu ve entegrasyonu daha karmaşıktır. Araya bir ağ katmanı girdiğinden gecikmeler *(latency)* olabilir ve daha da önemlisi authentication/authorization eklemek gerejir, çünkü aksi halde herhangi biri sunucuya bağlanıp araçları kullanabilir.
-  - **Kullanım senaryoları;** Internet veya intranet üzerinden merkezi bir MCP sunucusuna ihtiyaç duyulan durumlar, birden fazla istemcinin aynı MCP sunucusunu kullanacağı senaryolar.
+  - **Kullanım senaryoları;** Genellikle canlı güncellemeler *(live updates)* veya gerçek zamanlı bildirimler *(notifications)* gerektiren durumlarda ya da feed akışlarında kullanılır. Internet veya intranet üzerinden merkezi bir MCP sunucusuna ihtiyaç duyulan durumlar, birden fazla istemcinin aynı MCP sunucusunu kullanacağı senaryolar için uygundur.
 - **Streamable HTTP:**
-  - **Çalışma şekli;** İstemci ve sunucu haberleşmesi tek bir HTTP endpoint üzerinden yapılır. Kısa süreli işlemlerde standart bir **HTTP Request/Response** gibi davranırken, büyük boyutlu ve uzun sürecek akışlarda otomatik olarak SSE benzeri kesintisiz bir stream'e dönüşür.
+  - **Çalışma şekli;** İstemci ve sunucu haberleşmesi tek bir HTTP endpoint üzerinden yapılır. Kısa süreli işlemlerde standart bir **HTTP Request/Response** gibi davranırken, büyük boyutlu ve uzun sürecek akışlarda otomatik olarak **SSE** benzeri kesintisiz bir stream'e dönüşebilir.
   - **Avantajları;** Gerçek anlamda çift yönlü *(bidirectional)* iletişim sağlar, tek bir endpoint üzerinden hem kısa hem de uzun süreli işlemleri destekler, bağlantı kopuşlarında kaldığı yerden devam edebilir, iptal edilebilirlik özelliği sunar.
   - **Dezavantajları;** SSE'de olduğu gibi ağ üzerinden bir iletişim söz konusu olduğundan authentication/authorization eklemek gerekir.
-  - **Kullanım senaryoları;** Özellikle geliştirici deneyiminin önemli olduğu durumlarda tercih edilebilir.
+  - **Kullanım senaryoları;** Büyük boyultu veri akışlarının parçalar halinde eline alınacağı senaryolar için idealdir. Bu nedenle MCP tarafında özellikle araçların çıktılarının uzun olabileceği durumlarda Streamable HTTP tercih edilmektedir. Örneğin bir araç, büyük bir veri setini analiz ediyor ve sonuçları parça parça döndürüyor olabilir. Bu durumda Streamable HTTP, istemcinin bu parçaları gerçek zamanlı olarak almasını sağlar.
 
 ## Gün 10 - MCP Server'lar ile Çalışmak
 
