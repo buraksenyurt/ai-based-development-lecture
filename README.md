@@ -562,7 +562,41 @@ Yapay zeka ajanları ile insan belleğinin çalışma şekli arasında da yakın
 
 ### Custom Agents
 
-EKLENECEK
+Genel dil modelleri ve bunları kullanan ajanlar *(Claude Sonnet, GTP Codex vb)* çok geniş çerçevede bilgiye sahiptir. Ancak bazı senaryolarda projelerin çalıştığı domain bilgisine uyan özelleştirilmiş ajanlara da ihtiyacımız olur. Örneğin çalıştığımız kurumun kimliğini ifade edebilen CSS *(Cascading Style Sheets)* stilleri konusunda uzmanlaşmış bir ajan, genel bir asistanın verebileceği cevaplara kıyasla çok daha tutarlı ve hedefe yönelik çıktılar üretebilir. **Custom Agent**'lar, genel amaçlı yapay zeka modellerini belirli bir amaca, alana *(domain)* veya göreve odaklanacak şekilde özelleştirdiğimiz yapılandırmalardır. Genel bir asistan her konuda ortalama ve geniş kapsamlı cevaplar verirken, Custom Agent'lar tanımlanmış kesin kurallar çerçevesinde, kendisine atanmış uzmanlık rolüne *(persona)* sadık kalarak çok daha tutarlı ve hedefe yönelik çıktılar üretebilir.
+
+Özelleştirilmiş ajanlar markdown formatında dosyalar olarak tanımlanırlar. Günümüzdeki AI destekli yazılım geliştirme araçları ve dil modelleri bu dosyalardaki standartlaştırışmış şema yapısına bakarak ajanların ne tür görevleri yerine getirebileceğini, hangi araçlara erişebileceğini, hangi kurallar çerçevesinde hareket edeceğini anlayabilirler.
+
+Bu markdown şeması **frontmatter** ve **body** olmak üzere iki ana bölümden oluşur. Frontmatter kısmı **YAML** formatında yazılır ve ajanların kullanabileceği bazı meta bilgileri içerir. Genellikle ajanının adı *(name)*, açıklaması *(description)*, hangi araçlara erişebileceği *(tools)* gibi keşif amaçlı kullanılan ek bilgileri barındırır. Body kısmı ise ajanın kendisiyle ilgili detaylı bilgiler içerir *(Ajanın ne işe yaradığı, nasıl kullanılacağı, hangi kaynaklara sahip olduğu vb)*
+
+Aşağıda örnek bir ajan içeriği yer almaktadır.
+
+```text
+---
+name: [Ajanın adı]
+description: [Ajanın ne işe yaradığına dair kısa bir açıklama]
+tools: [Ajanın erişebileceği ve izin verilen araçların listesi]
+  - tool1
+  - tool2
+  - tool3
+---
+# [Ajanın detaylı açıklaması ve kullanım talimatları, örnekler, standartlar, referanslar vb]
+```
+
+Özelleştirilmiş ajanlar genellikle aşağıdaki durumlarda değerlendirilir;
+
+- **Tekrarlayan Karmaşık Görevler:** Her seferinde aynı uzun talimatları *(prompts)* yazmak yerine, kuralların bir kez tanımlanarak sürecin otomatize edilebileceği durumlarda.
+- **Domain Uzmanlığı:** Sadece veritabanı optimizasyonuna, ağ güvenliğine veya belirli bir programlama dilinin en iyi pratiklerine odaklanan bir uzman görüşüne ihtiyaç duyulduğunda.
+- **Standartların Korunması:** Kurum içerisinde üretilen kodların belirli standartlara *(örneğin Clean Architecture, SOLID, Design Patterns)* veya proje şablonlarına uymasını garanti etmek istediğimiz hallerde.
+- **Bağlamın *(Context)* Daraltılması:** Modelin konu dışına çıkmasını engellemek, halüsinasyon *(hallucination)* riskini azaltmak ve sınırlandırılmış bir çerçevede *(Guardrails)* çalışmasını sağlamak istediğimizde.
+
+Örnek senaryolar;
+
+- **Code Reviewer Agent:** Projeye bir kod eklendiğinde devreye giren ve kodun kalitesini, standartlara uygunluğunu ve potansiyel hataları değerlendiren ajan.
+- **Test Engineer Agent:** Uygulamanın kaynak kodunu inceleyerek *edge case*'leri tespit eden, eksik senaryoları belirleyen ve istenilen test kütüphanesine uygun birim *(unit)* testleri yazan kalite odaklı ajan.
+- **Database Architect Agent:** Domain modeline ve beklenen trafik yüküne göre en uygun veritabanı şemasını *(SQL/NoSQL)* tasarlayan, indeksleme stratejileri öneren ve sorgu performanslarını değerlendiren ajan.
+- **UX Developer Agent:** Kullanıcı senaryolarına bakarak uygulamaya HTML sayfaları ekleyen ve bu sayfaların kullanıcı deneyimi açısından tutarlı, erişilebilir ve estetik olmasını sağlayan ajan.
+
+Özelleştirilmiş ajanlar bir sonraki alt başlıkta yer alan SKILL yapılarıyla da desteklenebilirler. Dolayısıyla bağlamı daraltırken hem özelleştirilmiş bir ajanı hem de onun sahip olabileceği yetenek setlerini kullanabiliriz.
 
 ### Skills
 
