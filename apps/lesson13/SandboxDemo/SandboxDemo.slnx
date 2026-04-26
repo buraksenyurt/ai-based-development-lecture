@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="AgentService/AgentService.csproj" />
+  <Project Path="AttackerApi/AttackerApi.csproj" />
+</Solution>

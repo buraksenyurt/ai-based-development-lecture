@@ -22,6 +22,8 @@ Konya Gıda ve Tarım Üniversitesi Yazılım Mühendisliği ve Pamukkale Ünive
   - [Gün 11 - Custom Agent ve Skill Yapıları ile Çalışmak](#gün-11---custom-agent-ve-skill-yapıları-ile-çalışmak)
     - [Custom Agents](#custom-agents)
     - [Skill'ler](#skills)
+  - [Gün 12 - Spec Driven Development (SDD) Yaklaşımı ile Geliştirme Yapmak](#gün-12---spec-driven-development-sdd-yaklaşımı-ile-geliştirme-yapmak)
+  - [Gün 13 - Yapay Zeka Destekli Yazılım Geliştirmede Güvenlik](#gün-13---yapay-zeka-destekli-yazılım-geliştirmede-güvenlik)
   - [Aman Dikkat](#aman-dikkat)
   - [Ders Geçme Prosedürü](#ders-geçme-prosedürü)
     - [Proje Değerlendirmesi](#proje-değerlendirmesi)
@@ -744,6 +746,10 @@ Program çalıştığında otomatik olarak bir docker container başlatılacakt�
 Komutlar bu ortamda işletilecek ve ihlaller tespit edilip ekrana basılacaktır. Program çalışmasını bitirdiğinde ise docker ortamı otomatik olarak kaldırılacaktır.
 
 ![Day13_01](./images/day13_01.png)
+
+[Sandbox yaklaşımının ele alındığı bir başka örnek projde bu klasörde yer almaktadır](apps/lesson13/SandboxDemo/)
+
+[Referans makale](https://buraksenyurt.github.io/2026/04/26/ai-sandbox/)
 
 ## Gün 14 - Proje Sunumları
 
