@@ -364,6 +364,38 @@ Ajanın dinamik kod üretme ve sorunu otomatik çözme esnekliğinden **vazgeçm
 - C) Ajanın sistem prompt'una kesin kurallar eklemek ve **LLM** tabanlı bir **Guardrail *(Güvenlik bariyeri)*** modeli kullanarak söz konusu ajanın kötü niyetli komutlar içeren scriptler yazmasını anlamsal *(semantic)* olarak engellemek.
 - D) Ajanın ürettiği tüm scriptleri ana sistemden izole edilmiş, internet çıkışı tamamen kapalı, işlem bitince yok edilen *(ephemeral)* geçici bir **Sandbox** ortamı içinde ve en düşük yetkiyle *(Least Privilege)* çalıştırmak.
 
+## Soru 22
+
+**Retreival Augmented Generation *(RAG)*** mimarisi, yapay zeka destekli uygulamalarda bilgiye dayalı ve bağlamsal olarak zengin çıktılar üretmek için kullanılan güçlü bir yaklaşımdır. Temel amaç, dil modellerine sadece kullanıcı sorgusunu değil, aynı zamanda ilgili ve alakalı bilgileri de sağlayarak daha doğru, güncel ve bağlamsal olarak uygun yanıtlar üretmelerini sağlamaktır. Günümüzde ağrılıklı olarak kullanılan birkaç RAG mimari yaklaşımı vardır. Vector RAG, Graph RAG bunlardan en sık kullanılanlarıdır. Bu iki yaklaşım ile ilgili olarak aşağıdaki ifadelerden hangisi veya hangileri doğrudur?
+
+- **I.** Vektör RAG, veriyi izole metin blokları olarak anlamsal mesafe metrikleriyle *(kosinüs, öklid vb.)* indekslediği için parçalar arası nedensel ve tarihsel bağları kurmada genellikle yetersiz kalır.
+- **II.** Graph RAG mimarisinde sisteme veri alımı *(data ingestion)* süreci Vektör RAG'e göre çok daha düşük maliyetlidir ve donanımsal açıdan da daha az kaynak gerektirir.
+- **III.** Açıklanabilirlik *(Explainability)* gereksiniminin kritik olduğu finans ve tıp gibi regüle edilmiş sektörlerde, modelin hangi veri noktalarından sonuca ulaştığını denetlenebilir alt ağlar *(subgraphs)* üzerinden kanıtlamak adına Graph RAG daha avantajlıdır.
+- **IV.** Dağıtık sistem mimarilerinde yatay ölçeklenme *(sharding)* senaryoları ele alındığında, **Graph RAG** ağ bütünlüğünü koruma gereksiniminden dolayı **Vektör RAG**'e kıyasla çok daha basit bir planlama gerektirir.
+
+- A) Yalnızca I
+- B) Yalnızca II ve III
+- C) Yalnızca I ve III
+- D) Hepsi
+
+## Soru 23
+
+Büyük ölçekli kurumsal bir bilgi tabanında *"Şirketin 2026 yılında satın aldığı YeZe isimli girişimin kurucusu hangi üniversiteden mezun olmuştur?"* şeklinde karmaşık ve çok sekmeli *(multi-hop)* bir sorgu çalıştırılacaktır. Şirketin IT departmanında yapay zeka destekli uygulamalar için Vector ve Graph türevli RAG sistemleri yer almaktadır. Bu senaryoyu ve her iki yaklaşımı değerlendirdiğinizde aşağıdakilerden hangisi **söylenemez**?
+
+- A) **Graph RAG** mimarisi dağınık yapıdaki bu bilgiyi ararken sadece anlamsal benzerliğe *(semantic similarity)* güvendiği için retreival *(geri çağırma)* aşamasında Vektör RAG'den daha isabetsiz sonuçlar üretir.
+- B) **Vektör RAG** sistemlerinde bu tarz çok adımlı sorguların başarısını artırmak için genellikle **Sorgu Yönlendirme *(Query Routing)*** veya **Sorgu Yeniden Yazma *(Query Rewriting)*** gibi ek mimari katmanlara ihtiyaç duyulur.
+- C) **Graph RAG**, `[Şirket]` -> (Satın Aldı) -> `[YeZe Girişimi]` -> (Kurucusu) -> `[Kişi]` -> (Mezun Olduğu) -> `[Üniversite]` şeklindeki ilişkisel ağı tarayarak doğrudan ve deterministik bir bilgi yolunu *(graph traversal)* takip eder.
+- D) **Vektör RAG**, "YeZe girişimi", "kurucu" ve "üniversite" kelimelerinin anlamsal karşılıklarını tek bir uzayda arayacağı için, aynı kelimelerin geçtiği ancak bağlamın tamamen farklı olduğu alakasız dokümanları getirme *(halüsinasyon tetikleme)* riski taşır.
+
+## Soru 24
+
+Çalışmakta olduğunuz yazılım geliştirme departmanı kurum içi yapılandırılmamış dokümanları kullanarak bir **RAG** sistemi tasarlamaktadır. Hedeflenen sistemde domain odaklı varlıklar *(Entities)* ve bu varlıkların birbirleriyle olan ilişkileri *(örneğin, Order -> Waiting -> Approved)* modellenmek istenmektedir. Elinizde **Vektör RAG** ve **Graph RAG** tercihleri yer almaktadır. Sistem tasarımı açısından bakıldığında aşağıdaki yargılardan hangisi en kesin çıkarımdır?
+
+- A) **Graph RAG** kullanımında *embedding* modellerine hiçbir şekilde ihtiyaç duyulmaz. Sistem sadece geleneksel ilişkisel veritabanı *(RDBMS)* mantığıyla çalıştığı için donanım gereksinimi düşüktür.
+- B) **Vektör RAG**, metinleri belirli boyutlarda *(chunking)* parçaladığı için domain tabanlı varlık ilişkilerini, **Graph RAG**'in ilişkisel ağına kıyasla çok daha bütünsel bir şekilde muhafaza eder.
+- C) **Graph RAG** tercih edilirse, veri alımı *(Data Ingestion)* aşamasında metinlerden `node` ve `edge` çıkarımı yapmak için bir Doğal Dil İşleme modeli çalıştırmak zorunda kalacak, bu da veri indeksleme maliyetini ve süresini başlangıçta oldukça artıracaktır.
+- D) **Vektör RAG** kullanılması, varlıklar arası durum geçişlerini ve yapısal şemaları doğrudan modellemek için en maliyetsiz ve uygun mimari seçimdir.
+
 ## Cevap Anahtarı
 
 | Soru No | Doğru Cevap |
@@ -389,3 +421,6 @@ Ajanın dinamik kod üretme ve sorunu otomatik çözme esnekliğinden **vazgeçm
 | 19      | D           |
 | 20      | C           |
 | 21      | D           |
+| 22      | C           |
+| 23      | A           |
+| 24      | C           |

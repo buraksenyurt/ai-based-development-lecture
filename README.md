@@ -772,7 +772,7 @@ Aşağıdaki tabloda bu iki yöntem arasındaki temel farklar özetlenmektedir.
 | **Özellik** | **Klasik RAG** | **GraphRAG** |
 | --- | --- | --- |
 | **Çalışma Prensibi** | Anlamsal benzerliklere dayalı mesafe ölçümü (Kosinüs, Öklid) ve izole metin blokları | Düğümler *(nodes)* ve sınırlar *(edges)* üzerinden bağlantıları kurma |
-| **Context Kalıcılığı** | Metin parçaları tek başına anlam ifade eder ve tarihsel *(historic)* ya da nedensel bağlamlar zayıftır | Node'lar arası ilişkiler uzun süreli korunabilir ve daha sürdürülebilirdir |
+| **Bağlamsal Kalıcılık** | Metin parçaları tek başına anlam ifade eder ve tarihsel *(historic)* ya da nedensel bağlamlar zayıftır | Node'lar arası ilişkiler uzun süreli korunabilir ve daha sürdürülebilirdir |
 | **Halüsinasyon Riski** | Riskli. İlgisiz ama anlamsal olarak benzer parçaları yanlışlıla birleştirilebilir | Düşük Risk. Modelin yanıtı yalnızca yapısal ve doğrulanmış gerçeklere göre *(Faktörel Graf - Fact/knowledge Graph)* üretilir |
 | **Ölçeklenebilirlik** | Daha çok dağıtık sistemlere yatkın, suncular arası parçalama *(sharding)* nispeten basit | Ağ boyutu büyüdükçe ilişkilerin bütünlüğünü korumak zorlaşır, dağıtık sistemde daha iyi bir planlama gerektirir |
 | **Veri Alım İşlem Maliyeti** | Başlangıçta düşük maliyet. Sadece *embedding* sırasında CPU/GPU kaynakları harcanır | Başlangıçta yüksek maliyet. Verinin yapılandırılması, düğümlerin ve sınırların tanımlanması daha karmaşıktır |
@@ -801,7 +801,7 @@ Bu dönem ilk kez işlenen müfredat kapsamında ders geçme kriterleri şöyle 
 
 Proje değerlendirmesi için aşağıdaki kriterler göz önünde bulundurulacaktır:
 
-| Kriter | Açıklama |
+| **Kriter** | **Açıklama** |
 | ------ | -------- |
 | **Takım** | En az 1 en fazla 4 kişilik takımlar oluşturulabilir. |
 | **Dil Modeli** | Projede en az bir yapay zeka dil modeli aracı kullanılmalıdır. (Claude Sonnet 4.6, Gemini 3.1, Codex 5.2 vb) |
