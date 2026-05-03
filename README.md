@@ -24,6 +24,8 @@ Konya Gıda ve Tarım Üniversitesi Yazılım Mühendisliği ve Pamukkale Ünive
     - [Skill'ler](#skills)
   - [Gün 12 - Spec Driven Development (SDD) Yaklaşımı ile Geliştirme Yapmak](#gün-12---spec-driven-development-sdd-yaklaşımı-ile-geliştirme-yapmak)
   - [Gün 13 - Yapay Zeka Destekli Yazılım Geliştirmede Güvenlik](#gün-13---yapay-zeka-destekli-yazılım-geliştirmede-güvenlik)
+  - [Gün 14 - Proje Sunumları](#gün-14---proje-sunumları)
+  - [Ek 1 - Klasik RAG, Graph RAG ve Knowledge Graphler](#ek-1---klasik-rag-graph-rag-ve-knowledge-graphler)
   - [Aman Dikkat](#aman-dikkat)
   - [Ders Geçme Prosedürü](#ders-geçme-prosedürü)
     - [Proje Değerlendirmesi](#proje-değerlendirmesi)
@@ -503,6 +505,10 @@ python main.py --model "qwen/qwen3-14bs"
 
 ![RAG runtime](./images/day08_03.png)
 
+RAG, yapay zeka modellerini bağlam kapsamında zenginleştirmenin yollarından sadece birisidir ve farklı türevleri vardır. Bu bölümde değerlendirdiğimiz klasik yaklaşım Vektör RAG olarak da bilinir. Bir diğer türü ise **Graph RAG** olarak geçmektedir. Diğer yandan yapay zeka ajanlarının bir RAG hattı ile ilişkilendirildiği **Agentic RAG** yaklaşımı da söz konusudur. Süre gelen gelişmeler düşünüldüğünde farklı mimari çözümlerin de ortaya çıkması muhtemeldir. Ancak tüm bu yaklaşımlarda temel odak noktası, dil modelinin bağlam *(context)* kapsamını zenginleştirerek daha kaliteli çıktılar üretmesini sağlamaktır.
+
+- Bknz: [Ek 1 - Klasik RAG, Graph RAG ve Knowledge Graphler](#ek-1---klasik-rag-graph-rag-ve-knowledge-graphler)
+
 ## Gün 09 - MCP (Model Context Protocol) Kavramı ve MCP Server Yazılması
 
 Klasik bir Web API hizmetini göz önüne alalım. Bu senaryoda bir istemcinin JSON, XML gibi standart formatlarda veri gönderip alması söz konusudur. İstemci *(client)* ve sunucu *(server)* arasındaki iletişim genellikle HTTP protokolü üzerinden gerçekleşir. İstemciler sunucu üzerindeki belirli endpoint'lere istek gönderir. REST mimarisi açısından bakıldığında bu endpoint'ler genellikle kaynaklara karşılık gelir ve HTTP metodlarıyla *(GET, POST, PUT, DELETE gibi)* işlem yapılır. Bu süreçte istemciler genellikle sunucunun sunduğu API'leri keşfetmek ve kullanmak için dokümantasyonlara başvururlar.
@@ -752,6 +758,30 @@ Komutlar bu ortamda işletilecek ve ihlaller tespit edilip ekrana basılacaktır
 [Referans makale](https://buraksenyurt.github.io/2026/04/26/ai-sandbox/)
 
 ## Gün 14 - Proje Sunumları
+
+## Ek 1 - Klasik RAG, Graph RAG ve Knowledge Graph'ler
+
+Klasik RAG *(Retreival-Augmented Generation)* vektör RAG olarak da bilinir. Bu mimari yaklaşım büyük hamicli ve yapılandırılmamış metinleri anlamsak benzerliklerine göre taramak, belge kümeleri içinde konuya dair hızlı arama yapmak gibi görevler için biçilmiş kaftandır. Verinin modellemesi, sisteme veri alımı *(data ingestion)* donanımsal ve mantıksal olarak görece daha basittir. Örneğin kaynaklardaki metinler belirlenen boyutlarda *(100, 500, 1000 token gibi)* parçalara böülünür, embedding modelleri aracılığıyla çok boyutlu vektör karşılıkları çıkarılır ve bir vektör veritabanında indekslenerek kaydedilir. Kullanıcı bir soru sorduğunda, bu sorunun da vektör değeri hesaplanır ve veritabanındaki vektörler arasında matematiksel mesafe ölçümleri yapılarak en yakın metin blokları geri çağrılır *(retreival aşaması)* Bu sistemi **FAQ *(Frequently Asking Question)*** gibi sık güncellenen ya da yüzeysel doküman içi bilgi bulma senaryolarında tercih edebiliriz.
+
+Diğer yandan klasör RAG bağlam pencereleri *(Context Window)* içerisinde izole metin bloklarını modelin kullanımına sunduğunda parçalar arası tarihsel, nedensel ve yapısal bağları kurmak zordur. Bunu şöyle örnekleyebiliriz; RAG sisteminin zengin bir blog içeriğinde dokümanları kaynak olarak kullandığını düşünelim. Yazıların birisinde `Programı Microsoft.SemanticKernel kütüphanesini kullanarak geliştirdim.` cümlesi olsun. Bir süre sonra sisteme giren başka bir devam yazısında ise `Geliştirdiğim bu yeni projede denemeler için yerele LLM'leri kullanmayı tercih ettim.` şeklinde bir ifade geçsin. Klasik RAG düzeneğinde bu iki bilginin aslında aynı projeye ait evrimsel bir bilgi olduğu mantıksal olarak cevaplanamaz.
+
+**Graph RAG** mimarisinde ise, *yapılandırılMAmış* verinin *yapılandırılmış* bir ilişkisel ağ sistemine dönüştürülmesi söz konusudur. İşte bu noktada az önceki örnekte belirttiğimiz bağlam eksikliği ve farkında olmama durumu ortadan kalkar. Entity'ler ve aralarındaki ilişkiler açıkça ve ksin çizgilerle tanımlandığı için, **retreival** işlemi sırasında dil modeli, rastgele vektöre parçaları arasında matematiksel bir eşleştirme yapmak yerine, önceden tanımlanmış mantıksal bir ağ *(graph)* üzerinde doğrudan hedefe yönelik bir arama işlemi gereçleştirir *(graph traversal)*
+
+Aşağıdaki tabloda bu iki yöntem arasındaki temel farklar özetlenmektedir.
+
+| **Özellik** | **Klasik RAG** | **GraphRAG** |
+| --- | --- | --- |
+| **Çalışma Prensibi** | Anlamsal benzerliklere dayalı mesafe ölçümü (Kosinüs, Öklid) ve izole metin blokları | Düğümler *(nodes)* ve sınırlar *(edges)* üzerinden bağlantıları kurma |
+| **Context Kalıcılığı** | Metin parçaları tek başına anlam ifade eder ve tarihsel *(historic)* ya da nedensel bağlamlar zayıftır | Node'lar arası ilişkiler uzun süreli korunabilir ve daha sürdürülebilirdir |
+| **Halüsinasyon Riski** | Riskli. İlgisiz ama anlamsal olarak benzer parçaları yanlışlıla birleştirilebilir | Düşük Risk. Modelin yanıtı yalnızca yapısal ve doğrulanmış gerçeklere göre *(Faktörel Graf - Fact/knowledge Graph)* üretilir |
+| **Ölçeklenebilirlik** | Daha çok dağıtık sistemlere yatkın, suncular arası parçalama *(sharding)* nispeten basit | Ağ boyutu büyüdükçe ilişkilerin bütünlüğünü korumak zorlaşır, dağıtık sistemde daha iyi bir planlama gerektirir |
+| **Veri Alım İşlem Maliyeti** | Başlangıçta düşük maliyet. Sadece *embedding* sırasında CPU/GPU kaynakları harcanır | Başlangıçta yüksek maliyet. Verinin yapılandırılması, düğümlerin ve sınırların tanımlanması daha karmaşıktır |
+| **Açıklanabilirlik *(Explainability*)** | Düşük. Kullanıcılara sadece hangi metin bloğunun benzerlikten dolayı getirildiği gösterilebilir. | Oldukça yüksek. Yanıtın hangi belirleyici *entity* ve ilişkilerden *(subgraphs)* türetildiği denetlenebilir. |
+| **Senaryo** | Bilgi havuzu taraması, SSS *(Sıkça Sorulan Sorular)*, doküman içi veya konu odaklı arama | Çok sekmeli sorgular, kavramsal sentez, yapısal çıkarım, bütünsel veri seti anlama |
+
+**Graph RAG** ile **Vektör RAG** arasında belirgin farklar vardır ama bunlardan belki de en önemlisi açıklanabilirlik ilkesidir. Finansal hizmetler, tıp araştırmaları, sigortacılık gibi regülasyonları sıkı takibe dayanan, görev kritik süreçler barındıran endüstrilerde bir yapay zeka modelinin belirli bir analitik sonuca nasıl, hangi verilere dayanarak ulaştığını geriye dönül olarak kensin bir şekilde kanıtlamak gereklidir. Graph RAG, bu tür senaryolarda daha uygun bir mimari yaklaşım olarak öne çıkar.
+
+todo@buraksenyurt GENİŞLETİLECEK
 
 ## Aman Dikkat
 
