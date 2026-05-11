@@ -4,9 +4,9 @@ Bu dokümanda final sınavına hazırlık için örnek sorular yer almaktadır.
 
 ## Soru 1
 
-Yazılım projelerinde kodun beklediğimiz şekilde çalışmasını garanti altına almak için birçok test metodolojisi kullanılır. Bunlardan birisi de birim testlerdir *(Unit Testi)*. Birim testleri, yazılımın en küçük parçalarını (örneğin fonksiyonlar veya metotlar) izole ederek test etmeye odaklanır. Bu testler, kodun belirli bir bölümünün doğru çalışıp çalışmadığını kontrol eder ve genellikle otomatikleştirilir.
+Yazılım projelerinde kodun beklediğimiz şekilde çalışmasını garanti altına almak için birçok test metodolojisi kullanılır. Bunlardan birisi de birim testlerdir *(Unit Test)*. Birim testleri, yazılımın en küçük parçalarını (örneğin fonksiyonlar veya metotlar) izole ederek test etmeye odaklanır. Bu testler, kodun belirli bir bölümünün doğru çalışıp çalışmadığını kontrol eder ve genellikle otomatikleştirilir.
 
-Çalışmakta olduğunuz elektronik ticaret projesinde kullanıcıların sepete attıkları ürünlerin toplam tutarını hesaplayan bir fonksiyon geliştirmek istediğinizi düşünün. Bu fonksiyonun belirli kabül kriterlerini karşılaması bekleniyor. Geliştirme metodolojisini değiştiriyorsunuz ve öncelikle testin başarısız olduğu senaryoyu *(Fail)* ardından bu senaryoyu düzelten kod parçasını *(Pass)* ve son adımda ise kodun ideal hale getirilmiş versiyonunu *(Refactor)* yazarak ilerliyorsunuz. **Red - Green - Blue** olarak da bilinen bu süreç literatürde nasıl bilinir?
+Çalışmakta olduğunuz elektronik ticaret projesinde kullanıcıların sepete attıkları ürünlerin toplam tutarını hesaplayan bir fonksiyon geliştirmek istediğinizi düşünün. Bu fonksiyonun belirli kabul kriterlerini karşılaması bekleniyor. Geliştirme metodolojisini değiştiriyorsunuz ve öncelikle testin başarısız olduğu senaryoyu *(Fail)*, ardından bu senaryoyu düzelten kod parçasını *(Pass)* ve son adımda ise kodun ideal hâle getirilmiş versiyonunu *(Refactor)* yazarak ilerliyorsunuz. **Red - Green - Blue** olarak da bilinen bu süreç literatürde nasıl bilinir?
 
 - A) Test Driven Development (TDD)
 - B) Behavior Driven Development (BDD)
@@ -19,7 +19,7 @@ Uygulamaların geliştirme ortamlarında ihtiyaç duyduğu birçok dış bağım
 
 Geliştirmekte olduğunuz web uygulaması, bazı fiziki dosyaları Amazon S3 üzerinden karşılamaktadır. Geliştirme sürecinde bu dosyalara erişim sağlamak için gerçek S3 ortamını kullanmak yerine, yerel bir ortamda S3'ün davranışını taklit eden bir araç kullanarak ilerlemek istediğinizi düşünün. Bu amaçla konteyner tabanlı bir çözüm kullanarak, S3'ün temel özelliklerini taklit eden bir ortam oluşturabilirsiniz. Bu senaryoda şıklardaki araçlardan hangisini kullanırsınız?
 
-- A) Github Actions
+- A) GitHub Actions
 - B) Docker
 - C) Playwright
 - D) SonarQube
@@ -37,7 +37,7 @@ Code Coverage değerini artırmak için şıklarda belirtilen stratejilerden han
 
 ## Soru 4
 
-Bir bayi otomasyon sisteminde yedek parça siparişleri anlık olarak çok yüksek hacimlere ulaşabileceği öngörülmektedir. Bu nedenle sistemin ölçeklenebilir *(Scalability)* olarak tasarlanması gerektiği belirlenmiş, stok yönetimi, sipariş yönetimi ve tedarikçi entegrasyonu gibi modüllerin birbirinden bağımsız dağıtılabilmesi *(Deployment)* ve yönetilebilmesi gerektiğine karar verilmiştir. `Richards & Ford` 'un da belirttiği özelliklere göre, bu gereksinimler için aşağıdaki mimarilerden hangisi en yüksek test edilebilirlik ve ölçeklenebilirlik avantajına sahiptir?
+Bir bayi otomasyon sisteminde yedek parça siparişleri anlık olarak çok yüksek hacimlere ulaşabileceği öngörülmektedir. Bu nedenle sistemin ölçeklenebilir *(Scalability)* olarak tasarlanması gerektiği belirlenmiş, stok yönetimi, sipariş yönetimi ve tedarikçi entegrasyonu gibi modüllerin birbirinden bağımsız dağıtılabilmesi *(Deployment)* ve yönetilebilmesi gerektiğine karar verilmiştir. `Richards & Ford`'un da belirttiği özelliklere göre, bu gereksinimler için aşağıdaki mimarilerden hangisi en yüksek test edilebilirlik ve ölçeklenebilirlik avantajına sahiptir?
 
 - A) Monolithic Architecture
 - B) Layered Architecture
@@ -108,7 +108,7 @@ public void ProcessOrder(Order order)
 }
 ```
 
-Koda baktığınızda burnuzuza kötü kokular *(Code Smells)* gelmektedir. Sizce bu kod parçasında statik kod tarama aracına da takılacak ne gibi bir sorun vardır?
+Koda baktığınızda burnunuza kötü kokular *(Code Smells)* gelmektedir. Sizce bu kod parçasında statik kod tarama aracına da takılacak ne gibi bir sorun vardır?
 
 - A) Program kodunda zayıf isimlendirme standartları yer almaktadır *(Naming Convention Violation)*
 - B) Kötü niyetli kullanıcılar tarafından kaynak sızıntısı oluşabilir *(Resource Leak)*
@@ -165,15 +165,15 @@ public double CalculateCircleArea(double radius)
 
 - A) Daire alanı hesaplamasında kullanılan PI değeri hatalı verilmiştir.
 - B) Daire alanı hesaplamasında kullanılan formül yanlıştır.
-- C) radius paramtresi için Null kontrolü yapılmamıştır ve bu nedenle NullReferenceException hatası oluşabilir.
-- D) Daire alanı hesaplamasında kullanılan sayısal değer sihirli sayı *(Magic Number)* olarak kodun içerisine gömülmüştür. Bunun yerine bir sabit *(Constant)* ve hatta **Math.PI* enstrümanı kullanılarak kodun okunurluğunu artırıp bakımını kolaylaştırabiliriz.
+- C) radius parametresi için Null kontrolü yapılmamıştır ve bu nedenle NullReferenceException hatası oluşabilir.
+- D) Daire alanı hesaplamasında kullanılan sayısal değer sihirli sayı *(Magic Number)* olarak kodun içerisine gömülmüştür. Bunun yerine bir sabit *(Constant)* ve hatta **Math.PI** enstrümanı kullanılarak kodun okunurluğunu artırıp bakımını kolaylaştırabiliriz.
 
 ## Soru 10
 
 Yapay zeka dil modelleri *(LLM - Large Language Models)* çalıştığınız kurumun içeride kullandığı özel kodlama standartlarını, mimari kararları, geliştirme metodolojilerini veya iş akışlarını bilmez. Asistanın size doğru cevap verebilmesi için, sorduğunuz soruyla birlikte ilgili doküman parçalarının bağlama *(context)* dahil edilmesi gerektiğine karar verdiniz. Bu nedenle kullanıcı sorgusunu mevcut bilgi tabanından veriler getirerek zenginleştiren ve modeli bu özel bilgiyle besleyen bir metodolojide ilerlemeyi planlıyorsunuz. Aşağıdaki stratejilerden hangisini tercih edersiniz?
 
-- A) Retreival Augmented Generation *(RAG)* yaklaşımını benimsemek ve modeli kullanıcı sorgusuyla birlikte ilgili doküman parçalarını da içeren bir bilgi getirme mekanizmasıyla beslemek
-- B) Behaviror Driven Development *(BDD)* yaklaşımını benimsemek ve modeli kullanıcı hikayeleri, kabul kriterleri ve test senaryoları gibi yapılarla beslemek
+- A) Retrieval Augmented Generation *(RAG)* yaklaşımını benimsemek ve modeli kullanıcı sorgusuyla birlikte ilgili doküman parçalarını da içeren bir bilgi getirme mekanizmasıyla beslemek
+- B) Behavior Driven Development *(BDD)* yaklaşımını benimsemek ve modeli kullanıcı hikayeleri, kabul kriterleri ve test senaryoları gibi yapılarla beslemek
 - C) Prompt Engineering yaklaşımını benimsemek ve modeli kullanıcı sorgusuyla birlikte ilgili doküman parçalarını da içeren zenginleştirilmiş promptlarla beslemek
 - D) Test Driven Development *(TDD)* yaklaşımını benimsemek ve modeli kullanıcı sorgusuyla birlikte ilgili doküman parçalarını da içeren test senaryolarıyla beslemek
 
@@ -188,18 +188,18 @@ GitHub Copilot gibi bir yapay zeka asistanından uygulamada yer alan ürün yön
 
 ## Soru 12
 
-Komut satırında çalışan bir Copilot ajanı ile yepyeni bir .NET Solution yapısı kurduğunuz düşünün. Çözümünüz `Hexagonal Architecture` prensiplerine uygun olarak tasarlanmış olsun. Veritabanı tarafında `Postgresql` kullanıyorsunuz ve O/RM *(Object Relational Mapper)* olarak da `Entity Framework Core` tercih ediyorsunuz. Mimari olarak kayıt altına alınmasını istediğiniz bazı kararlar var bunları Claude Sonnet ile oluşturmaya karar verdiniz. `VS Code` arabirminden şu prompt'u verdiniz "Projeyi analiz et ve bu yapıya uygun `Architecture Decision Record (ADR)` dokümanlarını otomatik olarak oluştur."
+Komut satırında çalışan bir Copilot ajanı ile yepyeni bir .NET Solution yapısı kurduğunuzu düşünün. Çözümünüz `Hexagonal Architecture` prensiplerine uygun olarak tasarlanmış olsun. Veritabanı tarafında `PostgreSQL` kullanıyorsunuz ve O/RM *(Object Relational Mapper)* olarak da `Entity Framework Core` tercih ediyorsunuz. Mimari olarak kayıt altına alınmasını istediğiniz bazı kararlar var; bunları Claude Sonnet ile oluşturmaya karar verdiniz. `VS Code` arabiriminden şu prompt'u verdiniz: "Projeyi analiz et ve bu yapıya uygun `Architecture Decision Record (ADR)` dokümanlarını otomatik olarak oluştur."
 
 Bir yapay zeka asistanının mimari karar dokümanları üretmesi ile ilgili olarak aşağıdakilerden hangisi söylenebilir?
 
-- A) Yapay zekanın ürettiği kararlar kesinlikle uygulanmalıdır çünkü büyük dil modelleri kurumsal olarak kabul görmüş mimari standarlarla eğitilmiştir.
+- A) Yapay zekanın ürettiği kararlar kesinlikle uygulanmalıdır çünkü büyük dil modelleri kurumsal olarak kabul görmüş mimari standartlarla eğitilmiştir.
 - B) Yapay zeka kodu analiz edemez, bu sebeple böyle bir komut her zaman hata döndürür.
 - C) Asistan tarafından oluşturulan `ADR` dokümanları taslak olarak kabul edilmeli ve kararlar mutlaka yazılım mimarı/geliştirici tarafından doğrulanıp onaylanmalıdır.
 - D) Sadece Python projeleri yapay zeka tarafından analiz edilebilir, .NET projelerinde böyle bir özellik yoktur.
 
 ## Soru 13
 
-Yapay zeka destekli yazılım geliştirme süreçlerinde, geliştiricilerin yapay zeka asistanlarından gelen çıktıları dikkatlice inceleyip gerektiğinde müdahale ederek ilerlemeleri önemlidir. Bu süreçte kod güvenilirliği, teknik borç ve proje mimarisi gibi konulara dikkat etmek gerekmektedir. Bu bağlamda, Newtonsoft' un oldukça popüler olan Json kütüphanesini projenizde kullanmak istediğinizi düşünün. Projeyi `Nuget` paket yöneticisi ile sisteme ekledikten sonra şu prompt'u verdiniz: "Bu kütüphaneyi kullanarak bir JSON serileştirme ve deserileştirme işlemi gerçekleştiren örnek bir kod parçası oluştur." Ancak kodu çalıştırdığınızda yapay zeka asistanınızın aslında var olmayan, hatalı ve uydurma bilgilerle son derece mantıklı ve bir o kadarda kendinden emin bir şekilde kod ürettiğini gördünüz. Bu durum literatürde ne şekilde tanımlanır?
+Yapay zeka destekli yazılım geliştirme süreçlerinde, geliştiricilerin yapay zeka asistanlarından gelen çıktıları dikkatlice inceleyip gerektiğinde müdahale ederek ilerlemeleri önemlidir. Bu süreçte kod güvenilirliği, teknik borç ve proje mimarisi gibi konulara dikkat etmek gerekmektedir. Bu bağlamda, Newtonsoft'un oldukça popüler olan Json kütüphanesini projenizde kullanmak istediğinizi düşünün. Projeyi `NuGet` paket yöneticisi ile sisteme ekledikten sonra şu prompt'u verdiniz: "Bu kütüphaneyi kullanarak bir JSON serileştirme ve deserileştirme işlemi gerçekleştiren örnek bir kod parçası oluştur." Ancak kodu çalıştırdığınızda yapay zeka asistanınızın aslında var olmayan, hatalı ve uydurma bilgilerle son derece mantıklı ve bir o kadar da kendinden emin bir şekilde kod ürettiğini gördünüz. Bu durum literatürde ne şekilde tanımlanır?
 
 - A) Dil modeli token sınırını aşmıştır ve bu nedenle eksik bilgiyle kod üretmiştir.
 - B) Yapay zeka halüsinasyon *(Hallucination)* sorunu yaşamış var olmayan veya hatalı bilgileri gerçekmiş gibi sunarak kod üretmiştir.
@@ -232,7 +232,7 @@ Veri bilimi ekibinin `Python` ve `PyTorch` kullanarak harika bir makine öğrenm
 
 ## Soru 16
 
-Bir yapay zeka uygulamasının pyhton ile yazılmış yapılandırma dosyasında aşağıdaki değişkenler tanımlanmıştır:
+Bir yapay zeka uygulamasının Python ile yazılmış yapılandırma dosyasında aşağıdaki değişkenler tanımlanmıştır:
 
 ```python
 LM_STUDIO_BASE_URL = "http://127.0.0.1:1234/v1"
@@ -291,7 +291,7 @@ Bu kod parçası ile ilgili olarak aşağıdaki ifadeleri dikkatlice değerlendi
 
 - I. `McpServerTool` ve `McpServerToolType` isimli nitelikler *(attributes)*, bu sınıfın ve metodların bir yapay zeka asistanı tarafından tanınarak belirli işlevler için otomatik olarak kullanılabilmesini sağlar.
 - II. Bu sınıf bir **MCP *(Model Context Protocol)*** sunucu aracı olarak tanımlanmıştır ve bu nedenle yapay zeka asistanları tarafından belirli sorgulara yanıt vermek için kullanılabilir.
-- III. Her iki metot da arka planda bir API servisi çağırmakta ve geriye bir takım performans metriklerini içeren string türünde veriler döndürmektedir.
+- III. Her iki metot da arka planda bir API servisi çağırmakta ve geriye birtakım performans metriklerini içeren string türünde veriler döndürmektedir.
 
 Sizce yukarıda belirtilen ifadelerden hangisi veya hangileri doğrudur?
 
@@ -309,7 +309,7 @@ Aşağıdaki tabloda güncel yapay zeka teknikleri hakkında bazı bilgiler yer 
 | **...** | Yapay zeka asistanlarının harici araçlara standart bir yolla erişmesini sağlayan protokoldür. | Bir yapay zeka ajanının hangi araçlara erişebileceğini ve bu araçları nasıl kullanabileceğini tarif eder. |
 | **...** | Yapay zeka modellerinin bilgi deposundan çekilen parçaları muhakeme sürecine dahil ederek daha kaliteli çıktılar üretmesini sağlayan yaklaşımdır. | Yapay zeka ajanına bir şeyin nasıl yapılacağını öğretmez, sadece mevcut bilgileri referans almasını sağlar. |
 | **...** | Bir dil modelinin belirli bir domain veya görev için özel olarak eğitilmesi sürecidir. | Modelin belirli bir alanda daha iyi performans göstermesini sağlar. |
-| **...** | Yapay zeka ajanlarına yeni yetenekler ve uzmanlıklar kazandırmak için çeşitli talimatları ve kaynakları içeren modüldür. | Bir şeylerin nasıl, hangi sırada ve değerlendirmeye yapılması gerektiğini belirler. |
+| **...** | Yapay zeka ajanlarına yeni yetenekler ve uzmanlıklar kazandırmak için çeşitli talimatları ve kaynakları içeren modüldür. | Bir şeylerin nasıl, hangi sırayla ve neye göre değerlendirileceğini belirler. |
 | **...** | Belirli bir hedefi gerçekleştirmek üzere araçlar, hafıza ve yeteneklerle donatılmış, planlama yapabilen özelleştirilmiş yapay zeka birimi. | Orkestra şefidir. Sadece cevap üretmekle kalmaz; otonom kararlar alarak çok adımlı karmaşık görevleri uçtan uca yönetir ve aksiyon alır. |
 
 **...** şeklinde bırakılan yerlere sırasıyla aşağıdaki kavramlardan hangileri gelmelidir?
@@ -370,7 +370,7 @@ Ajanın dinamik kod üretme ve sorunu otomatik çözme esnekliğinden **vazgeçm
 
 ## Soru 22
 
-**Retreival Augmented Generation *(RAG)*** mimarisi, yapay zeka destekli uygulamalarda bilgiye dayalı ve bağlamsal olarak zengin çıktılar üretmek için kullanılan güçlü bir yaklaşımdır. Temel amaç, dil modellerine sadece kullanıcı sorgusunu değil, aynı zamanda ilgili ve alakalı bilgileri de sağlayarak daha doğru, güncel ve bağlamsal olarak uygun yanıtlar üretmelerini sağlamaktır. Günümüzde ağrılıklı olarak kullanılan birkaç RAG mimari yaklaşımı vardır. Vector RAG, Graph RAG bunlardan en sık kullanılanlarıdır.
+**Retrieval Augmented Generation *(RAG)*** mimarisi, yapay zeka destekli uygulamalarda bilgiye dayalı ve bağlamsal olarak zengin çıktılar üretmek için kullanılan güçlü bir yaklaşımdır. Temel amaç, dil modellerine sadece kullanıcı sorgusunu değil, aynı zamanda ilgili ve alakalı bilgileri de sağlayarak daha doğru, güncel ve bağlamsal olarak uygun yanıtlar üretmelerini sağlamaktır. Günümüzde ağırlıklı olarak kullanılan birkaç RAG mimari yaklaşımı vardır. Vector RAG ve Graph RAG bunlardan en sık kullanılanlarıdır.
 
 - **I.** Vektör RAG, veriyi izole metin blokları olarak anlamsal mesafe metrikleriyle *(kosinüs, öklid vb.)* indekslediği için parçalar arası nedensel ve tarihsel bağları kurmada genellikle yetersiz kalır.
 - **II.** Graph RAG mimarisinde sisteme veri alımı *(data ingestion)* süreci Vektör RAG'e göre çok daha düşük maliyetlidir ve donanımsal açıdan da daha az kaynak gerektirir.
@@ -388,7 +388,7 @@ Bu iki yaklaşım ile ilgili olarak yukarıda belirtilen ifadelerden hangisi vey
 
 Büyük ölçekli kurumsal bir bilgi tabanında *"Şirketin 2026 yılında satın aldığı YeZe isimli girişimin kurucusu hangi üniversiteden mezun olmuştur?"* şeklinde karmaşık ve çok sekmeli *(multi-hop)* bir sorgu çalıştırılacaktır. Şirketin IT departmanında yapay zeka destekli uygulamalar için Vector ve Graph türevli RAG sistemleri yer almaktadır. Bu senaryoyu ve her iki yaklaşımı değerlendirdiğinizde aşağıdakilerden hangisi **söylenemez**?
 
-- A) **Graph RAG** mimarisi dağınık yapıdaki bu bilgiyi ararken sadece anlamsal benzerliğe *(semantic similarity)* güvendiği için retreival *(geri çağırma)* aşamasında Vektör RAG'den daha isabetsiz sonuçlar üretir.
+- A) **Graph RAG** mimarisi dağınık yapıdaki bu bilgiyi ararken sadece anlamsal benzerliğe *(semantic similarity)* güvendiği için retrieval *(geri çağırma)* aşamasında Vektör RAG'den daha isabetsiz sonuçlar üretir.
 - B) **Vektör RAG** sistemlerinde bu tarz çok adımlı sorguların başarısını artırmak için genellikle **Sorgu Yönlendirme *(Query Routing)*** veya **Sorgu Yeniden Yazma *(Query Rewriting)*** gibi ek mimari katmanlara ihtiyaç duyulur.
 - C) **Graph RAG**, `[Şirket]` -> (Satın Aldı) -> `[YeZe Girişimi]` -> (Kurucusu) -> `[Kişi]` -> (Mezun Olduğu) -> `[Üniversite]` şeklindeki ilişkisel ağı tarayarak doğrudan ve deterministik bir bilgi yolunu *(graph traversal)* takip eder.
 - D) **Vektör RAG**, "YeZe girişimi", "kurucu" ve "üniversite" kelimelerinin anlamsal karşılıklarını tek bir uzayda arayacağı için, aynı kelimelerin geçtiği ancak bağlamın tamamen farklı olduğu alakasız dokümanları getirme *(halüsinasyon tetikleme)* riski taşır.
@@ -404,9 +404,9 @@ Büyük ölçekli kurumsal bir bilgi tabanında *"Şirketin 2026 yılında satı
 
 ## Soru 25
 
-Yapay zeka alanında kullanılan temel kavramlar katmanlarına ve işlevlerine göre ele alınabilir. Aşağıdaki tabloda bu iki ana grup ve arasındaki ilişkiler özetlenmektedir.
+Yapay zeka alanında kullanılan temel kavramlar katmanlarına ve işlevlerine göre ele alınabilir. Aşağıdaki tabloda bu iki ana grup arasındaki ilişkiler özetlenmektedir.
 
-| | **Reactive** | **Retreival** | **Orchestration** | **Validation** | **Models** |
+| | **Reactive** | **Retrieval** | **Orchestration** | **Validation** | **Models** |
 | --- | --- | --- | --- | --- | --- |
 | **Primitives** | Pr *(Prompt)* | Em *(Embeddings)* | | | Lg *(Large LM)* |
 | **Compositions** | Fc *(Function Call)* | Vx *(Vector)* | Rg *(RAG)* | Gr *(Guardrails)* | Mm *(Multi Model)* |
@@ -417,19 +417,30 @@ Yapay zeka alanında kullanılan temel kavramlar katmanlarına ve işlevlerine g
 
 Geliştirmekte olduğunuz LLM tabanlı kodlama asistanını yakında canlı ortama alacaksınız. Asistanı devreye almadan önce, sistemin kötü niyetli komutlar *(jailbreak denemeleri)* çalıştırıp çalıştırmadığını test eden bir simülasyon ortamı kurdunuz. Simülasyon ortamında yapılan sızma testleri sonucuna göre de uygulamanın zararlı çıktı üretmesini engellemek için araya bir güvenlik katmanı eklemeye karar verdiniz. Bu senaryoda uygulanan test süreci ve alınan mimari önlem, sorudaki tabloda yer alan hangi **Validation *(Doğrulama)*** bileşenleriyle eşleşmektedir?
 
-- A) Ag *(Agent) ve Fc *(Function Call)*
-- B) Gr *(Guardrails) ve Rt *(Red-Team)*
+- A) Ag *(Agent)* ve Fc *(Function Call)*
+- B) Gr *(Guardrails)* ve Rt *(Red-Team)*
 - C) Rg *(RAG)* ve Ft *(Fine-Tune)*
-- D) Ma *(Multi-Agent) ve Sy *(Synthetic)*
+- D) Ma *(Multi-Agent)* ve Sy *(Synthetic)*
 
 ## Soru 26
 
-25nci soruda yer alan ana tabloyu tekrardan göz önüne alalım. Yeni senaryoda kullanıcıların komut satırından verdiği karmaşık talimatlara göre çeşitli işletim sistemi komutlarını çalıştıran, gerektiğinde harici API servis noktalarına bağlanıp veri çekebilen otonom bir asistan tasarladığınızı düşünün. Yazılımın sonraki sürümlerinde ise tek bir asistan yerine, her biri farklı uzmanlıklara sahip ve kendi aralarında da haberleşebilen bir dağıtık yapıya gitmeyi planlıyorsunuz. Bu asistanın mevcut durumda dış sistemlerle etkileşime girmesini sağlayan yetenek ve sonraki planlama düşünüldüğünde sistemin temelini şıklarda belirtilen hangi bileşenler oluşturur?
+25'inci soruda yer alan ana tabloyu tekrardan göz önüne alalım. Yeni senaryoda kullanıcıların komut satırından verdiği karmaşık talimatlara göre çeşitli işletim sistemi komutlarını çalıştıran, gerektiğinde harici API servis noktalarına bağlanıp veri çekebilen otonom bir asistan tasarladığınızı düşünün. Yazılımın sonraki sürümlerinde ise tek bir asistan yerine, her biri farklı uzmanlıklara sahip ve kendi aralarında da haberleşebilen bir dağıtık yapıya gitmeyi planlıyorsunuz. Bu asistanın mevcut durumda dış sistemlerle etkileşime girmesini sağlayan yetenek ve sonraki planlama düşünüldüğünde sistemin temelini şıklarda belirtilen hangi bileşenler oluşturur?
 
 - A) Em *(Embeddings)* ve Vx *(Vector)*
 - B) Gr *(Guardrails)* ve Rt *(Red-Team)*
 - C) Ft *(Fine-Tune)* ve Sm *(Small LM)*
 - D) Fc *(Function Call)* , Ag *(Agent)* ve Ma *(Multi-Agent)*
+
+## Soru 27
+
+25'inci soruda yer alan ana tabloyu tekrardan göz önüne alalım. Yeni senaryonun sahibi bir hukuk bürosu. Büronun binlerce sayfadan oluşan dava dosyalarını ve içtihat metinlerini yapay zeka aracılığıyla sorgulayabilen bir sistem tasarlandığını düşünün. Belgeler çok uzun ve LLM'in bağlam penceresinin *(Context Window)* boyutlarına da sığmıyor. Sorunu çözmek için yazılım geliştirme ekibi; metinleri anlamsal matematiksel temsillere dönüştürüp özel bir veritabanında saklamaya ve kullanıcı soru sorduğunda en alakalı bilgi parçalarını bu veritabanından çekip modele göndermeye karar veriyor.
+
+Bu senaryoda hukuk bürosunun kurmak istediği mimariyi sıfırdan inşa etmek için tablodaki hangi **Retrieval** bileşenlerini sırayla kullanmak gerekir?
+
+- A) Em *(Embeddings)*, Vx *(Vector)* ve Rg *(RAG)*
+- B) Ft *(Fine-Tune)*, Sy *(Synthetic)* ve Gr *(Guardrails)*
+- C) Lg *(Large LM)*, Th *(Thinking)* ve Ag *(Agent)*
+- D) Fc *(Function Call)*, Ma *(Multi-Agent)* ve Sy *(Synthetic)*
 
 ## Cevap Anahtarı
 
@@ -461,3 +472,4 @@ Geliştirmekte olduğunuz LLM tabanlı kodlama asistanını yakında canlı orta
 | 24      | C           |
 | 25      | B           |
 | 26      | D           |
+| 27      | A           |
