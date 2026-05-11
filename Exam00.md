@@ -249,12 +249,14 @@ CHUNK_OVERLAP = 50
 SUPPORTED_EXTENSIONS = {".txt", ".md", ".pdf", ".docx"}
 ```
 
-Tanımlı yapılandırma değerleri ve `RAG` mimarisinin çalışma prensiplerine göre aşağıdaki ifadelerden hangileri doğrudur?
+Aşağıda bu değişkenlerle ilgili bazı ifadelere yer verilmiştir.
 
 - I. Büyük belgeler sisteme yüklenirken 500 birimlik *(token/karakter)* parçalara ayrılacak; ancak cümlelerin veya paragraf bağlamının ortadan bölünmemesi *(anlam kaybı yaşanmaması)* için ardışık her bir parça, bir öncekinin 50 birimlik kısmını içerecek *(overlap)* şekilde kesişecektir.
 - II. `Qdrant` veritabanında `documents` adıyla oluşturulacak olan koleksiyonun *(collection)* vektör boyutu mutlaka **768** olarak ayarlanmalıdır. Aksi takdirde modelin ürettiği vektörler veritabanına kaydedilemez.
 - III. Sistem `PDF` ve `DOCX` gibi zengin içerikli dosyaları desteklediği için, bu dosyalar hiçbir metin ayıklama *(text parsing/extraction)* işlemine tabi tutulmadan doğrudan `Qdrant` veritabanına ikili *(binary)* formatta kaydedilecektir.
 - IV. Verilen URL ve model ismine bakıldığında, metinleri matematiksel vektörlere dönüştürme işlemi için dışarıdan bir bulut API'si *(örn. OpenAI)* değil, yerel *(localhost)* ortamda barındırılan bir dil modeli kullanılmaktadır.
+
+Tanımlı yapılandırma değerleri ve `RAG` mimarisinin çalışma prensiplerine göre yukarıdaki ifadelerden hangileri doğrudur?
 
 - A) Yalnızca I ve II
 - B) Yalnızca II ve IV
@@ -285,11 +287,13 @@ public class BenchmarkTools
 }
 ```
 
-Sizce bu kod parçası ile ilgili olarak aşağıda belirtilen ifadelerden hangisi veya hangileri doğrudur?
+Bu kod parçası ile ilgili olarak aşağıdaki ifadeleri dikkatlice değerlendirin.
 
 - I. `McpServerTool` ve `McpServerToolType` isimli nitelikler *(attributes)*, bu sınıfın ve metodların bir yapay zeka asistanı tarafından tanınarak belirli işlevler için otomatik olarak kullanılabilmesini sağlar.
 - II. Bu sınıf bir **MCP *(Model Context Protocol)*** sunucu aracı olarak tanımlanmıştır ve bu nedenle yapay zeka asistanları tarafından belirli sorgulara yanıt vermek için kullanılabilir.
 - III. Her iki metot da arka planda bir API servisi çağırmakta ve geriye bir takım performans metriklerini içeren string türünde veriler döndürmektedir.
+
+Sizce yukarıda belirtilen ifadelerden hangisi veya hangileri doğrudur?
 
 - A) Yalnızca I
 - B) Yalnızca II
@@ -342,10 +346,10 @@ Burada **?** (soru işareti) ile gösterilen bileşenle ilgili şıklarda belirt
 
 Bu yeni özelliği geliştirirken aşağıdaki stratejilerden hangisini tercih edersiniz?
 
-A) Şirketin geçmiş satış verileri, müşteri davranışları ve araç kataloğunu derleyerek açık kaynaklı bir modele **Fine-Tuning** uygulamak ve bu sayede dış servislere bağımlılığı olmayan, şirkete özel kapalı bir öneri modeli eğitmek.
-B) Tüm araç kataloğunu ve müşteri profillerini düzenli olarak bir vektör veri tabanına senkronize ederek **RAG *(Retrieval-Augmented Generation)*** mimarisi kurmak ve anlamsal arama *(similarity search)* üzerinden yapay zekanın öneriler üretmesini sağlamak.
-C) Mevcut envanter ve müşteri servislerini **MCP *(Model Context Protocol)*** sunucuları olarak dışa açıp, LLM tabanlı bir vekil ajanın *(agent)* ihtiyaç anında canlı sistemlere standart bir arayüzle bağlanıp *(tool-calling)* bağlamı *(context)* gerçek zamanlı inşa etmesini sağlamak.
-D) İlgili müşterinin tüm profil verilerini ve o anki muhtemel uygun stok listesinin tamamını REST API üzerinden çekip, her istekte LLM bağlam penceresine *(context window)* **JSON** formatlı bir dosya şeklinde enjekte etmek *(prompt-stuffing)* ve anlık öneri üretmek.
+- A) Şirketin geçmiş satış verileri, müşteri davranışları ve araç kataloğunu derleyerek açık kaynaklı bir modele **Fine-Tuning** uygulamak ve bu sayede dış servislere bağımlılığı olmayan, şirkete özel kapalı bir öneri modeli eğitmek.
+- B) Tüm araç kataloğunu ve müşteri profillerini düzenli olarak bir vektör veri tabanına senkronize ederek **RAG *(Retrieval-Augmented Generation)*** mimarisi kurmak ve anlamsal arama *(similarity search)* üzerinden yapay zekanın öneriler üretmesini sağlamak.
+- C) Mevcut envanter ve müşteri servislerini **MCP *(Model Context Protocol)*** sunucuları olarak dışa açıp, LLM tabanlı bir vekil ajanın *(agent)* ihtiyaç anında canlı sistemlere standart bir arayüzle bağlanıp *(tool-calling)* bağlamı *(context)* gerçek zamanlı inşa etmesini sağlamak.
+- D) İlgili müşterinin tüm profil verilerini ve o anki muhtemel uygun stok listesinin tamamını REST API üzerinden çekip, her istekte LLM bağlam penceresine *(context window)* **JSON** formatlı bir dosya şeklinde enjekte etmek *(prompt-stuffing)* ve anlık öneri üretmek.
 
 ## Soru 21
 
@@ -366,12 +370,14 @@ Ajanın dinamik kod üretme ve sorunu otomatik çözme esnekliğinden **vazgeçm
 
 ## Soru 22
 
-**Retreival Augmented Generation *(RAG)*** mimarisi, yapay zeka destekli uygulamalarda bilgiye dayalı ve bağlamsal olarak zengin çıktılar üretmek için kullanılan güçlü bir yaklaşımdır. Temel amaç, dil modellerine sadece kullanıcı sorgusunu değil, aynı zamanda ilgili ve alakalı bilgileri de sağlayarak daha doğru, güncel ve bağlamsal olarak uygun yanıtlar üretmelerini sağlamaktır. Günümüzde ağrılıklı olarak kullanılan birkaç RAG mimari yaklaşımı vardır. Vector RAG, Graph RAG bunlardan en sık kullanılanlarıdır. Bu iki yaklaşım ile ilgili olarak aşağıdaki ifadelerden hangisi veya hangileri doğrudur?
+**Retreival Augmented Generation *(RAG)*** mimarisi, yapay zeka destekli uygulamalarda bilgiye dayalı ve bağlamsal olarak zengin çıktılar üretmek için kullanılan güçlü bir yaklaşımdır. Temel amaç, dil modellerine sadece kullanıcı sorgusunu değil, aynı zamanda ilgili ve alakalı bilgileri de sağlayarak daha doğru, güncel ve bağlamsal olarak uygun yanıtlar üretmelerini sağlamaktır. Günümüzde ağrılıklı olarak kullanılan birkaç RAG mimari yaklaşımı vardır. Vector RAG, Graph RAG bunlardan en sık kullanılanlarıdır.
 
 - **I.** Vektör RAG, veriyi izole metin blokları olarak anlamsal mesafe metrikleriyle *(kosinüs, öklid vb.)* indekslediği için parçalar arası nedensel ve tarihsel bağları kurmada genellikle yetersiz kalır.
 - **II.** Graph RAG mimarisinde sisteme veri alımı *(data ingestion)* süreci Vektör RAG'e göre çok daha düşük maliyetlidir ve donanımsal açıdan da daha az kaynak gerektirir.
 - **III.** Açıklanabilirlik *(Explainability)* gereksiniminin kritik olduğu finans ve tıp gibi regüle edilmiş sektörlerde, modelin hangi veri noktalarından sonuca ulaştığını denetlenebilir alt ağlar *(subgraphs)* üzerinden kanıtlamak adına Graph RAG daha avantajlıdır.
 - **IV.** Dağıtık sistem mimarilerinde yatay ölçeklenme *(sharding)* senaryoları ele alındığında, **Graph RAG** ağ bütünlüğünü koruma gereksiniminden dolayı **Vektör RAG**'e kıyasla çok daha basit bir planlama gerektirir.
+
+Bu iki yaklaşım ile ilgili olarak yukarıda belirtilen ifadelerden hangisi veya hangileri doğrudur?
 
 - A) Yalnızca I
 - B) Yalnızca II ve III
@@ -395,6 +401,35 @@ Büyük ölçekli kurumsal bir bilgi tabanında *"Şirketin 2026 yılında satı
 - B) **Vektör RAG**, metinleri belirli boyutlarda *(chunking)* parçaladığı için domain tabanlı varlık ilişkilerini, **Graph RAG**'in ilişkisel ağına kıyasla çok daha bütünsel bir şekilde muhafaza eder.
 - C) **Graph RAG** tercih edilirse, veri alımı *(Data Ingestion)* aşamasında metinlerden `node` ve `edge` çıkarımı yapmak için bir Doğal Dil İşleme modeli çalıştırmak zorunda kalacak, bu da veri indeksleme maliyetini ve süresini başlangıçta oldukça artıracaktır.
 - D) **Vektör RAG** kullanılması, varlıklar arası durum geçişlerini ve yapısal şemaları doğrudan modellemek için en maliyetsiz ve uygun mimari seçimdir.
+
+## Soru 25
+
+Yapay zeka alanında kullanılan temel kavramlar katmanlarına ve işlevlerine göre ele alınabilir. Aşağıdaki tabloda bu iki ana grup ve arasındaki ilişkiler özetlenmektedir.
+
+| | **Reactive** | **Retreival** | **Orchestration** | **Validation** | **Models** |
+| --- | --- | --- | --- | --- | --- |
+| **Primitives** | Pr *(Prompt)* | Em *(Embeddings)* | | | Lg *(Large LM)* |
+| **Compositions** | Fc *(Function Call)* | Vx *(Vector)* | Rg *(RAG)* | Gr *(Guardrails)* | Mm *(Multi Model)* |
+| **Deployment** | Ag *(Agent)* | Ft *(Fine Tune)* | Fw *(Framework)* | Rt *(Red-Team)* | Sm *(Small LM)* |
+| **Emerging** | Ma *(Multi Agent)* | Sy *(Synthetic)* | | In *(Interpret)* | Th *(Thinking)* |
+
+*Kaynak:* Martin Keen, Master Inventor, IBM
+
+Geliştirmekte olduğunuz LLM tabanlı kodlama asistanını yakında canlı ortama alacaksınız. Asistanı devreye almadan önce, sistemin kötü niyetli komutlar *(jailbreak denemeleri)* çalıştırıp çalıştırmadığını test eden bir simülasyon ortamı kurdunuz. Simülasyon ortamında yapılan sızma testleri sonucuna göre de uygulamanın zararlı çıktı üretmesini engellemek için araya bir güvenlik katmanı eklemeye karar verdiniz. Bu senaryoda uygulanan test süreci ve alınan mimari önlem, sorudaki tabloda yer alan hangi **Validation *(Doğrulama)*** bileşenleriyle eşleşmektedir?
+
+- A) Ag *(Agent) ve Fc *(Function Call)*
+- B) Gr *(Guardrails) ve Rt *(Red-Team)*
+- C) Rg *(RAG)* ve Ft *(Fine-Tune)*
+- D) Ma *(Multi-Agent) ve Sy *(Synthetic)*
+
+## Soru 26
+
+25nci soruda yer alan ana tabloyu tekrardan göz önüne alalım. Yeni senaryoda kullanıcıların komut satırından verdiği karmaşık talimatlara göre çeşitli işletim sistemi komutlarını çalıştıran, gerektiğinde harici API servis noktalarına bağlanıp veri çekebilen otonom bir asistan tasarladığınızı düşünün. Yazılımın sonraki sürümlerinde ise tek bir asistan yerine, her biri farklı uzmanlıklara sahip ve kendi aralarında da haberleşebilen bir dağıtık yapıya gitmeyi planlıyorsunuz. Bu asistanın mevcut durumda dış sistemlerle etkileşime girmesini sağlayan yetenek ve sonraki planlama düşünüldüğünde sistemin temelini şıklarda belirtilen hangi bileşenler oluşturur?
+
+- A) Em *(Embeddings)* ve Vx *(Vector)*
+- B) Gr *(Guardrails)* ve Rt *(Red-Team)*
+- C) Ft *(Fine-Tune)* ve Sm *(Small LM)*
+- D) Fc *(Function Call)* , Ag *(Agent)* ve Ma *(Multi-Agent)*
 
 ## Cevap Anahtarı
 
@@ -424,3 +459,5 @@ Büyük ölçekli kurumsal bir bilgi tabanında *"Şirketin 2026 yılında satı
 | 22      | C           |
 | 23      | A           |
 | 24      | C           |
+| 25      | B           |
+| 26      | D           |
