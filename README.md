@@ -26,6 +26,9 @@ Konya Gıda ve Tarım Üniversitesi Yazılım Mühendisliği ve Pamukkale Ünive
   - [Gün 13 - Yapay Zeka Destekli Yazılım Geliştirmede Güvenlik](#gün-13---yapay-zeka-destekli-yazılım-geliştirmede-güvenlik)
   - [Gün 14 - Proje Sunumları](#gün-14---proje-sunumları)
   - [Ek 1 - Klasik RAG, Graph RAG ve Knowledge Graphler](#ek-1---klasik-rag-graph-rag-ve-knowledge-graphler)
+  - [Ek 2 - Token Kullanımlarını Open Telemetry ve Aspire Dashboard ile İzlemek](#ek-2---token-kullanımlarını-open-telemetry-ve-aspire-dashboard-ile-i̇zlemek)
+    - [Setup](#setup)
+    - [Deneme](#deneme)
   - [Aman Dikkat](#aman-dikkat)
   - [Ders Geçme Prosedürü](#ders-geçme-prosedürü)
     - [Proje Değerlendirmesi](#proje-değerlendirmesi)
@@ -783,10 +786,64 @@ Aşağıdaki tabloda bu iki yöntem arasındaki temel farklar özetlenmektedir.
 
 todo@buraksenyurt GENİŞLETİLECEK
 
+## Ek 2 - Token Kullanımlarını Open Telemetry ve Aspire Dashboard ile İzlemek
+
+Yapay zeka araçlarının token maliyetleri, kullanım bedelleri ve lisanslamalar zamanla değişiyor. Bu nedenle yapay zeka destekli uygulamalar geliştirirken, bu araçların kullanımını ve maliyetlerini izlemek önemlidir. **Open Telemetry** gibi açık kaynaklı gözlemleme araçları, uygulamanızın yapay zeka araçlarına yaptığı çağrıları, kullanılan token miktarını ve diğer ilgili metrikleri takip etmek için kullanılabilir. **Aspire Dashboard** gibi özel panolar ise bu verileri görselleştirerek, hangi araçların ne kadar kullanıldığını, hangi işlemlerin daha fazla token tükettiğini ve genel maliyet trendlerini anlamanıza yardımcı olabilir. Örneğin **Visual Studio Code** arabiriminde çalışırken, **Context Window** daki kullanımları **Open Telemetry** araclığı ile **Microsoft Aspire Dashboard**' a gönderip takip edebiliriz.
+
+### Setup
+
+Öncelikle Aspire Dashboard' u ayağa kaldıralım. Local ortamda çalışırken bu amaçla **docker container** kullanabiliriz. **docker-compose.yml** dosyasına aşağıdaki servisi eklemek yeterli.
+
+```yaml
+aspire-dashboard:
+    image: mcr.microsoft.com/dotnet/aspire-dashboard:latest
+    container_name: ai-aspire-dashboard
+    restart: always
+    ports:
+      - "18888:18888" # Dashboard UI Portu
+      - "4317:18889"  # OTLP gRPC Portu (VS Code Copilot'un veri göndereceği port)
+      - "4318:18890"  # OTLP HTTP Portu
+    environment:
+      ASPIRE_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS: "true"
+```
+
+Servisi başlattıktan sonra `http://localhost:18888` adresinden Aspire Dashboard' a erişebiliriz. Dashboard üzerinde yapay zeka araçlarının kullanımını izlemek için **Open Telemetry**'nin OTLP protokolü üzerinden veri göndermesi gerekir. **Visual Studio Code** üzerinde çalışırken, **VS Code Copilot** gibi yapay zeka araçlarının kullanımını izlemek için **Open Telemetry**'nin OTLP gRPC portuna veri göndermesi sağlanabilir. Bunun için **VS Code**'un `settings.json` dosyasına aşağıdaki konfigürasyonu ekleyebiliriz.
+
+```json
+"github.copilot.chat.otel.enabled": true,
+"github.copilot.chat.otel.exporterType": "otlp-grpc",
+"github.copilot.chat.otel.otlpEndpoint": "http://localhost:4317",
+"github.copilot.chat.otel.captureContent": true
+```
+
+Öncelikle otel.enabled ile Telemetry log aktarım özelliğini etkinleştiriyoruz. Verinin **gRPC** protokolü üzerinden gönderilmesi için exporterType'ı `otlp-grpc` olarak belirtiyoruz. Local ortamda logların akacağı endpoint'i ise `http://localhost:4317` olarak tanımlıyoruz. Son olarak **captureContent** özelliği ile logların içeriğinin de gönderilmesini sağlıyoruz.
+
+### Deneme
+
+Örnek bir senaryo ile logları inceleyelim. Context Window pencersinde, **ask** modunda, herhangi bir dil modeline aşağıdaki soruyu sorduğumuzu düşünelim. *(docker-compose.yml dosyası açıkken)*
+
+```text
+Bu docker dosyasındaki servislerin hangi amaçla kullanıldığını söyler misin?
+```
+
+İşlemler devam ederken ve tamamlandığında **Aspire Dashboard**'un logları yakaladığını görürüz.
+
+![Aspire Dashboard](./images/day14_01.png)
+
+Özellikle dikkat etmemiz gereken noktalardan birisi söz konusu işlemler için harcanan token miktarlarıdır. Örneğin bu soru için içeriğin hazırlandığı **Mayıs 2026** tarihi itibariyle **gpt 5.4** modeli için harcanan token değerleri aşağıdaki gibidir.
+
+- Cache Üzerinden Okunan Token Sayısı: 8704
+- Girdi Token Sayısı: 11773
+- Çıktı Token Sayısı: 768
+
+![Aspire Dashboard II](./images/day14_02.png)
+
 ## Aman Dikkat
 
 - Yapay zeka botları ile çalışırken şifre, gizli anahtar, kişisel veri gibi hassas bilgileri prompt'lara dahil etmekten kaçınmalısınız. Bu tür bilgilerin istemeden de olsa loglanması veya üçüncü taraflarla paylaşılması ciddi güvenlik risklerine yol açabilir. Lisanslı modeller kullanırken de mutlaka sözleşme şartlarını dikkatlice inceleyin ve gizlilik politikalarını anlayın.
-- Yapay zeka araçlarının ürettiği kodların güvenlik açıkları içermediğinden emin olmak için kodu dikkatlice inceleyin ve gerekirse güvenlik tarama araçları kullanarak analiz edin. Özellikle web uygulamaları geliştirirken SQL injection, XSS gibi yaygın güvenlik açıklarına karşı dikkatli olmak gerekiyor.
+- Yapay zeka araçlarının ürettiği kodların güvenlik açıkları içermediğinden emin olmak için kodu dikkatlice inceleyin ve gerekirse güvenlik tarama araçları kullanarak analiz edin. Özellikle web uygulamaları geliştirirken **SQL injection**, **XSS** gibi yaygın güvenlik açıklarına karşı dikkatli olmak gerekiyor.
+- Birçok yapay zeka aracı vardır, **CLI**, **Context Window**, **MCP**, **RAG**, **Custom Agents**, **Skills** gibi farklı araçların ne işe yaradığını, hangi senaryolarda kullanılması gerektiğini ve birbirleriyle nasıl ilişkilendirilebileceğini iyi anlamak önemlidir. Bu araçları bilinçli bir şekilde kullanmak, güvenlik risklerini azaltmaya yardımcı olur.
+- Kullanılan teknik ne olursa olsun yapay zeka araçları dil modelleri ile çalıştıklarından token tüketir. Token'lar lisanslama modellerine göre farklı maliyetlere sahip olabilirler. Senaryoya göre doğru araçları seçmek, basit bir prompt kullanırken bile token maliyetinin çok yüksek olabileceğini göz önüne almak önemlidir. Harcanan token maliyetlerini local ortamda ölçümlemek için **Ek 2**'deki teknikleri kullanabilirsiniz.
 - Kodun yüksek kalitede olduğunu garanti etmek için statik kod tarama araçlarından yararlanın. Örneğin, .NET projeleri için **SonarQube**, **JavaScript** projeleri için **ESLint** gibi araçlar ile kod kalitesini sıklıkla ölçün. Code Review ve Pull Request gibi süreçleri atlamayın, insan denetimi her zaman önemlidir.
 - Kendi yapabileceğimiz çok basit bir kod parçasını yapay zeka aracına yazdırmak yerine, yapay zeka araçlarını daha karmaşık, zaman alan, aynı görevin sürekli tekrar ettiği işler için kullanmak daha verimli olabilir. Örneğin bir **MongoDB Docker** imaj tanımını resmî sitesinden alıp projeye uygulamayı yapay zeka aracına yazdırmak yerine, ayağa kaldırdığımız bir imajın çalışması ile ilgili içinden çıkamadığımız bir hatayı çözmek için yapay zeka aracından yardım almak daha verimli olabilir.
 - İyi **prompt**'lar vermek, yapay zeka araçlarından kaliteli çıktılar almak için kritik öneme sahiptir. Prompt'larınızda açık ve net olun, gerekli detayları sağlayın ve mümkünse örnekler verin. Çıktıları mutlaka dikkatlice inceleyin, ispat arayın, doğruluğundan emin olun. Yapay zeka araçlarının ürettiği çıktıları denetleyen kodlar da geliştirebilirsiniz ;-)

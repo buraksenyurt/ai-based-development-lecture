@@ -35,6 +35,19 @@ services:
     networks:
       - ai-app-network
 
+  aspire-dashboard:
+    image: mcr.microsoft.com/dotnet/aspire-dashboard:latest
+    container_name: ai-aspire-dashboard
+    restart: always
+    ports:
+      - "18888:18888" # Dashboard UI Portu
+      - "4317:18889"  # OTLP gRPC Portu (VS Code Copilot'un veri göndereceği port)
+      - "4318:18890"  # OTLP HTTP Portu
+    environment:
+      ASPIRE_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS: "true"
+    networks:
+      - ai-app-network
+
 networks:
   ai-app-network:
     driver: bridge
