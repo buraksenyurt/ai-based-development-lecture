@@ -27,8 +27,9 @@ Konya Gıda ve Tarım Üniversitesi Yazılım Mühendisliği ve Pamukkale Ünive
   - [Gün 14 - Proje Sunumları](#gün-14---proje-sunumları)
   - [Ek 1 - Klasik RAG, Graph RAG ve Knowledge Graphler](#ek-1---klasik-rag-graph-rag-ve-knowledge-graphler)
   - [Ek 2 - Token Kullanımlarını Open Telemetry ve Aspire Dashboard ile İzlemek](#ek-2---token-kullanımlarını-open-telemetry-ve-aspire-dashboard-ile-i̇zlemek)
-    - [Setup](#setup)
+    - [Setup (Visual Studio Code)](#setup-visual-studio-code)
     - [Deneme](#deneme)
+    - [Setup (Copilot CLI)](#setup-copilot-cli)
   - [Aman Dikkat](#aman-dikkat)
   - [Ders Geçme Prosedürü](#ders-geçme-prosedürü)
     - [Proje Değerlendirmesi](#proje-değerlendirmesi)
@@ -790,7 +791,7 @@ todo@buraksenyurt GENİŞLETİLECEK
 
 Yapay zeka araçlarının token maliyetleri, kullanım bedelleri ve lisanslamalar zamanla değişiyor. Bu nedenle yapay zeka destekli uygulamalar geliştirirken, bu araçların kullanımını ve maliyetlerini izlemek önemlidir. **Open Telemetry** gibi açık kaynaklı gözlemleme araçları, uygulamanızın yapay zeka araçlarına yaptığı çağrıları, kullanılan token miktarını ve diğer ilgili metrikleri takip etmek için kullanılabilir. **Aspire Dashboard** gibi özel panolar ise bu verileri görselleştirerek, hangi araçların ne kadar kullanıldığını, hangi işlemlerin daha fazla token tükettiğini ve genel maliyet trendlerini anlamanıza yardımcı olabilir. Örneğin **Visual Studio Code** arabiriminde çalışırken, **Context Window** daki kullanımları **Open Telemetry** araclığı ile **Microsoft Aspire Dashboard**' a gönderip takip edebiliriz.
 
-### Setup
+### Setup (Visual Studio Code)
 
 Öncelikle Aspire Dashboard' u ayağa kaldıralım. Local ortamda çalışırken bu amaçla **docker container** kullanabiliriz. **docker-compose.yml** dosyasına aşağıdaki servisi eklemek yeterli.
 
@@ -805,6 +806,12 @@ aspire-dashboard:
       - "4318:18890"  # OTLP HTTP Portu
     environment:
       ASPIRE_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS: "true"
+```
+
+Eğer Aspire Dashboard'unu doğrudan docker ile başlatmak istersek aşağıdaki komutla da hareket edebiliriz.
+
+```bash
+docker run -d --name aspire-dashboard --restart unless-stopped -p 18888:18888 -p 4317:18889 -p 4318:18890 -e ASPIRE_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS=true mcr.microsoft.com/dotnet/aspire-dashboard:latest
 ```
 
 Servisi başlattıktan sonra `http://localhost:18888` adresinden Aspire Dashboard' a erişebiliriz. Dashboard üzerinde yapay zeka araçlarının kullanımını izlemek için **Open Telemetry**'nin OTLP protokolü üzerinden veri göndermesi gerekir. **Visual Studio Code** üzerinde çalışırken, **VS Code Copilot** gibi yapay zeka araçlarının kullanımını izlemek için **Open Telemetry**'nin OTLP gRPC portuna veri göndermesi sağlanabilir. Bunun için **VS Code**'un `settings.json` dosyasına aşağıdaki konfigürasyonu ekleyebiliriz.
@@ -837,6 +844,59 @@ Bu docker dosyasındaki servislerin hangi amaçla kullanıldığını söyler mi
 - Çıktı Token Sayısı: 768
 
 ![Aspire Dashboard II](./images/day14_02.png)
+
+### Setup (Copilot CLI)
+
+Vekil yapay zeka ajanları farklı araçlarla kullanılabilir. Visual Studio Code, Visual Studio gibi kod geliştirme araçlarının chat pencereleri, Claude CLI gibi terminal arabirimleri vs Aradaki iletişimi dinleyerek giden gelen token değerlerini, sistem promptlarını, süre bazlı ölçümlemeleri görmek mümkündür. Tüm bunlar ilgili arabirimlerin **Open Telemetry** gibi standartlarda bilgi vermesi üzerine kuruludur. Ölçümlerde bir dashboard kullanarak monitoring kolaylaştırılır. Copilot CLI tarafından çıkan metriklerin izlenmesi için de bazı ortam parametrelerinin sisteme eklenmesi gerekir. **Windows** ortamında aşağıdaki **powershell** komutları ile ilerlenebilir. Burada kullanıcı bazından bir ortam ayarı yapılmaktadır.
+
+```bash
+Environment]::SetEnvironmentVariable(
+    "COPILOT_OTEL_ENABLED",
+    "true",
+    "User"
+)
+
+[Environment]::SetEnvironmentVariable(
+    "OTEL_EXPORTER_OTLP_ENDPOINT",
+    "http://localhost:4318",
+    "User"
+) 
+
+[Environment]::SetEnvironmentVariable(
+    "COPILOT_OTEL_EXPORTER_TYPE",
+    "otlp-http",
+    "User"
+) 
+
+[Environment]::SetEnvironmentVariable(
+    "OTEL_SERVICE_NAME",
+    "github-copilot-cli",
+    "User"
+)
+```
+
+Ubuntu tarafında kalıcı olarak ilgili ayarları oluşturmak için ilgili değişkenler doğrudan `~/.bashrc` dosyasına eklenebilir.
+
+```bash
+cat >> ~/.bashrc <<'EOF'
+
+# GitHub Copilot CLI - OpenTelemetry
+export COPILOT_OTEL_ENABLED=true
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318
+export COPILOT_OTEL_EXPORTER_TYPE=otlp-http
+export OTEL_SERVICE_NAME=github-copilot-cli
+EOF
+```
+
+> Sistemde birden fazla open telemetry değişkeni kullanılacaksa ayrı konfigurasyon dosyaları hazırlayıp `bashrc` dosyasından referans vermek daha mantıklı olur.
+
+Copilot CLI kullanımı sırasında Aspire Dashboard ile izlenebilecek örnek sayfalar aşağıdaki gibidir.
+
+![Aspire Dashboard III](./images/day14_03.png)
+
+Örnek bir istek sonrası oluşan token kullanımlarına ait grafiksel özet.
+
+![Aspire Dashboard IV](./images/day14_04.png)
 
 ## Aman Dikkat
 
