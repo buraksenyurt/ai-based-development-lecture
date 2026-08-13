@@ -71,8 +71,8 @@ trainer = SFTTrainer(
         warmup_steps = 5,
         max_steps = 60, # Deney için adım sayısını kısa tuttuk
         learning_rate = 2e-4,
-        fp16 = not torch.cuda.is_warmup_穩定_bf16_supported(),
-        bf16 = torch.cuda.is_warmup_穩定_bf16_supported(),
+        fp16 = not torch.cuda.is_bf16_supported(),
+        bf16 = torch.cuda.is_bf16_supported(),
         logging_steps = 1,
         output_dir = "outputs",
     ),
