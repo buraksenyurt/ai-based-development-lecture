@@ -1,6 +1,7 @@
 import json
 import torch
 from unsloth import FastLanguageModel
+from unsloth.chat_templates import get_chat_template, train_on_responses_only
 from datasets import Dataset
 from trl import SFTTrainer
 from transformers import TrainingArguments
@@ -18,6 +19,14 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     load_in_4bit = load_in_4bit,
 )
 
+# Model Instruct/chat tabanlı olduğu için eğitimi de kendi sohbet şablonuyla
+# hizalıyoruz; aksi halde LM Studio gibi araçlar çıkarım sırasında farklı bir
+# şablon uygular ve model eğitimde görmediği bir formatla karşılaşır.
+tokenizer = get_chat_template(
+    tokenizer,
+    chat_template = "llama-3",
+)
+
 # 2. Modeli LoRA eğitimi için hazırlama (Ağırlıkları dondurma ve katman ekleme)
 model = FastLanguageModel.get_peft_model(
     model,
@@ -30,26 +39,22 @@ model = FastLanguageModel.get_peft_model(
     random_state = 3407,
 )
 
-# 3. Yerel veri setini tanımlama (Deney için basit Alpaca formatı)
-alpaca_prompt = """Aşağıda bir görevi tanımlayan bir talimat yer almaktadır. Talebi uygun şekilde karşılayan bir yanıt yazın.
-
-### Talimat:
-{}
-
-### Yanıt:
-{}"""
-
+# 3. Yerel veri setini tanımlama
 # Eğitim örneklerini dataSet.json dosyasından okuyoruz
 with open("dataSet.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
-# Verileri modelin anlayacağı şablona dönüştürüyoruz
+# Verileri modelin kendi Llama-3 sohbet şablonuna göre dönüştürüyoruz
 def formatting_prompts_func(examples):
     instructions = examples["instruction"]
     outputs      = examples["output"]
     texts = []
     for instruction, output in zip(instructions, outputs):
-        text = alpaca_prompt.format(instruction, output) + tokenizer.eos_token
+        convo = [
+            {"role": "user", "content": instruction},
+            {"role": "assistant", "content": output},
+        ]
+        text = tokenizer.apply_chat_template(convo, tokenize = False, add_generation_prompt = False)
         texts.append(text)
     return { "text" : texts }
 
@@ -76,6 +81,14 @@ trainer = SFTTrainer(
         logging_steps = 1,
         output_dir = "outputs",
     ),
+)
+
+# Kaybı (loss) sadece asistan yanıtı üzerinden hesaplıyoruz; böylece model
+# soruyu tekrar üretmeyi değil, doğru cevabı üretmeyi öğrenir.
+trainer = train_on_responses_only(
+    trainer,
+    instruction_part = "<|start_header_id|>user<|end_header_id|>\n\n",
+    response_part = "<|start_header_id|>assistant<|end_header_id|>\n\n",
 )
 
 # 5. Eğitimin Başlatılması

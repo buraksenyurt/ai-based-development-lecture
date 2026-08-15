@@ -733,13 +733,38 @@ Yerel bilgisayarda LoRA tekniğine göre çalışmak için yine de NVIDIA tabanl
 
 **Jupyter Notebook** ortamında çalışırken, eğitim sürecini başlatmak için aşağıdaki komutu kullanabilirsiniz.
 
-```bash
-# Gerekli modüllerin yüklenmesi
-pip install --upgrade --no-cache-dir unsloth "trimesh" transformers datasets trl bitsandbytes peft accelerate
+Modülleri kurmadan önce pod sürücüsünün hangi **CUDA** sürümünü desteklediğini kontrol etmekte yarar var. Devam eden kısımda yer alan `pip install` komutundaki `--index-url` bu sürüme göre seçilmelidir.
 
-# Not: Eğer install işlemi sırasında torchaudio modülü ile ilgili bir hata alırsanız, aşağıdaki komut ile bu modülü kaldırıp
+```bash
+nvidia-smi   # Sağ üstte "CUDA Version: 12.8" gibi bir değer görünür. Bu değer sürücünün desteklediği üst sınırdır.
+python -c "import torch; print(torch.__version__, torch.version.cuda)"   # Kurulu torch'un hangi CUDA sürümüyle derlendiğini gösterir.
+```
+
+Eğer `torch.version.cuda`, `nvidia-smi`'nin gösterdiği sürümden daha yeniyse *(örneğin sürücü 12.8'i desteklerken torch 13.0 için derlenmişse)* kuvvetle muhtemel aşağıdaki gibi bir hata alabiliriz. Böyle bir durumda modülleri sürücüyle uyumlu bir torch sürümüyle yeniden kurmanız gerekir.
+
+```text
+UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 12080)
+...
+NotImplementedError: Unsloth cannot find any torch accelerator? You need a GPU.
+```
+
+```bash
+# torch'u pod sürücüsüyle(driver) uyumlu CUDA sürümüne göre sabitleyerek kuruyoruz.
+# `nvidia-smi` çıktısındaki "CUDA Version" değeri sürücünün desteklediği üst sınırı gösterir (Benim denememde versiyon 12.8).
+pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cu128
+
+# Diğer modüllerin yüklenmesi. 
+# `--no-deps` önemli, aksi halde unsloth'un bağımlılık çözümleyicisi
+# yukarıda sabitlediğimiz torch'u daha yeni (ve pod'un sürücüsüyle uyumsuz) bir sürümle değiştirebilir.
+pip install --no-cache-dir --no-deps --upgrade unsloth
+pip install --no-cache-dir "trimesh" transformers datasets trl bitsandbytes peft accelerate
+
+# Not: Eğer install işlemi sırasında torchaudio modülü ile ilgili bir hata alınırsa aşağıdaki komut ile bu modülü kaldırıp
 # tekrardan modülleri yüklemeyi deneyin.
 # pip uninstall -y torchaudio
+
+# Kurulumu doğrulamak için kullanacağımız komut(True dönmesi gerekiyor)
+python -c "import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available())"
 
 # Eğitim betiğinin çalıştırılması
 python trainer.py
