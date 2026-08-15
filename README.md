@@ -757,7 +757,7 @@ pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cu
 # `--no-deps` önemli, aksi halde unsloth'un bağımlılık çözümleyicisi
 # yukarıda sabitlediğimiz torch'u daha yeni (ve pod'un sürücüsüyle uyumsuz) bir sürümle değiştirebilir.
 pip install --no-cache-dir --no-deps --upgrade unsloth
-pip install --no-cache-dir "trimesh" transformers datasets trl bitsandbytes peft accelerate
+pip install --no-cache-dir "trimesh" transformers datasets trl bitsandbytes peft accelerate unsloth_zoo
 
 # Not: Eğer install işlemi sırasında torchaudio modülü ile ilgili bir hata alınırsa aşağıdaki komut ile bu modülü kaldırıp
 # tekrardan modülleri yüklemeyi deneyin.
