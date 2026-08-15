@@ -28,13 +28,17 @@ tokenizer = get_chat_template(
 )
 
 # 2. Modeli LoRA eğitimi için hazırlama (Ağırlıkları dondurma ve katman ekleme)
+# r ve lora_alpha; veri seti 50'den 100 örneğe çıktığı ve kaybı (loss) artık
+# sadece yanıt token'ları üzerinden hesapladığımız (bkz. train_on_responses_only)
+# için önceki değerlerde (16/16) 100 farklı gerçeği güvenilir şekilde ezberlemeye
+# yetecek kapasite kalmıyordu; bu yüzden büyütüldü.
 model = FastLanguageModel.get_peft_model(
     model,
-    r = 16,                # LoRA Rank (Büyük değer = daha çok bellek, daha derin öğrenme)
+    r = 32,                # LoRA Rank (Büyük değer = daha çok bellek, daha derin öğrenme)
     target_modules = ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
-    lora_alpha = 16,
+    lora_alpha = 32,
     lora_dropout = 0,      # Performans için 0 olarak optimize edilmiştir
-    bias = "none",         
+    bias = "none",
     use_gradient_checkpointing = "unsloth", # VRAM tasarrufu sağlar
     random_state = 3407,
 )
@@ -74,7 +78,10 @@ trainer = SFTTrainer(
         per_device_train_batch_size = 2,
         gradient_accumulation_steps = 4,
         warmup_steps = 5,
-        max_steps = 60, # Deney için adım sayısını kısa tuttuk
+        # 100 örnek / (2 * 4) efektif batch ~= 12.5 adım/epoch. Yalnızca yanıt
+        # token'ları üzerinden öğrenildiği için (train_on_responses_only) daha
+        # önceki 60 adım (~5 epoch) yetersiz kalıyordu; ~16 epoch'a çıkarıldı.
+        max_steps = 200,
         learning_rate = 2e-4,
         fp16 = not torch.cuda.is_bf16_supported(),
         bf16 = torch.cuda.is_bf16_supported(),
@@ -94,9 +101,36 @@ trainer = train_on_responses_only(
 # 5. Eğitimin Başlatılması
 print("--- LoRA Eğitimi Başlıyor ---")
 trainer_stats = trainer.train()
+print(f"--- Eğitim tamamlandı: {trainer_stats.metrics['train_runtime']:.2f} sn, "
+      f"ortalama eğitim kaybı (loss): {trainer_stats.metrics['train_loss']:.4f} ---")
 
 # 6. Sadece LoRA Ağırlıklarını Yerel Diske Kaydetme
 print("--- LoRA Modeli Kaydediliyor ---")
 model.save_pretrained("lora_model_sonuc")
 tokenizer.save_pretrained("lora_model_sonuc")
 print("İşlem tamamlandı! 'lora_model_sonuc' klasörünü kontrol edin.")
+
+# 7. Hızlı Doğrulama (Sanity Check)
+# GGUF'a aktarıp LM Studio'da denemeden önce, adaptörün eğitim verisindeki
+# kritik gerçekleri gerçekten öğrenip öğrenmediğini burada, aynı process
+# içinde, greedy (do_sample=False) decoding ile kontrol ediyoruz. Böylece
+# "eğitim mi yetersiz, yoksa export/şablon mu sorunlu" sorusu daha export
+# adımına gelmeden netleşir.
+print("--- Hızlı Doğrulama Başlıyor ---")
+FastLanguageModel.for_inference(model)
+sanity_questions = [
+    "Bu dersin geçme kriterleri nelerdir?",
+    "MCP (Model Context Protocol) nedir?",
+    "LoRA eğitimi için hangi bulut tabanlı GPU servisleri kullanılabilir?",
+]
+for question in sanity_questions:
+    convo = [{"role": "user", "content": question}]
+    inputs = tokenizer.apply_chat_template(
+        convo,
+        tokenize = True,
+        add_generation_prompt = True,
+        return_tensors = "pt",
+    ).to("cuda")
+    outputs = model.generate(input_ids = inputs, max_new_tokens = 150, do_sample = False, use_cache = True)
+    response = tokenizer.batch_decode(outputs[:, inputs.shape[1]:], skip_special_tokens = True)[0]
+    print(f"Soru: {question}\nYanıt: {response}\n{'-' * 40}")
