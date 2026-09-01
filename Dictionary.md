@@ -8,65 +8,84 @@ Burası ders müfredatında incelenen konulara ait teknik terimlerin özetlendi�
 | --- | ------- |
 | 1 | [.gitignore](#gitignore) |
 | 2 | [ADR](#adr) |
-| 3 | [Aggregate](#aggregate) |
-| 4 | [Assert](#assert) |
-| 5 | [BDD](#bdd) |
-| 6 | [Bootstrap](#bootstrap) |
-| 7 | [CAG *(Context Augmented Generation)*](#cag-context-augmented-generation) |
-| 8 | [CI/CD](#cicd) |
-| 9 | [Clean Architecture](#clean-architecture) |
-| 10 | [Code Review](#code-review) |
-| 11 | [Context](#context) |
-| 12 | [Cross-Origin Request Blocked](#cross-origin-request-blocked) |
-| 13 | [CRUD](#crud) |
-| 14 | [Custom Agent](#custom-agent) |
-| 15 | [Dağıtık Sistemler *(Distributed Systems)*](#dağıtık-sistemler-distributed-systems) |
-| 16 | [Dependency Injection](#dependency-injection) |
-| 17 | [Docker](#docker) |
-| 18 | [Embedding](#embedding) |
-| 19 | [Enum](#enum) |
-| 20 | [Entegrasyon Testi *(Integration Testing)*](#entegrasyon-testi-integration-testing) |
-| 21 | [Fine-Tuning](#fine-tuning) |
-| 22 | [GitHub Copilot](#github-copilot) |
-| 23 | [GitHub Repo](#github-repo) |
-| 24 | [Graph RAG](#graph-rag) |
-| 25 | [Guardrails](#guardrails) |
-| 26 | [gRPC *(Google Remote Procedure Call)*](#grpc-google-remote-procedure-call) |
-| 27 | [Hallucination](#hallucination) |
-| 28 | [HTML *(Hypertext Markup Language)*](#html-hypertext-markup-language) |
-| 29 | [JavaScript *(JS)*](#javascript-js) |
-| 30 | [JSON *(JavaScript Object Notation)*](#json-javascript-object-notation) |
-| 31 | [Knowledge Graph](#knowledge-graph) |
-| 32 | [Legacy System](#legacy-system) |
-| 33 | [Markdown Format](#markdown-format) |
-| 34 | [MCP *(Model Context Protocol)*](#mcp-model-context-protocol) |
-| 35 | [Microservices](#microservices) |
-| 36 | [Playwright](#playwright) |
-| 37 | [Prompt](#prompt) |
-| 38 | [Prompt Injection](#prompt-injection) |
-| 39 | [Pull Request](#pull-request) |
-| 40 | [RAG *(Retrieval Augmented Generation)*](#rag-retrieval-augmented-generation) |
-| 41 | [RDBMS *(Relational Database Management System)*](#rdbms-relational-database-management-system) |
-| 42 | [Regex *(Regular Expressions)*](#regex-regular-expressions) |
-| 43 | [REST *(Representational State Transfer)*](#rest-representational-state-transfer) |
-| 44 | [Rich Entity](#rich-entity) |
-| 45 | [Sandbox](#sandbox) |
-| 46 | [Skill](#skill) |
-| 47 | [SOAP *(Simple Object Access Protocol)*](#soap-simple-object-access-protocol) |
-| 48 | [Spec-Oriented Programming](#spec-oriented-programming) |
-| 49 | [SQL Injection](#sql-injection) |
-| 50 | [Swagger](#swagger) |
-| 51 | [Test Containers](#test-containers) |
-| 52 | [Test Driven Development *(TDD)*](#test-driven-development-tdd) |
-| 53 | [Teknik Borç *(Technical Debt)*](#teknik-borç-technical-debt) |
-| 54 | [Tightly Coupled vs Loosely Coupled](#tightly-coupled-vs-loosely-coupled) |
-| 55 | [UAT](#uat) |
-| 56 | [Unit Test *(Birim Test)*](#unit-test-birim-test) |
-| 57 | [UX *(User Experience)*](#ux-user-experience) |
-| 58 | [Vektör Veritabanı](#vektör-veritabanı) |
-| 59 | [XSS *(Cross-Site Scripting)*](#xss-cross-site-scripting) |
-| 60 | [XML *(eXtensible Markup Language)*](#xml-extensible-markup-language) |
-| 61 | [YAML *(YAML Ain't Markup Language)*](#yaml-yaml-aint-markup-language) |
+| 3 | [Agentic Engineering](#agentic-engineering) |
+| 4 | [Aggregate](#aggregate) |
+| 5 | [Aspire Dashboard](#aspire-dashboard) |
+| 6 | [Assert](#assert) |
+| 7 | [BDD](#bdd) |
+| 8 | [Bootstrap](#bootstrap) |
+| 9 | [CAG *(Context Augmented Generation)*](#cag-context-augmented-generation) |
+| 10 | [CAP Teoremi *(CAP Theorem)*](#cap-teoremi-cap-theorem) |
+| 11 | [Chunking *(Parçalama)*](#chunking-parçalama) |
+| 12 | [CI/CD](#cicd) |
+| 13 | [Circuit Breaker](#circuit-breaker) |
+| 14 | [Clean Architecture](#clean-architecture) |
+| 15 | [Code Review](#code-review) |
+| 16 | [Context](#context) |
+| 17 | [Cross-Origin Request Blocked](#cross-origin-request-blocked) |
+| 18 | [CRUD](#crud) |
+| 19 | [Custom Agent](#custom-agent) |
+| 20 | [Dağıtık Sistemler *(Distributed Systems)*](#dağıtık-sistemler-distributed-systems) |
+| 21 | [Dağıtık Sistemlerin Yanılgıları *(Fallacies of Distributed Computing)*](#dağıtık-sistemlerin-yanılgıları-fallacies-of-distributed-computing) |
+| 22 | [Dependency Injection](#dependency-injection) |
+| 23 | [Docker](#docker) |
+| 24 | [Embedding](#embedding) |
+| 25 | [Enum](#enum) |
+| 26 | [Entegrasyon Testi *(Integration Testing)*](#entegrasyon-testi-integration-testing) |
+| 27 | [Eventual Consistency *(Nihai Tutarlılık)*](#eventual-consistency-nihai-tutarlılık) |
+| 28 | [Fine-Tuning](#fine-tuning) |
+| 29 | [GitHub Copilot](#github-copilot) |
+| 30 | [GitHub Repo](#github-repo) |
+| 31 | [Graph RAG](#graph-rag) |
+| 32 | [Guardrails](#guardrails) |
+| 33 | [gRPC *(Google Remote Procedure Call)*](#grpc-google-remote-procedure-call) |
+| 34 | [Hallucination](#hallucination) |
+| 35 | [HTML *(Hypertext Markup Language)*](#html-hypertext-markup-language) |
+| 36 | [Idempotency](#idempotency) |
+| 37 | [JavaScript *(JS)*](#javascript-js) |
+| 38 | [JSON *(JavaScript Object Notation)*](#json-javascript-object-notation) |
+| 39 | [Knowledge Graph](#knowledge-graph) |
+| 40 | [Legacy System](#legacy-system) |
+| 41 | [Load Balancing *(Yük Dengeleme)*](#load-balancing-yük-dengeleme) |
+| 42 | [LoRA *(Low-Rank Adaptation)*](#lora-low-rank-adaptation) |
+| 43 | [Malware Injection](#malware-injection) |
+| 44 | [Markdown Format](#markdown-format) |
+| 45 | [MCP *(Model Context Protocol)*](#mcp-model-context-protocol) |
+| 46 | [Message Queue *(Mesaj Kuyruğu)*](#message-queue-mesaj-kuyruğu) |
+| 47 | [Microservices](#microservices) |
+| 48 | [Multi-Agent Sistemler *(Multi-Agent Systems)*](#multi-agent-sistemler-multi-agent-systems) |
+| 49 | [OpenTelemetry](#opentelemetry) |
+| 50 | [Playwright](#playwright) |
+| 51 | [Prompt](#prompt) |
+| 52 | [Prompt Injection](#prompt-injection) |
+| 53 | [Pull Request](#pull-request) |
+| 54 | [RAG *(Retrieval Augmented Generation)*](#rag-retrieval-augmented-generation) |
+| 55 | [RDBMS *(Relational Database Management System)*](#rdbms-relational-database-management-system) |
+| 56 | [Regex *(Regular Expressions)*](#regex-regular-expressions) |
+| 57 | [REST *(Representational State Transfer)*](#rest-representational-state-transfer) |
+| 58 | [Rich Entity](#rich-entity) |
+| 59 | [Saga Pattern](#saga-pattern) |
+| 60 | [Sandbox](#sandbox) |
+| 61 | [Service Discovery *(Servis Keşfi)*](#service-discovery-servis-keşfi) |
+| 62 | [Skill](#skill) |
+| 63 | [SOAP *(Simple Object Access Protocol)*](#soap-simple-object-access-protocol) |
+| 64 | [Spec-Oriented Programming](#spec-oriented-programming) |
+| 65 | [SQL Injection](#sql-injection) |
+| 66 | [Streamable HTTP](#streamable-http) |
+| 67 | [Swagger](#swagger) |
+| 68 | [Teknik Borç *(Technical Debt)*](#teknik-borç-technical-debt) |
+| 69 | [Test Containers](#test-containers) |
+| 70 | [Test Driven Development *(TDD)*](#test-driven-development-tdd) |
+| 71 | [Tightly Coupled vs Loosely Coupled](#tightly-coupled-vs-loosely-coupled) |
+| 72 | [Tool Poisoning](#tool-poisoning) |
+| 73 | [UAT](#uat) |
+| 74 | [Unit Test *(Birim Test)*](#unit-test-birim-test) |
+| 75 | [UX *(User Experience)*](#ux-user-experience) |
+| 76 | [Vektör Veritabanı](#vektör-veritabanı) |
+| 77 | [Vibe Coding](#vibe-coding) |
+| 78 | [XSS *(Cross-Site Scripting)*](#xss-cross-site-scripting) |
+| 79 | [XML *(eXtensible Markup Language)*](#xml-extensible-markup-language) |
+| 80 | [YAML *(YAML Ain't Markup Language)*](#yaml-yaml-aint-markup-language) |
 
 ## Terimler
 
@@ -78,9 +97,17 @@ Git versiyon kontrol sisteminde hangi dosya ve klasörlerin takip edilmeyeceğin
 
 **Architecture Decision Record** ifadesinin kısaltmasıdır. Yazılım projelerinde tüm sistemi etkileyen önemli mimari kararların neden alındığını, hangi alternatiflerin değerlendirildiğini ve bu kararların olası sonuçlarını kısa ama kalıcı bir kayıt olarak belgelemek için kullanılır.
 
+### Agentic Engineering
+
+Yapay zeka ajanlarını salt kod üreten bir araç olarak değil, planlama yapabilen, araçları kullanabilen ve görevleri uçtan uca yürütebilen bir iş birliği ortağı olarak konumlandıran geliştirme yaklaşımıdır. **Vibe Coding** yaklaşımının aksine üretilen her çıktının gözden geçirilmesini, mimari prensiplere uygunluğunun denetlenmesini ve gerektiğinde müdahale edilmesini öngörür. Amaç geliştirme hızından ödün vermeden kontrolü sağlamak ve kod kalitesini korumaktır.
+
 ### Aggregate
 
 **Domain-Driven Design *(DDD)*** yaklaşımında tutarlılık sınırını temsil eden yapıdır. Bir aggregate, kendi içinde ilişkili varlıkları *(entity)* ve değer türlerini *(value object)* barındırır. Dış dünya bileşenleri ile etkileşim genellikle aggregate root üzerinden yapılır.
+
+### Aspire Dashboard
+
+**Microsoft** tarafından geliştirilen, **OpenTelemetry** standardıyla toplanan log, metrik ve trace verilerini görselleştirmek için kullanılan açık kaynaklı bir izleme panosudur. Genellikle bir **docker container** olarak ayağa kaldırılır. Yapay zeka destekli geliştirme araçlarının harcadığı token miktarı, süre ve maliyet gibi bilgilerin gözlemlenmesinde de kullanılabilir.
 
 ### Assert
 
@@ -98,9 +125,21 @@ Web geliştirme için kullanılan açık kaynaklı, ücretsiz bir **CSS framewor
 
 Yapay zeka modellerinin, belirli bir bağlamı *(context)* kullanarak daha doğru ve ilgili yanıtlar üretmesini sağlayan bir tekniktir. Model, verilen bir sorguya yanıt üretmeden önce ilgili bağlam bilgilerini alır ve bu bilgileri kullanarak yanıtını oluşturur. Burada temel amaç kullanıcının niyetini zenginleştirerek modelin belirli bir domain çerçevesinde cevaplar üretebilmesini sağlamaktır. **RAG *(Retrieval Augmented Generation)*** ile benzer bir yaklaşım olmakla birlikte RAG, modelin harici veri kaynaklarından bilgi çekmesini sağlarken CAG daha çok mevcut bağlam bilgisini kullanarak yanıt üretmeye odaklanır. RAG ilişkili bilgileri çalışma zamanında çekmeye odaklanırken, CAG önceden yüklenmiş statik veriyi baz alarak geniş bir bağlam bilgisini belleğe alır *(long-context memory)* ve bu bağlam bilgisini kullanarak yanıt üretmeye odaklanır. *RAG* daha çok büyük ve değişen veriler için tercih edilirken, *CAG* statik ve küçük verilerle çalışmak için tercih edilir.
 
+### CAP Teoremi *(CAP Theorem)*
+
+Dağıtık bir sistemin aynı anda en fazla iki özelliği tam olarak sağlayabileceğini ileri süren teoremdir. **Consistency** *(tüm düğümlerin aynı anda aynı veriyi görmesi)*, **Availability** *(her isteğe bir yanıt alınması)* ve **Partition Tolerance** *(ağ bölünmelerine rağmen sistemin çalışmaya devam etmesi)*. Ağ bölünmeleri gerçek dünyada kaçınılmaz olduğundan, pratikte tasarım kararı genellikle tutarlılık ile erişilebilirlik arasında bir tercihe dönüşür.
+
+### Chunking *(Parçalama)*
+
+Büyük bir metin veya doküman kümesinin embedding modeline verilmeden önce daha küçük ve anlamlı parçalara bölünmesi işlemidir. Parçalama boyutu ve stratejisi *(karakter sayısına göre, cümle/paragraf bazlı veya semantik analiz ile)*, **RAG** sistemlerinde bilgi deposundan çekilen parçaların kalitesini doğrudan etkiler.
+
 ### CI/CD
 
 **Continuous Integration** ve **Continuous Delivery/Deployment** kavramlarının birleşimidir. Kod değişikliklerinin otomatik olarak derlenmesi, test edilmesi ve uygun ortamlara aktarılması için kurulan geliştirme hattını ifade eder.
+
+### Circuit Breaker
+
+Dağıtık sistemlerde sürekli hata veren bir servise yapılan çağrıları belirli bir süre için otomatik olarak keserek sistemin genelini korumaya yönelik bir dayanıklılık *(resilience)* kazandırma stratejisidir. Elektrik sigortalarına benzer şekilde çalışır; bir servis art arda hata üretmeye başladığında devre "açılır(open)" ve gereksiz denemeler engellenerek hem kaynak israfının hem de kademeli çöküşün *(cascading failure)* önüne geçilir.
 
 ### Clean Architecture
 
@@ -128,7 +167,11 @@ Belirli bir görev, kurum standardı veya domain bilgisi etrafında özelleştir
 
 ### Dağıtık Sistemler *(Distributed Systems)*
 
-Birden fazla bilgisayarın ağ üzerinden iletişim kurarak ortak bir görevi yerine getirdiği sistem mimarisidir. Yük dengeleme *(Load Balancing)*, hata toleransı *(Fault Tolerance)* ve ölçeklenebilirlik *(Scalability)* gibi çözülmesi zor problemlere ait disiplinleri gerektirir. Mikroservisler, bulut sistemleri ve blockchain gibi yapılar bu kategoriye girer. Koordinasyon ve veri tutarlılığı önemli zorlukları arasındadır. Mutlaka *CAP teoremi - Consistency, Availability, Partition Tolerance* hatırlanmalıdır.
+Birden fazla bilgisayarın ağ üzerinden iletişim kurarak ortak bir görevi yerine getirdiği sistem mimarisidir. Yük dengeleme *(Load Balancing)*, hata toleransı *(Fault Tolerance)* ve ölçeklenebilirlik *(Scalability)* gibi çözülmesi zor problemlere ait disiplinleri gerektirir. Mikroservisler, bulut sistemleri ve blockchain gibi yapılar bu kategoriye girer. Koordinasyon ve veri tutarlılığını sağlamak önemli zorlukları arasındadır. Mutlaka **CAP Teoremi** hatırlanmalıdır.
+
+### Dağıtık Sistemlerin Yanılgıları *(Fallacies of Distributed Computing)*
+
+**L. Peter Deutsch** tarafından tanımlanan ve daha sonra Sun Microsystems'daki meslektaşlarınca genişletilen, geliştiricilerin dağıtık sistem tasarlarken sıkça düştüğü [sekiz varsayımı](https://en.wikipedia.org/wiki/Fallacies_of_distributed_computing) ifade eder *(örneğin "ağ güvenilirdir", "gecikme sıfırdır", "bant genişliği sınırsızdır" gibi)*. Bu yanılgılar, yerel *(in-process)* bir çağrı ile ağ üzerinden yapılan bir çağrının aslında hiçbir zaman aynı garantilere sahip olmadığını hatırlatır ve **Circuit Breaker**, **Retry** gibi dayanıklılık desenlerinin neden gerekli olduğunu açıklar.
 
 ### Dependency Injection
 
@@ -149,6 +192,10 @@ Programlamada sınırlı ve önceden tanımlanmış sabit değer kümelerini ifa
 ### Entegrasyon Testi *(Integration Testing)*
 
 Entegrasyon testleri, birden fazla bileşenin veya modülün birlikte çalışmasını doğrulamak için yapılan testlerdir. Bu testler, bileşenlerin birbirleriyle doğru şekilde entegre olduğunu ve beklenen sonuçları ürettiğini kontrol eder. Entegrasyon testleri, birim testlerden sonra gerçekleştirilir ve sistemin genel işlevselliğini değerlendirmek için önemlidir.
+
+### Eventual Consistency *(Nihai Tutarlılık)*
+
+Dağıtık bir sistemde yapılan bir güncellemenin tüm düğümlere anında değil, zamanla yayılacağını kabul eden tutarlılık modelidir. Güçlü tutarlılığa *(strong consistency)* kıyasla daha yüksek erişilebilirlik ve performans sunar ancak kısa süreliğine farklı düğümlerden farklı sonuçlar okunabileceği gerçeğiyle uygulama tasarımının barışık olması gerekir. Bknz: **CAP Teoremi**.
 
 ### Fine-Tuning
 
@@ -182,6 +229,10 @@ Bir yapay zeka modelinin kulağa doğruymuş gibi gelen ancak gerçekte hatalı,
 
 Web sayfalarının yapısını oluşturmak için kullanılan işaretleme dilidir. Etiketler (tags) kullanılarak içerik organize edilir ve anlamlandırılır. Tarayıcılar HTML'i yorumlayarak görsel içeriği kullanıcıya sunar. CSS ve JavaScript ile birlikte modern web uygulamalarının temelini oluşturur.
 
+### Idempotency
+
+Bir işlemin aynı girdiyle birden fazla kez çalıştırılmasının, tek seferlik çalıştırılmasıyla aynı sonucu üretmesi özelliğidir. Ağ hatalarının kaçınılmaz olduğu dağıtık sistemlerde, bir isteğin yeniden denenmesi *(retry)* gerektiğinde yan etkilerin *(mükerrer sipariş, çift ödeme vb.)* önüne geçmek için tarfilenmiş kritik bir tasarım ilkesidir.
+
 ### JavaScript *(JS)*
 
 Web tarayıcılarında ve sunucu tarafında *(Node.js ile)* çalışabilen yüksek seviyeli, dinamik programlama dilidir. **HTML** ve **CSS** ile birlikte modern web teknolojilerinin üçüncü temel bileşenidir. Event-driven *(olay güdümlü)* ve asenkron programlamayı destekler. Çok geniş bir ekosisteme ve kütüphane desteğine sahiptir.
@@ -198,6 +249,18 @@ Varlıkları *(entity)* ve bunlar arasındaki ilişkileri düğüm *(nodes)* ve 
 
 Eski teknolojiler veya artık desteklenmeyen ya da desteği bitecek olan sistemler üzerine kurulu, hala kullanımda olan yazılım ve donanım altyapısıdır. Değiştirmek maliyetli veya riskli olabilir ancak modern sistemlerle entegrasyonu zordur *(En sık başvurulan çözüm yollarından birisi API köprüleri veya adaptörler kullanmak, mesajlaşmayı kuyruk yapıları ile sağlamaktır)*. Güvenlik açıkları ve bakım zorlukları yaşanır. Yavaş yavaş modernize edilmesi veya yeniden yazılması gerekir.
 
+### Load Balancing *(Yük Dengeleme)*
+
+Gelen isteklerin birden fazla sunucu veya servis örneği *(instance)* arasında dağıtılması işlemidir. Amaç, tek bir düğümün *(node)* aşırı yüklenmesini önlemek, sistemin genel performansını artırmak ve bir düğüm devre dışı kaldığında hizmetin kesintisiz sürmesini sağlamaktır.
+
+### LoRA *(Low-Rank Adaptation)*
+
+Bir dil modelinin tüm ağırlıklarını yeniden eğitmek yerine, modelin belirli katmanlarına eklenen düşük dereceli *(low-rank)* matrisleri eğiterek özelleştirilmesini sağlayan bir **Fine-Tuning** tekniğidir. Ana modelin ağırlıkları dondurulduğu için eğitim süresi ve donanım gereksinimi klasik fine-tuning'e göre önemli ölçüde azalır. Farklı türevleri de vardır. Güncel bilgileri araştırınız.
+
+### Malware Injection
+
+Yapay zeka ajanlarının çalıştırabileceği kod parçalarına kullanıcı fark etmeden zararlı kod enjekte edilmesiyle gerçekleşen saldırı türüdür. Özellikle ajanın dosya sistemine erişip kod çalıştırabildiği senaryolarda, üretilen veya dışarıdan alınan kodun çalıştırılmadan önce incelenmesi ve **Sandbox** gibi izole ortamlarda test edilmesi son derece önemlidir.
+
 ### Markdown Format
 
 Basit işaretleme sözdizimiyle düz metin formatında belge yazmayı sağlayan hafif işaretleme dilidir. **HTML**'e kolayca dönüştürülebilir ve okunması kolaydır. **README** dosyaları, dokümantasyonlar ve blog yazıları için yaygın olarak kullanılır. **GitHub**, **Stack Overflow** gibi platformlar tarafından desteklenir.
@@ -206,9 +269,21 @@ Basit işaretleme sözdizimiyle düz metin formatında belge yazmayı sağlayan 
 
 **AI** modellerinin dış sistemler ve araçlarla etkileşim kurmasını sağlayan standart bir protokoldür. Modellerin dosya sistemlerine, veritabanlarına ve API'lere erişimini düzenler. Güvenli ve yapılandırılmış veri alışverişi sağlar. AI uygulamalarının gerçek dünya sistemleriyle entegrasyonunu kolaylaştırır.
 
+### Message Queue *(Mesaj Kuyruğu)*
+
+Servisler arasında asenkron iletişim kurmak için kullanılan, mesajların üretildiği ve tüketildiği ara katman yapısıdır. Gönderen servis mesajı kuyruğa bırakıp işine devam ederken, alıcı servis kendi hızında mesajı işleyebilir. Bu sayede servisler arasındaki bağımlılık gevşetilir *(loosely coupled)* ve geçici kesintilere karşı sistem daha dayanıklı hale gelir. **RabbitMQ**, **Apache Kafka** ve **Azure Service Bus** yaygın kullanılan ve bilenen örneklerdir.
+
 ### Microservices
 
 Bir uygulamanın, belirli iş yeteneklerine odaklanan küçük ve bağımsız servisler olarak tasarlanması yaklaşımıdır. Her servis ayrı şekilde geliştirilebilir, dağıtılabilir ve ölçeklenebilir. Diğer yandan dağıtık sistem karmaşıklığını da beraberinde getirir.
+
+### Multi-Agent Sistemler *(Multi-Agent Systems)*
+
+Birden fazla yapay zeka ajanının, kendi uzmanlık alanlarında çalışarak ortak bir hedefe ulaşmak için birbirleriyle iş birliği yaptığı mimaridir. Genellikle bir orkestratör ajan işlenecek görevi alt görevlere böler ve uygun uzman ajanlara dağıtır. Sonuçlar birleştirilerek nihai çıktı oluşturulur.
+
+### OpenTelemetry
+
+Uygulamalardan log, metrik ve trace *(izleme)* verisi toplamak için kullanılan açık kaynaklı, satıcıdan bağımsız *(vendor-neutral)* bir gözlemleme *(observability)* standardıdır. Yapay zeka destekli geliştirme araçlarının harcadığı token miktarını, süreyi ve maliyeti izlemek için **Aspire Dashboard** gibi araçlarla birlikte kullanılabilir.
 
 ### Playwright
 
@@ -246,9 +321,17 @@ Web servisleri için kullanılan bir mimari tarzdır. HTTP protokolünü kullana
 
 **Domain Driven Design (DDD)** yaklaşımında, sadece veri tutan değil aynı zamanda iş mantığını da içeren entity'lerdir. Rich Entity'ler, kendi davranışlarını ve kurallarını içerir, bu da kodun daha modüler, okunabilir ve bakımının kolay olmasını sağlar. Anemic Domain Model'in (sadece veri tutan entity'ler) aksine, Rich Entity'ler domain mantığını kapsülleyerek daha güçlü bir model oluşturur.
 
+### Saga Pattern
+
+Dağıtık bir işlemin *(transaction)* birden fazla servisi kapsadığı durumlarda, klasik veritabanı transaction'larının yerini alan bir tutarlılık yönetim desenidir. Süreç, her biri kendi yerel transaction'ını tamamlayan bir dizi adıma bölünür. Adımlardan biri başarısız olursa önceki adımları geri almak için telafi edici *(compensating)* iş parçacıkları çalıştırılır.
+
 ### Sandbox
 
 Kodun veya komutların ana sisteme zarar vermeden denenebildiği izole çalışma ortamıdır. Güvenlik açısından riskli işlemleri sınırlı yetkilerle ve kontrollü kaynak erişimiyle çalıştırmak için tercih edilir. Özellikle yapay zeka ajanlarının dış sistemlerle etkileşim kurarken güvenliğini sağlamak için kullanılır. Örneğin, bir yapay zeka modelinin dosya sistemine erişmesi gerekiyorsa, bu erişim bir sandbox içinde sınırlandırılabilir.
+
+### Service Discovery *(Servis Keşfi)*
+
+Dağıtık bir sistemde servislerin birbirlerinin ağ adreslerini *(IP, port)* dinamik olarak bulabilmesini sağlayan mekanizmadır. Servis örnekleri sık sık başlatılıp durdurulduğu veya ölçeklendiği için, sabit adresler yerine bir kayıt merkezinden *(registry)* güncel konum bilgisi sorgulanır.
 
 ### Skill
 
@@ -265,6 +348,10 @@ Yazılım geliştirme sürecinde, uygulamanın mimari tasarımını ve domain mo
 ### SQL Injection
 
 Kötü niyetli kullanıcıların SQL sorgularını manipüle ederek veri tabanına yetkisiz erişim sağlamasına izin veren bir güvenlik açığı türüdür. Genellikle kullanıcı tarafından sağlanan verilerin uygun şekilde doğrulanmaması veya temizlenmemesi nedeniyle ortaya çıkar. SQL Injection saldırıları, veri tabanındaki hassas bilgilerin çalınmasına, değiştirilmesine veya silinmesine yol açabilir.
+
+### Streamable HTTP
+
+**MCP** protokolünün Mart 2025'te eklenen veri taşıma *(transport)* mekanizmasıdır. Tek bir HTTP endpoint üzerinden hem klasik istek/yanıt hem de uzun süreli, parça parça akan yanıtları destekler. Büyük çıktılar üreten araçlarda **SSE**'ye kıyasla daha esnek bir alternatif sunar.
 
 ### Swagger
 
@@ -286,6 +373,10 @@ Yazılım geliştirme sürecinde testlerin önce yazıldığı, ardından kodun 
 
 Dependency Injection konusunun önemli bir parçası olan bu kavramlar, yazılım bileşenlerinin birbirlerine olan bağımlılık derecesini ifade eder. Tightly Coupled *(Sıkı Bağlı)* yapılar, bileşenlerin birbirlerine sıkı ve kolayca ayrıştırılamayacak bir şekilde bağlı olduğu durumları ifade eder. Bu sıkı bağlılık değişiklik yapmayı zorlaştırır ve test edilebilirliği azaltır. Test edilebilirliğin azalması kod bakımını zorlaştırır ve güvenilirliği düşürür. Loosely Coupled *(Gevşek Bağlı)* yapılar ise bileşenlerin çeşitli soyutlamalar ile birbirlerine daha az bağımlı olacak halde kullanılabildiği durumları ifade eder. Bu tür yapılar, değişiklik yapmayı kolaylaştırır ve test edilebilirliği artırır; doğal olarak kod bakımını kolaylaştırır ve güvenilirliği artırır. Özellikle SOLID prensiplerinden olan Dependency Inversion Principle (DIP) bu konuda önemli bir rol oynar.
 
+### Tool Poisoning
+
+Bir yapay zeka ajanının erişebildiği harici araçlara *(örneğin bir **MCP** sunucusuna)* zararlı bir aracın eklenmesi veya var olan bir aracın davranışının kötü niyetli biçimde değiştirilmesiyle gerçekleşen saldırı türüdür. Ajan, kendisine sunulan aracın güvenilir olduğunu varsayarak zararlı işlemleri fark etmeden çalıştırabilir. Bu yüzden araç kaynaklarının doğrulanması ve izlenmesi önemlidir.
+
 ### UAT
 
 **User Acceptance Testing** ifadesinin kısaltmasıdır. Yazılımın son kullanıcı veya iş birimi tarafından kabul kriterlerine göre değerlendirildiği test aşamasını ifade eder.
@@ -301,6 +392,10 @@ Bir kullanıcının bir ürün veya hizmetle etkileşiminden elde ettiği genel 
 ### Vektör Veritabanı
 
 **Embedding** gibi yüksek boyutlu vektör verilerini saklamak ve benzerlik araması yapmak için tasarlanmış veritabanı türüdür. Özellikle **RAG** uygulamalarında sorguya anlamsal olarak en yakın parçaları hızlıca bulmak için kullanılır.
+
+### Vibe Coding
+
+Geliştiricinin üretilen kodun detaylarını gözden geçirmeden, yalnızca **"çalışıyor gibi görünmesine"** güvenerek yapay zeka aracıyla hızlıca ilerlediği, disiplinsiz bir geliştirme pratiğidir. Kısa vadede hız kazandırsa da mimari uyumsuzluk, güvenlik açığı ve teknik borç riskini artırır. Bu derste bunun yerine **Agentic Engineering** yaklaşımı önerilir.
 
 ### XSS *(Cross-Site Scripting)*
 
