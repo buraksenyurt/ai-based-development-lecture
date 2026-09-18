@@ -36,7 +36,6 @@ Konya Gıda ve Tarım Üniversitesi Yazılım Mühendisliği ve Pamukkale Ünive
     - [Proje Değerlendirmesi](#proje-değerlendirmesi)
     - [Final Sınavı](#final-sınavı)
   - [Uygulama Önerileri](#uygulama-önerileri)
-    - [Farklı Diller, Platformlar ve Disiplinlere Yönelik Ek Örnekler](#farklı-diller-platformlar-ve-disiplinlere-yönelik-ek-örnekler)
 - [Terimler Sözlüğü](Dictionary.md)
 
 ## Önsöz
