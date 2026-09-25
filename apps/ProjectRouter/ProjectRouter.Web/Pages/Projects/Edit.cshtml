@@ -1,0 +1,69 @@
+@page "{id:guid?}"
+@using ProjectRouter.Domain
+@model ProjectRouter.Web.Pages.Projects.EditModel
+@{
+    ViewData["Title"] = Model.IsNew ? "Yeni Proje" : "Projeyi Düzenle";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" class="row g-3" style="max-width: 48rem">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+    <div class="col-12">
+        <label asp-for="Input.Title" class="form-label"></label>
+        <input asp-for="Input.Title" class="form-control" placeholder="Kahoot Clone" />
+        <span asp-validation-for="Input.Title" class="text-danger"></span>
+    </div>
+    <div class="col-12">
+        <label asp-for="Input.Summary" class="form-label"></label>
+        <textarea asp-for="Input.Summary" class="form-control" rows="3" maxlength="@ProjectIdea.SummaryMaxLength"></textarea>
+        <div class="form-text">En fazla @ProjectIdea.SummaryMaxLength karakter.</div>
+        <span asp-validation-for="Input.Summary" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Input.Languages" class="form-label"></label>
+        <input asp-for="Input.Languages" class="form-control" placeholder="Python, C#" />
+        <div class="form-text">En az bir dil (Rule 04).</div>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Input.Databases" class="form-label"></label>
+        <input asp-for="Input.Databases" class="form-control" placeholder="Postgres, MongoDB" />
+        <div class="form-text">En az bir veritabanı (Rule 04).</div>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Input.Platforms" class="form-label"></label>
+        <input asp-for="Input.Platforms" class="form-control" placeholder="web, mobile" />
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Input.TeamMin" class="form-label"></label>
+        <input asp-for="Input.TeamMin" class="form-control" />
+        <span asp-validation-for="Input.TeamMin" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Input.TeamMax" class="form-label"></label>
+        <input asp-for="Input.TeamMax" class="form-control" />
+        <span asp-validation-for="Input.TeamMax" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Input.Size" class="form-label"></label>
+        <select asp-for="Input.Size" asp-items="Html.GetEnumSelectList<ProjectSize>()" class="form-select"></select>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Input.Similar" class="form-label"></label>
+        <input asp-for="Input.Similar" class="form-control" placeholder="Kahoot, Mentimeter" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Input.Tags" class="form-label"></label>
+        <input asp-for="Input.Tags" class="form-control" placeholder="web, game" />
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+        <a asp-page="Index" class="btn btn-link">Vazgeç</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

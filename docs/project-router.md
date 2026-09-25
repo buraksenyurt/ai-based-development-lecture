@@ -142,11 +142,17 @@ Proje ve katılımcı bilgilerinin eşleştirildiği ana başlık. Özellikleri;
 
 ## Kullanıcı Hikayeleri *(User Stories)*
 
-- USR 01:
-- USR 02:
+- `USR 01`: Eğitmen olarak katılımcıları; iletişim, okul bilgileri ve sıralı dil/veritabanı tercihleriyle kaydetmek, düzenlemek ve silmek istiyorum. Böylece dağıtım öğrencilerin tercihlerine göre yapılabilir. *(Rule 00, Rule 01)*
+- `USR 02`: Eğitmen olarak proje fikirlerini; kısa tarif, teknoloji altyapısı, takım aralığı (min-max) ve büyüklük bilgisiyle kaydetmek istiyorum. Böylece her projenin kaç kişiyle ve hangi teknolojilerle yapılacağı bellidir. *(Rule 02, Rule 04)*
+- `USR 03`: Eğitmen olarak bir dönem için turnuva oluşturup hangi katılımcı ve projelerin dağıtıma dahil olacağını seçmek istiyorum.
+- `USR 04`: Eğitmen olarak tek tuşla dağıtımı çalıştırıp her projenin takımını, katılımcıların uyum puanını, yerleştirilemeyen katılımcıları ve açılamayan projeleri görmek istiyorum. *(Rule 02, Rule 03)*
+- `USR 05`: Eğitmen olarak dağıtım sonucunu yukarıdaki `Competition` örneğindeki JSON formatında indirmek istiyorum.
+- `USR 06`: Eğitmen olarak bir turnuvada yer alan katılımcı veya projenin yanlışlıkla silinmesinin engellenmesini istiyorum.
 
 ## Veri *(DataSets)*
 
-- Katılımcı *(Participant)*:
-- Proje Bilgileri *(Project Idea)*:
-- Yerleştirme *(Competition)*:
+Uygulama verileri SQLite veritabanında (`projectrouter.db`) tutar ve Razor formları üzerinden girilir. Uygulamanın kodu ve kurulum adımları için [apps/ProjectRouter](../apps/ProjectRouter/README.md) klasörüne bakın.
+
+- Katılımcı *(Participant)*: `participants` tablosu. Dil ve veritabanı tercihleri sıralarıyla birlikte `participant_preferences` tablosunda tutulur (`rank = 0` ilk tercihtir).
+- Proje Bilgileri *(Project Idea)*: `projects` tablosu. Diller, platformlar, veritabanları, benzerleri ve etiketler `project_items` tablosunda tutulur.
+- Yerleştirme *(Competition)*: `competitions`, `competition_projects`, `competition_participants` ve `settlements` tabloları. `settlements` tablosundaki `(competition_id, participant_id)` birincil anahtarı Rule 03'ü veritabanı seviyesinde de garanti eder.

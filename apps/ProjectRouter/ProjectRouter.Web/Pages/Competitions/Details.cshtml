@@ -1,0 +1,159 @@
+@page "{id:guid}"
+@model ProjectRouter.Web.Pages.Competitions.DetailsModel
+@{
+    var details = Model.Details;
+    var competition = details.Competition;
+    ViewData["Title"] = competition.Title;
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
+    <div>
+        <h1 class="mb-0">@competition.Title</h1>
+        <div class="text-muted">Dönem @competition.Session</div>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <form method="post" asp-page-handler="Route" asp-route-id="@competition.Id">
+            <button type="submit" class="btn btn-primary">@(details.IsSettled ? "Dağıtımı Yeniden Çalıştır" : "Dağıtımı Çalıştır")</button>
+        </form>
+        @if (details.IsSettled)
+        {
+            <a asp-page-handler="Export" asp-route-id="@competition.Id" class="btn btn-outline-secondary">JSON indir</a>
+            <form method="post" asp-page-handler="Clear" asp-route-id="@competition.Id">
+                <button type="submit" class="btn btn-outline-danger">Dağıtımı Temizle</button>
+            </form>
+        }
+        <a asp-page="Edit" asp-route-id="@competition.Id" class="btn btn-outline-secondary">Düzenle</a>
+    </div>
+</div>
+
+@if (Model.RoutingWarnings is not null)
+{
+    <div class="alert alert-warning">
+        <strong>Uyarılar</strong>
+        <ul class="mb-0">
+            @foreach (var warning in Model.RoutingWarnings.Split('\n'))
+            {
+                <li>@warning</li>
+            }
+        </ul>
+    </div>
+}
+
+<div class="row g-3 mb-4">
+    <div class="col-sm-4">
+        <div class="border rounded p-3 h-100">
+            <div class="text-muted small">Katılımcı</div>
+            <div class="fs-3">@details.Participants.Count</div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="border rounded p-3 h-100">
+            <div class="text-muted small">Proje</div>
+            <div class="fs-3">@details.Projects.Count</div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="border rounded p-3 h-100">
+            <div class="text-muted small">Toplam kapasite (min – max)</div>
+            <div class="fs-3">@Model.MinCapacity – @Model.MaxCapacity</div>
+        </div>
+    </div>
+</div>
+
+@if (!details.IsSettled)
+{
+    <p class="text-muted">Bu turnuva için henüz dağıtım yapılmadı. <strong>Dağıtımı Çalıştır</strong> ile katılımcıları projelere yerleştirin.</p>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <h4>Projeler</h4>
+            <ul class="list-group">
+                @foreach (var project in details.Projects)
+                {
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>@project.Title</span>
+                        <small class="text-muted">@project.Team.Min–@project.Team.Max kişi</small>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-lg-6">
+            <h4>Katılımcılar</h4>
+            <ul class="list-group">
+                @foreach (var participant in details.Participants)
+                {
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>@participant.FullName</span>
+                        <small class="text-muted">@string.Join(" › ", participant.Languages)</small>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+    <p class="text-muted small">
+        Dağıtım zamanı: @competition.SettledAt?.ToLocalTime().ToString("g").
+        Uyum puanı, katılımcının dil ve veritabanı tercih sırasına göre hesaplanır (1. tercih = %100, 2. tercih = %50, …).
+    </p>
+
+    <div class="row g-3">
+        @foreach (var team in details.Teams)
+        {
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between">
+                        <span class="fw-semibold">@team.Project.Title</span>
+                        <small class="text-muted">@team.Members.Count kişi (@team.Project.Team.Min–@team.Project.Team.Max)</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="small text-muted mb-2">
+                            @string.Join(", ", team.Project.TechStack.Languages) · @string.Join(", ", team.Project.TechStack.Databases)
+                        </div>
+                        <table class="table table-sm mb-0">
+                            <tbody>
+                                @foreach (var member in team.Members)
+                                {
+                                    <tr>
+                                        <td>
+                                            @member.Participant.FullName
+                                            <div class="small text-muted">@string.Join(" › ", member.Participant.Languages) · @string.Join(" › ", member.Participant.Databases)</div>
+                                        </td>
+                                        <td class="text-end align-middle">
+                                            <span class="badge @(member.Score >= 0.75 ? "text-bg-success" : member.Score > 0 ? "text-bg-warning" : "text-bg-danger")">
+                                                %@Math.Round(member.Score * 100)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (details.UnassignedParticipants.Count > 0)
+    {
+        <h4 class="mt-4">Yerleştirilemeyen katılımcılar</h4>
+        <ul>
+            @foreach (var participant in details.UnassignedParticipants)
+            {
+                <li>@participant.FullName</li>
+            }
+        </ul>
+    }
+
+    @if (details.ClosedProjects.Count > 0)
+    {
+        <h4 class="mt-4">Açılmayan projeler</h4>
+        <ul>
+            @foreach (var project in details.ClosedProjects)
+            {
+                <li>@project.Title <small class="text-muted">(en az @project.Team.Min kişi gerekiyor)</small></li>
+            }
+        </ul>
+    }
+}

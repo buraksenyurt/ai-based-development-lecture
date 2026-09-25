@@ -1,0 +1,58 @@
+@page
+@model ProjectRouter.Web.Pages.Participants.IndexModel
+@{
+    ViewData["Title"] = "Katılımcılar";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Katılımcılar</h1>
+    <a asp-page="Edit" class="btn btn-primary">Yeni Katılımcı</a>
+</div>
+
+@if (Model.Participants.Count == 0)
+{
+    <p class="text-muted">Henüz katılımcı yok.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>İsim</th>
+                    <th>Okul / Bölüm</th>
+                    <th>Sınıf</th>
+                    <th>Diller (sıralı)</th>
+                    <th>Veritabanları (sıralı)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model.Participants)
+                {
+                    <tr>
+                        <td>
+                            <div>@p.FullName</div>
+                            <small class="text-muted">@p.Email</small>
+                            @if (p.GithubUrl is not null)
+                            {
+                                <div><small><a href="@p.GithubUrl" target="_blank" rel="noopener">GitHub</a></small></div>
+                            }
+                        </td>
+                        <td>@p.University<br /><small class="text-muted">@p.Department</small></td>
+                        <td>@p.Class</td>
+                        <td>@string.Join(" › ", p.Languages)</td>
+                        <td>@string.Join(" › ", p.Databases)</td>
+                        <td class="text-end text-nowrap">
+                            <a asp-page="Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-secondary">Düzenle</a>
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@p.Id" class="d-inline"
+                                  data-confirm="@p.FullName silinsin mi?" onsubmit="return confirm(this.dataset.confirm);">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
