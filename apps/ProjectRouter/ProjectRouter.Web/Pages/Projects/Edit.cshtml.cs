@@ -53,13 +53,16 @@ public class EditModel(ProjectIdeaService projects) : PageModel
         try
         {
             var project = new ProjectIdea(
+                id ?? Guid.NewGuid(),
                 Input.Title!,
                 Input.Summary!,
                 new TechStack(ListInput.Split(Input.Languages), ListInput.Split(Input.Platforms), ListInput.Split(Input.Databases)),
                 new TeamSize(Input.TeamMin, Input.TeamMax),
-                Input.Size,
-                ListInput.Split(Input.Similar),
-                ListInput.Split(Input.Tags));
+                Input.Size)
+            {
+                Similar = ListInput.Split(Input.Similar),
+                Tags = ListInput.Split(Input.Tags),
+            };
 
             projects.Save(project);
             TempData["Success"] = $"{project.Title} kaydedildi.";

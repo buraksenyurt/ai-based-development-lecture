@@ -6,11 +6,9 @@ public class ParticipantTests
 {
     private static Participant Create(IEnumerable<string>? languages = null, IEnumerable<string>? databases = null, int @class = 4) =>
         new(
-            "Can Kulod Van Dam",
-            "canklaud@marvel.corp.com",
-            "BatCave Technic",
-            "Software Engineering",
-            @class,
+            Guid.NewGuid(),
+            new Identity("Can Kulod Van Dam", "canklaud@marvel.corp.com"),
+            new School("BatCave Technic", "Software Engineering", @class),
             "https://github.com/canklaudvandam",
             languages ?? ["C#", "Python"],
             databases ?? ["Sql Server", "NoSQL-*"]);
@@ -70,6 +68,23 @@ public class ParticipantTests
     public void Constructor_WithInvalidEmail_Throws()
     {
         Assert.Throws<DomainRuleException>(() =>
-            new Participant("Name", "not-an-email", "Uni", "Dept", 1, null, ["C#"], ["SQLite"]));
+            new Identity("Name", "not-an-email"));
+    }
+
+    [Fact]
+    public void Constructor_WithEmptyId_Throws()
+    {
+        Assert.Throws<DomainRuleException>(() =>
+            new Participant(Guid.Empty, new Identity("Name", "name@uni.edu"), new School("Uni", "Dept", 1), null, ["C#"], ["SQLite"]));
+    }
+
+    [Fact]
+    public void Constructor_KeepsGivenId()
+    {
+        var id = Guid.NewGuid();
+
+        var participant = new Participant(id, new Identity("Name", "name@uni.edu"), new School("Uni", "Dept", 1), null, ["C#"], ["SQLite"]);
+
+        Assert.Equal(id, participant.Id);
     }
 }

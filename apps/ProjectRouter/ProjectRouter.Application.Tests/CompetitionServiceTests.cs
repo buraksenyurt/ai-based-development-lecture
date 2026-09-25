@@ -22,7 +22,7 @@ public class CompetitionServiceTests
     {
         var project = TestData.Project(["C#"], ["SQLite"], 2, 3);
         var participants = new[] { TestData.Participant(["C#"], ["SQLite"]), TestData.Participant(["C#"], ["SQLite"]) };
-        var competition = new Competition("AI", "2026-27", [project.Id], participants.Select(p => p.Id));
+        var competition = new Competition(Guid.NewGuid(), "AI", "2026-27", [project.Id], participants.Select(p => p.Id));
 
         _competitions.Setup(r => r.GetById(competition.Id)).Returns(competition);
         _participants.Setup(r => r.GetByIds(It.IsAny<IEnumerable<Guid>>())).Returns(participants);
@@ -70,28 +70,26 @@ public class CompetitionServiceTests
         competition.AssignSettlement(
             new Dictionary<Guid, IReadOnlyList<Guid>> { [project.Id] = participants.Select(p => p.Id).ToList() }, [project], DateTime.UtcNow);
 
-        var edited = new Competition("AI", "2026-27", [project.Id], [participants[0].Id]);
+        var edited = new Competition(competition.Id, "AI", "2026-27", [project.Id], [participants[0].Id]);
         CreateService().Save(edited);
 
         Assert.Null(edited.SettledAt);
         _competitions.Verify(r => r.Save(edited), Times.Once);
     }
 
-    //// TODO@buraksenyurt Test hatası çözülemli
-    //[Fact]
-    //public void Save_WhenOnlyTitleChanges_KeepsSettlement()
-    //{
-    //    var (competition, project, participants) = Arrange();
-    //    competition.AssignSettlement(
-    //        new Dictionary<Guid, IReadOnlyList<Guid>> { [project.Id] = participants.Select(p => p.Id).ToList() }, [project], DateTime.UtcNow);
+    [Fact]
+    public void Save_WhenOnlyTitleChanges_KeepsSettlement()
+    {
+        var (competition, project, participants) = Arrange();
+        competition.AssignSettlement(
+            new Dictionary<Guid, IReadOnlyList<Guid>> { [project.Id] = participants.Select(p => p.Id).ToList() }, [project], DateTime.UtcNow);
 
-    //    var edited = new Competition("Renamed", "2026-27", [project.Id], participants.Select(p => p.Id));
-    //    CreateService().Save(edited);
+        var edited = new Competition(competition.Id, "Renamed", "2026-27", [project.Id], participants.Select(p => p.Id));
+        CreateService().Save(edited);
 
-        
-    //    Assert.NotNull(edited.SettledAt);
-    //    Assert.Equal(2, edited.Settlement[project.Id].Count);
-    //}
+        Assert.NotNull(edited.SettledAt);
+        Assert.Equal(2, edited.Settlement[project.Id].Count);
+    }
 
     [Fact]
     public void Export_UsesDocumentFormat()

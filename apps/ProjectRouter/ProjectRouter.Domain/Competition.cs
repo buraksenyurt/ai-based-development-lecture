@@ -18,13 +18,15 @@ public class Competition
     public IReadOnlyDictionary<Guid, IReadOnlyList<Guid>> Settlement => _settlement.AsReadOnly();
     public DateTime? SettledAt { get; private set; }
 
+    /// <param name="id">A new id (<see cref="Guid.NewGuid"/>) for a new competition, or the existing id when updating or loading one.</param>
     public Competition(
+        Guid id,
         string title,
         string session,
         IEnumerable<Guid> projectIds,
         IEnumerable<Guid> participantIds)
     {
-        Id = Guid.NewGuid();
+        Id = Guard.Id(id, "Competition");
         Title = Guard.Required(title, "Title");
         Session = Guard.Required(session, "Session");
         _projectIds = projectIds.Distinct().ToList();

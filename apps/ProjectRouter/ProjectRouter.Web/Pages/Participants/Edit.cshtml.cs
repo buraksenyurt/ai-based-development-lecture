@@ -51,11 +51,9 @@ public class EditModel(ParticipantService participants) : PageModel
         try
         {
             var participant = new Participant(
-                Input.FullName!,
-                Input.Email!,
-                Input.University!,
-                Input.Department!,
-                Input.Class,
+                id ?? Guid.NewGuid(),
+                new Identity(Input.FullName!, Input.Email!),
+                new School(Input.University!, Input.Department!, Input.Class),
                 Input.GithubUrl,
                 ListInput.Split(Input.Languages),
                 ListInput.Split(Input.Databases));

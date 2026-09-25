@@ -6,13 +6,16 @@ public class ProjectIdeaTests
 {
     private static ProjectIdea Create(string? summary = null, TechStack? techStack = null, TeamSize? team = null) =>
         new(
+            Guid.NewGuid(),
             "Kahoot Clone",
             summary ?? "Çevrimiçi bilgi yarışması platformu.",
             techStack ?? new TechStack(["python"], ["web", "mobile"], ["postgres", "mongodb"]),
             team ?? new TeamSize(2, 5),
-            ProjectSize.L,
-            ["Kahoot", "Mentimeter"],
-            ["web", "game"]);
+            ProjectSize.L)
+        {
+            Similar = ["Kahoot", "Mentimeter"],
+            Tags = ["web", "game"],
+        };
 
     [Fact]
     public void Constructor_WithValidData_CreatesProject()

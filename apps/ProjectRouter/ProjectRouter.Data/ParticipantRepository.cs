@@ -97,11 +97,9 @@ public class ParticipantRepository(SqliteConnectionFactory connectionFactory) : 
         {
             var owned = itemsByOwner[row.Id].ToList();
             return new Participant(
-                row.FullName,
-                row.Email,
-                row.University,
-                row.Department,
-                (int)row.Class,
+                Guid.Parse(row.Id),
+                new Identity(row.FullName, row.Email),
+                new School(row.University, row.Department, (int)row.Class),
                 row.GithubUrl,
                 owned.Where(i => i.Kind == "language").Select(i => i.Name),
                 owned.Where(i => i.Kind == "database").Select(i => i.Name));

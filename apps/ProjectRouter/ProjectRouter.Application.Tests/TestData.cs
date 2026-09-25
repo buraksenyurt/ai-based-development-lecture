@@ -10,11 +10,9 @@ internal static class TestData
     {
         var n = Interlocked.Increment(ref _counter);
         return new Participant(
-            name ?? $"Participant {n}",
-            $"participant{n}@example.com",
-            "University",
-            "Software Engineering",
-            3,
+            Guid.NewGuid(),
+            new Identity(name ?? $"Participant {n}", $"participant{n}@example.com"),
+            new School("University", "Software Engineering", 3),
             null,
             languages,
             databases);
@@ -22,11 +20,10 @@ internal static class TestData
 
     public static ProjectIdea Project(string[] languages, string[] databases, int min, int max, string? title = null) =>
         new(
+            Guid.NewGuid(),
             title ?? $"Project {Interlocked.Increment(ref _counter)}",
             "Summary",
             new TechStack(languages, ["web"], databases),
             new TeamSize(min, max),
-            ProjectSize.M,
-            [],
-            []);
+            ProjectSize.M);
 }

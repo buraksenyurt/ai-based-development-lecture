@@ -3,12 +3,15 @@ namespace ProjectRouter.Domain;
 public class Participant
 {
     public Guid Id { get; }
-    public string FullName { get; }
-    public string Email { get; }
-    public string University { get; }
-    public string Department { get; }
-    public int Class { get; }
+    public Identity Identity { get; }
+    public School School { get; }
     public string? GithubUrl { get; }
+
+    public string FullName => Identity.FullName;
+    public string Email => Identity.Email;
+    public string University => School.University;
+    public string Department => School.Department;
+    public int Class => School.Class;
 
     /// <summary>Preferred programming languages, ordered from first to last choice (Rule 00).</summary>
     public IReadOnlyList<string> Languages { get; }
@@ -16,29 +19,21 @@ public class Participant
     /// <summary>Preferred databases, ordered from first to last choice (Rule 01).</summary>
     public IReadOnlyList<string> Databases { get; }
 
+    /// <param name="id">A new id (<see cref="Guid.NewGuid"/>) for a new participant, or the existing id when updating or loading one.</param>
     public Participant(
-        string fullName,
-        string email,
-        string university,
-        string department,
-        int @class,
+        Guid id,
+        Identity identity,
+        School school,
         string? githubUrl,
         IEnumerable<string> languages,
         IEnumerable<string> databases)
     {
-        if (@class <= 0)
-            throw new DomainRuleException(DomainRuleException.Validation, "Class must be greater than zero.");
+        ArgumentNullException.ThrowIfNull(identity);
+        ArgumentNullException.ThrowIfNull(school);
 
-        var mail = Guard.Required(email, "Email");
-        if (!mail.Contains('@'))
-            throw new DomainRuleException(DomainRuleException.Validation, "Email is not valid.");
-
-        Id = Guid.NewGuid();
-        FullName = Guard.Required(fullName, "Full name");
-        Email = mail;
-        University = Guard.Required(university, "University");
-        Department = Guard.Required(department, "Department");
-        Class = @class;
+        Id = Guard.Id(id, "Participant");
+        Identity = identity;
+        School = school;
         GithubUrl = string.IsNullOrWhiteSpace(githubUrl) ? null : githubUrl.Trim();
         Languages = Guard.OrderedList(languages, Rules.Rule00, "programming language", required: true);
         Databases = Guard.OrderedList(databases, Rules.Rule01, "database", required: true);

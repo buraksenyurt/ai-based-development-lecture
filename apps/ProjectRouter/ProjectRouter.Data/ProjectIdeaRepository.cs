@@ -100,13 +100,16 @@ public class ProjectIdeaRepository(SqliteConnectionFactory connectionFactory) : 
             IEnumerable<string> Of(string kind) => owned.Where(i => i.Kind == kind).Select(i => i.Name);
 
             return new ProjectIdea(
+                Guid.Parse(row.Id),
                 row.Title,
                 row.Summary,
                 new TechStack(Of("language"), Of("platform"), Of("database")),
                 new TeamSize((int)row.TeamMin, (int)row.TeamMax),
-                Enum.Parse<ProjectSize>(row.Size),
-                Of("similar"),
-                Of("tag"));
+                Enum.Parse<ProjectSize>(row.Size))
+            {
+                Similar = Of("similar").ToList(),
+                Tags = Of("tag").ToList(),
+            };
         }).ToList();
     }
 

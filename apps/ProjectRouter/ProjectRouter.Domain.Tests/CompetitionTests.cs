@@ -7,7 +7,7 @@ public class CompetitionTests
     private static readonly DateTime Now = new(2026, 9, 25, 10, 0, 0, DateTimeKind.Utc);
 
     private static ProjectIdea Project(int min, int max) =>
-        new($"Project {min}-{max}", "Summary", new TechStack(["C#"], [], ["SQLite"]), new TeamSize(min, max), ProjectSize.M, [], []);
+        new(Guid.NewGuid(), $"Project {min}-{max}", "Summary", new TechStack(["C#"], [], ["SQLite"]), new TeamSize(min, max), ProjectSize.M);
 
     private static Dictionary<Guid, IReadOnlyList<Guid>> Settlement(params (Guid Project, Guid[] Members)[] teams) =>
         teams.ToDictionary(t => t.Project, t => (IReadOnlyList<Guid>)t.Members);
@@ -18,7 +18,7 @@ public class CompetitionTests
         var project = Project(2, 3);
         var p1 = Guid.NewGuid();
         var p2 = Guid.NewGuid();
-        var competition = new Competition("AI", "2026-27", [project.Id], [p1, p2]);
+        var competition = new Competition(Guid.NewGuid(), "AI", "2026-27", [project.Id], [p1, p2]);
 
         competition.AssignSettlement(Settlement((project.Id, [p1, p2])), [project], Now);
 
@@ -32,7 +32,7 @@ public class CompetitionTests
         var project = Project(3, 4);
         var p1 = Guid.NewGuid();
         var p2 = Guid.NewGuid();
-        var competition = new Competition("AI", "2026-27", [project.Id], [p1, p2]);
+        var competition = new Competition(Guid.NewGuid(), "AI", "2026-27", [project.Id], [p1, p2]);
 
         var ex = Assert.Throws<DomainRuleException>(() =>
             competition.AssignSettlement(Settlement((project.Id, [p1, p2])), [project], Now));
@@ -47,7 +47,7 @@ public class CompetitionTests
         var project = Project(1, 1);
         var p1 = Guid.NewGuid();
         var p2 = Guid.NewGuid();
-        var competition = new Competition("AI", "2026-27", [project.Id], [p1, p2]);
+        var competition = new Competition(Guid.NewGuid(), "AI", "2026-27", [project.Id], [p1, p2]);
 
         var ex = Assert.Throws<DomainRuleException>(() =>
             competition.AssignSettlement(Settlement((project.Id, [p1, p2])), [project], Now));
@@ -62,7 +62,7 @@ public class CompetitionTests
         var second = Project(1, 2);
         var p1 = Guid.NewGuid();
         var p2 = Guid.NewGuid();
-        var competition = new Competition("AI", "2026-27", [first.Id, second.Id], [p1, p2]);
+        var competition = new Competition(Guid.NewGuid(), "AI", "2026-27", [first.Id, second.Id], [p1, p2]);
 
         var ex = Assert.Throws<DomainRuleException>(() =>
             competition.AssignSettlement(Settlement((first.Id, [p1]), (second.Id, [p1, p2])), [first, second], Now));
@@ -74,7 +74,7 @@ public class CompetitionTests
     public void AssignSettlement_WithUnknownParticipant_Throws()
     {
         var project = Project(1, 2);
-        var competition = new Competition("AI", "2026-27", [project.Id], [Guid.NewGuid()]);
+        var competition = new Competition(Guid.NewGuid(), "AI", "2026-27", [project.Id], [Guid.NewGuid()]);
 
         Assert.Throws<DomainRuleException>(() =>
             competition.AssignSettlement(Settlement((project.Id, [Guid.NewGuid()])), [project], Now));
@@ -85,7 +85,7 @@ public class CompetitionTests
     {
         var project = Project(1, 2);
         var p1 = Guid.NewGuid();
-        var competition = new Competition("AI", "2026-27", [project.Id], [p1]);
+        var competition = new Competition(Guid.NewGuid(), "AI", "2026-27", [project.Id], [p1]);
         competition.AssignSettlement(Settlement((project.Id, [p1])), [project], Now);
 
         competition.ClearSettlement();
