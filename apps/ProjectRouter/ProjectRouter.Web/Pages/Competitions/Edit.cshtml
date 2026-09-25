@@ -1,0 +1,75 @@
+@page "{id:guid?}"
+@model ProjectRouter.Web.Pages.Competitions.EditModel
+@{
+    ViewData["Title"] = Model.IsNew ? "Yeni Turnuva" : "Turnuvayı Düzenle";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+    <div class="row g-3 mb-4" style="max-width: 48rem">
+        <div class="col-md-8">
+            <label asp-for="Input.Title" class="form-label"></label>
+            <input asp-for="Input.Title" class="form-control" placeholder="Yapay Zeka destekli yazılım geliştirme" />
+            <span asp-validation-for="Input.Title" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Input.Session" class="form-label"></label>
+            <input asp-for="Input.Session" class="form-control" placeholder="2026-27" />
+            <span asp-validation-for="Input.Session" class="text-danger"></span>
+        </div>
+    </div>
+
+    @if (!Model.IsNew)
+    {
+        <div class="alert alert-info">Katılımcı veya proje listesi değişirse mevcut dağıtım silinir; dağıtımı yeniden çalıştırmanız gerekir.</div>
+    }
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <h4>Projeler</h4>
+            @if (Model.AllProjects.Count == 0)
+            {
+                <p class="text-muted">Önce <a asp-page="/Projects/Edit">proje ekleyin</a>.</p>
+            }
+            @foreach (var project in Model.AllProjects)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="Input.ProjectIds" value="@project.Id" id="project-@project.Id"
+                           checked="@(Model.Input.ProjectIds.Contains(project.Id) ? "checked" : null)" />
+                    <label class="form-check-label" for="project-@project.Id">
+                        @project.Title <small class="text-muted">(@project.Team.Min–@project.Team.Max kişi, @string.Join(", ", project.TechStack.Languages))</small>
+                    </label>
+                </div>
+            }
+        </div>
+        <div class="col-lg-6">
+            <h4>Katılımcılar</h4>
+            @if (Model.AllParticipants.Count == 0)
+            {
+                <p class="text-muted">Önce <a asp-page="/Participants/Edit">katılımcı ekleyin</a>.</p>
+            }
+            @foreach (var participant in Model.AllParticipants)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="Input.ParticipantIds" value="@participant.Id" id="participant-@participant.Id"
+                           checked="@Model.Input.ParticipantIds.Contains(participant.Id)" />
+                    <label class="form-check-label" for="participant-@participant.Id">
+                        @participant.FullName <small class="text-muted">(@string.Join(" › ", participant.Languages))</small>
+                    </label>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+        <a asp-page="Index" class="btn btn-link">Vazgeç</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

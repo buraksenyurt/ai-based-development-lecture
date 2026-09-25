@@ -1,0 +1,61 @@
+@page "{id:guid?}"
+@model ProjectRouter.Web.Pages.Participants.EditModel
+@{
+    ViewData["Title"] = Model.IsNew ? "Yeni Katılımcı" : "Katılımcıyı Düzenle";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" class="row g-3" style="max-width: 48rem">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+    <div class="col-md-6">
+        <label asp-for="Input.FullName" class="form-label"></label>
+        <input asp-for="Input.FullName" class="form-control" />
+        <span asp-validation-for="Input.FullName" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Input.Email" class="form-label"></label>
+        <input asp-for="Input.Email" class="form-control" />
+        <span asp-validation-for="Input.Email" class="text-danger"></span>
+    </div>
+    <div class="col-md-5">
+        <label asp-for="Input.University" class="form-label"></label>
+        <input asp-for="Input.University" class="form-control" />
+        <span asp-validation-for="Input.University" class="text-danger"></span>
+    </div>
+    <div class="col-md-5">
+        <label asp-for="Input.Department" class="form-label"></label>
+        <input asp-for="Input.Department" class="form-control" />
+        <span asp-validation-for="Input.Department" class="text-danger"></span>
+    </div>
+    <div class="col-md-2">
+        <label asp-for="Input.Class" class="form-label"></label>
+        <input asp-for="Input.Class" class="form-control" />
+        <span asp-validation-for="Input.Class" class="text-danger"></span>
+    </div>
+    <div class="col-12">
+        <label asp-for="Input.GithubUrl" class="form-label"></label>
+        <input asp-for="Input.GithubUrl" class="form-control" placeholder="https://github.com/kullanici" />
+        <span asp-validation-for="Input.GithubUrl" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Input.Languages" class="form-label"></label>
+        <input asp-for="Input.Languages" class="form-control" placeholder="C#, Python" />
+        <div class="form-text">Virgülle ayırın; ilk yazılan ilk tercihtir. (Rule 00)</div>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Input.Databases" class="form-label"></label>
+        <input asp-for="Input.Databases" class="form-control" placeholder="Sql Server, NoSQL-*" />
+        <div class="form-text">Virgülle ayırın; ilk yazılan ilk tercihtir. <code>NoSQL-*</code> / <code>SQL-*</code> kategorinin tamamını kapsar. (Rule 01)</div>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+        <a asp-page="Index" class="btn btn-link">Vazgeç</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
