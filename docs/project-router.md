@@ -4,7 +4,7 @@
 | ---------- | ------------------------------------------------------------------------------------------------------------ |
 | İsim       | Project Router                                                                                               |
 | Amaç       | Derse katılan öğrencileri dönem projelerine belirli kriterlere göre otomatik dağıtan bir sistem geliştirmek. |
-| Tech Stack | .Net 10, C#, Sqlite                                                                                          |
+| Tech Stack | .Net 10, C#, Sqlite, Razor Based Web App                                                                     |
 
 ![Project Router Diagram](ProjectRouterDiagram.png)
 
@@ -29,6 +29,7 @@ Projeyi alan katılımcı. Özellikleri;
 ```json
 {
   "identity": {
+    "id": "participant-001",
     "fullName": "Can Kulod Van Dam",
     "email": "canklaud@marvel.corp.com"
   },
@@ -63,6 +64,7 @@ Projeye ait bilgiler. Özellikleri;
 
 ```json
 {
+  "id": "project-001",
   "title": "Kahoot Clone",
   "summary": "Çevrimiçi bilgi yarışması platformudur. Maksimum 50 yarışmacı aynı anda yarışır...",
   "techStack": {
@@ -107,6 +109,7 @@ Proje ve katılımcı bilgilerinin eşleştirildiği ana başlık. Özellikleri;
 
 ```json
 {
+  "id": "competition-001",
   "title": "Yapay Zeka destekli yazılım geliştirme",
   "session": "2026-27",
   "settlement": [
@@ -131,10 +134,11 @@ Proje ve katılımcı bilgilerinin eşleştirildiği ana başlık. Özellikleri;
 
 ## Kurallar *(Rules)*
 
-- `Rule 00`: Bir katılımcı en az bir programlama dili tercih etmelidir. Birden fazla dil tercihi varsa ilk-son şeklinde sıralı girilmelidir.
+- `Rule 00`: Bir katılımcı en az bir programlama dili tercih etmelidir. Birden fazla dil tercihi varsa `ilk tercih-son tercih` şeklinde sıralı girilmelidir.
 - `Rule 01`: `Rule 00` daki kural veritabanı tercihi için de geçerlidir.
 - `Rule 02`: Bir projedeki takım sayısı min ve max değer aralığı arasında olabilir. *(min:2 max:4 için bunun anlamı şudur; takımda en az 2 en fazla 4 katlımcı olabilir)*
 - `Rule 03`: Bir katılımcı sadece bir projeye dahil olabilir.
+- `Rule 04`: Bir proje en az bir programlama dili ve en az bir veri tabanı kullanmalıdır.
 
 ## Kullanıcı Hikayeleri *(User Stories)*
 
