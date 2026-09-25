@@ -1,8 +1,10 @@
 <Solution>
   <Project Path="ProjectRouter.Application.Tests/ProjectRouter.Application.Tests.csproj" />
   <Project Path="ProjectRouter.Application/ProjectRouter.Application.csproj" />
+  <Project Path="ProjectRouter.Data.Tests/ProjectRouter.Data.Tests.csproj" />
   <Project Path="ProjectRouter.Data/ProjectRouter.Data.csproj" />
   <Project Path="ProjectRouter.Domain.Tests/ProjectRouter.Domain.Tests.csproj" />
   <Project Path="ProjectRouter.Domain/ProjectRouter.Domain.csproj" />
+  <Project Path="ProjectRouter.Web.Tests/ProjectRouter.Web.Tests.csproj" />
   <Project Path="ProjectRouter.Web/ProjectRouter.Web.csproj" />
 </Solution>
