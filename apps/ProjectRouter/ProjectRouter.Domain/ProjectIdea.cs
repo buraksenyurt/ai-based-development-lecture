@@ -14,7 +14,6 @@ public class ProjectIdea
     public IReadOnlyList<string> Tags { get; }
 
     public ProjectIdea(
-        Guid id,
         string title,
         string summary,
         TechStack techStack,
@@ -28,7 +27,7 @@ public class ProjectIdea
         if (team == default)
             throw new DomainRuleException(Rules.Rule02, "Team size must be specified.");
 
-        Id = Guard.Id(id, "Project");
+        Id = Guid.NewGuid();
         Title = Guard.Required(title, "Title");
         Summary = Guard.Required(summary, "Summary", SummaryMaxLength);
         TechStack = techStack;

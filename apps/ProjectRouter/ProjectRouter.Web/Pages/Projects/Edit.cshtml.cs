@@ -53,7 +53,6 @@ public class EditModel(ProjectIdeaService projects) : PageModel
         try
         {
             var project = new ProjectIdea(
-                id ?? Guid.NewGuid(),
                 Input.Title!,
                 Input.Summary!,
                 new TechStack(ListInput.Split(Input.Languages), ListInput.Split(Input.Platforms), ListInput.Split(Input.Databases)),

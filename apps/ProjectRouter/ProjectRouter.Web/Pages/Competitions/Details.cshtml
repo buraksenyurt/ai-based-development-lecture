@@ -112,6 +112,12 @@ else
                             @string.Join(", ", team.Project.TechStack.Languages) · @string.Join(", ", team.Project.TechStack.Databases)
                         </div>
                         <table class="table table-sm mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Katılımcı</th>
+                                    <th class="text-end">Uyum puanı</th>
+                                </tr>
+                            </thead>
                             <tbody>
                                 @foreach (var member in team.Members)
                                 {

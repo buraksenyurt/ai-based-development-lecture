@@ -62,7 +62,6 @@ public class EditModel(
         try
         {
             var competition = new Competition(
-                id ?? Guid.NewGuid(),
                 Input.Title!,
                 Input.Session!,
                 Input.ProjectIds,

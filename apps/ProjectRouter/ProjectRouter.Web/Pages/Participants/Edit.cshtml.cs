@@ -51,7 +51,6 @@ public class EditModel(ParticipantService participants) : PageModel
         try
         {
             var participant = new Participant(
-                id ?? Guid.NewGuid(),
                 Input.FullName!,
                 Input.Email!,
                 Input.University!,

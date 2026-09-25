@@ -17,7 +17,6 @@ public class Participant
     public IReadOnlyList<string> Databases { get; }
 
     public Participant(
-        Guid id,
         string fullName,
         string email,
         string university,
@@ -34,7 +33,7 @@ public class Participant
         if (!mail.Contains('@'))
             throw new DomainRuleException(DomainRuleException.Validation, "Email is not valid.");
 
-        Id = Guard.Id(id, "Participant");
+        Id = Guid.NewGuid();
         FullName = Guard.Required(fullName, "Full name");
         Email = mail;
         University = Guard.Required(university, "University");

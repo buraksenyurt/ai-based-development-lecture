@@ -6,7 +6,6 @@ public class ProjectIdeaTests
 {
     private static ProjectIdea Create(string? summary = null, TechStack? techStack = null, TeamSize? team = null) =>
         new(
-            Guid.NewGuid(),
             "Kahoot Clone",
             summary ?? "Çevrimiçi bilgi yarışması platformu.",
             techStack ?? new TechStack(["python"], ["web", "mobile"], ["postgres", "mongodb"]),

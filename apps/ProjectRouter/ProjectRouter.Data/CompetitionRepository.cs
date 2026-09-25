@@ -114,7 +114,6 @@ public class CompetitionRepository(SqliteConnectionFactory connectionFactory) : 
             new { Id = id });
 
         var competition = new Competition(
-            Guid.Parse(row.Id),
             row.Title,
             row.Session,
             projectIds.Select(Guid.Parse),

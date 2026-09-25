@@ -19,13 +19,12 @@ public class Competition
     public DateTime? SettledAt { get; private set; }
 
     public Competition(
-        Guid id,
         string title,
         string session,
         IEnumerable<Guid> projectIds,
         IEnumerable<Guid> participantIds)
     {
-        Id = Guard.Id(id, "Competition");
+        Id = Guid.NewGuid();
         Title = Guard.Required(title, "Title");
         Session = Guard.Required(session, "Session");
         _projectIds = projectIds.Distinct().ToList();

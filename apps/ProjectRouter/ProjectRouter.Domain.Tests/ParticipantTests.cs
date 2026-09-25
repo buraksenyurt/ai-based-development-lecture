@@ -6,7 +6,6 @@ public class ParticipantTests
 {
     private static Participant Create(IEnumerable<string>? languages = null, IEnumerable<string>? databases = null, int @class = 4) =>
         new(
-            Guid.NewGuid(),
             "Can Kulod Van Dam",
             "canklaud@marvel.corp.com",
             "BatCave Technic",
@@ -71,6 +70,6 @@ public class ParticipantTests
     public void Constructor_WithInvalidEmail_Throws()
     {
         Assert.Throws<DomainRuleException>(() =>
-            new Participant(Guid.NewGuid(), "Name", "not-an-email", "Uni", "Dept", 1, null, ["C#"], ["SQLite"]));
+            new Participant("Name", "not-an-email", "Uni", "Dept", 1, null, ["C#"], ["SQLite"]));
     }
 }

@@ -100,7 +100,6 @@ public class ProjectIdeaRepository(SqliteConnectionFactory connectionFactory) : 
             IEnumerable<string> Of(string kind) => owned.Where(i => i.Kind == kind).Select(i => i.Name);
 
             return new ProjectIdea(
-                Guid.Parse(row.Id),
                 row.Title,
                 row.Summary,
                 new TechStack(Of("language"), Of("platform"), Of("database")),

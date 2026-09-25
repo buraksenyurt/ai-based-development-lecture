@@ -40,12 +40,4 @@ internal static class Guard
 
         return trimmed;
     }
-
-    public static Guid Id(Guid id, string entityName)
-    {
-        if (id == Guid.Empty)
-            throw new DomainRuleException(DomainRuleException.Validation, $"{entityName} id cannot be empty.");
-
-        return id;
-    }
 }

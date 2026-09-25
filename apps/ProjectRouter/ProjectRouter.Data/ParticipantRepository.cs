@@ -97,7 +97,6 @@ public class ParticipantRepository(SqliteConnectionFactory connectionFactory) : 
         {
             var owned = itemsByOwner[row.Id].ToList();
             return new Participant(
-                Guid.Parse(row.Id),
                 row.FullName,
                 row.Email,
                 row.University,
