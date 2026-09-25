@@ -2,3 +2,7 @@
 *.db
 *.db-shm
 *.db-wal
+
+# SonarQube / test ciktilari
+TestResults/
+.sonarqube/
