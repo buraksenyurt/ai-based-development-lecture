@@ -19,6 +19,18 @@ public class DetailsModel(CompetitionService competitions) : PageModel
     public int MinCapacity => Details.Projects.Sum(p => p.Team.Min);
     public int MaxCapacity => Details.Projects.Sum(p => p.Team.Max);
 
+    /// <summary>Badge color of a match score: green for a strong match, yellow for a partial one, red for none.</summary>
+    public static string ScoreBadgeClass(double score)
+    {
+        if (score >= 0.75)
+            return "text-bg-success";
+
+        if (score > 0)
+            return "text-bg-warning";
+
+        return "text-bg-danger";
+    }
+
     public IActionResult OnGet(Guid id)
     {
         try

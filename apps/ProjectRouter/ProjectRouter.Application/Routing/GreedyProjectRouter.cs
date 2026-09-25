@@ -20,73 +20,53 @@ public class GreedyProjectRouter(IMatchScorer scorer) : IProjectRouter
         var orderedParticipants = participants.OrderBy(p => p.Id).ToList();
         var orderedProjects = projects.OrderBy(p => p.Id).ToList();
 
-        var scores = new Dictionary<(Guid ParticipantId, Guid ProjectId), double>();
-        foreach (var participant in orderedParticipants)
-            foreach (var project in orderedProjects)
-                scores[(participant.Id, project.Id)] = scorer.Score(participant, project);
-
+        var scores = ScoreAll(orderedParticipants, orderedProjects);
         var openProjects = SelectProjectsToOpen(orderedParticipants, orderedProjects, scores);
-        var members = openProjects.ToDictionary(p => p.Id, _ => new List<Guid>());
-        var unassigned = orderedParticipants.Select(p => p.Id).ToList();
-        var placements = new List<Placement>();
+        var assignment = new Assignment(openProjects, orderedParticipants, scores);
 
         // Step 3: reach the minimum team size of every opened project.
-        AssignBestPairs(openProjects, p => p.Team.Min);
+        assignment.Fill(p => p.Team.Min);
 
         // Step 4: place everyone else while capacity allows.
-        AssignBestPairs(openProjects, p => p.Team.Max);
+        assignment.Fill(p => p.Team.Max);
 
+        var closedProjects = orderedProjects.Where(p => !assignment.IsOpen(p.Id)).ToList();
+
+        return new RoutingResult
+        {
+            Settlement = assignment.Settlement(),
+            Placements = assignment.Placements,
+            UnassignedParticipantIds = assignment.Unassigned,
+            ClosedProjectIds = closedProjects.Select(p => p.Id).ToList(),
+            Warnings = BuildWarnings(assignment, closedProjects),
+        };
+    }
+
+    private Dictionary<(Guid ParticipantId, Guid ProjectId), double> ScoreAll(List<Participant> participants, List<ProjectIdea> projects)
+    {
+        var scores = new Dictionary<(Guid ParticipantId, Guid ProjectId), double>();
+        foreach (var participant in participants)
+            foreach (var project in projects)
+                scores[(participant.Id, project.Id)] = scorer.Score(participant, project);
+
+        return scores;
+    }
+
+    private static List<string> BuildWarnings(Assignment assignment, List<ProjectIdea> closedProjects)
+    {
         var warnings = new List<string>();
-        var closedProjects = orderedProjects.Where(p => !members.ContainsKey(p.Id)).ToList();
 
-        if (unassigned.Count > 0)
-            warnings.Add($"{unassigned.Count} participant(s) could not be placed: the opened projects have no remaining capacity.");
+        if (assignment.Unassigned.Count > 0)
+            warnings.Add($"{assignment.Unassigned.Count} participant(s) could not be placed: the opened projects have no remaining capacity.");
 
         foreach (var project in closedProjects)
             warnings.Add($"Project '{project.Title}' was not opened: there are not enough participants to reach its minimum team size of {project.Team.Min}.");
 
-        var noMatchCount = placements.Count(p => p.Score == 0);
+        var noMatchCount = assignment.Placements.Count(p => p.Score == 0);
         if (noMatchCount > 0)
             warnings.Add($"{noMatchCount} participant(s) were placed into a project that matches none of their preferences.");
 
-        return new RoutingResult
-        {
-            Settlement = members
-                .Where(kv => kv.Value.Count > 0)
-                .ToDictionary(kv => kv.Key, kv => (IReadOnlyList<Guid>)kv.Value.AsReadOnly()),
-            Placements = placements,
-            UnassignedParticipantIds = unassigned,
-            ClosedProjectIds = closedProjects.Select(p => p.Id).ToList(),
-            Warnings = warnings,
-        };
-
-        void AssignBestPairs(IReadOnlyList<ProjectIdea> candidates, Func<ProjectIdea, int> capacity)
-        {
-            while (unassigned.Count > 0)
-            {
-                Placement? best = null;
-
-                foreach (var project in candidates)
-                {
-                    if (members[project.Id].Count >= capacity(project))
-                        continue;
-
-                    foreach (var participantId in unassigned)
-                    {
-                        var score = scores[(participantId, project.Id)];
-                        if (best is null || score > best.Score)
-                            best = new Placement(participantId, project.Id, score);
-                    }
-                }
-
-                if (best is null)
-                    return;
-
-                members[best.ProjectId].Add(best.ParticipantId);
-                unassigned.Remove(best.ParticipantId);
-                placements.Add(best);
-            }
-        }
+        return warnings;
     }
 
     private static List<ProjectIdea> SelectProjectsToOpen(
@@ -127,5 +107,58 @@ public class GreedyProjectRouter(IMatchScorer scorer) : IProjectRouter
         }
 
         return open;
+    }
+
+    /// <summary>Tracks who is placed where while the greedy steps run.</summary>
+    private sealed class Assignment(
+        List<ProjectIdea> openProjects,
+        List<Participant> participants,
+        Dictionary<(Guid ParticipantId, Guid ProjectId), double> scores)
+    {
+        private readonly Dictionary<Guid, List<Guid>> _members = openProjects.ToDictionary(p => p.Id, _ => new List<Guid>());
+        private readonly List<Guid> _unassigned = participants.Select(p => p.Id).ToList();
+        private readonly List<Placement> _placements = [];
+
+        public List<Guid> Unassigned => _unassigned;
+        public IReadOnlyList<Placement> Placements => _placements;
+
+        public bool IsOpen(Guid projectId) => _members.ContainsKey(projectId);
+
+        /// <summary>Repeatedly places the best scoring pair until no open project is below the given capacity.</summary>
+        public void Fill(Func<ProjectIdea, int> capacity)
+        {
+            while (FindBestPair(capacity) is { } best)
+            {
+                _members[best.ProjectId].Add(best.ParticipantId);
+                _unassigned.Remove(best.ParticipantId);
+                _placements.Add(best);
+            }
+        }
+
+        public Dictionary<Guid, IReadOnlyList<Guid>> Settlement() =>
+            _members
+                .Where(kv => kv.Value.Count > 0)
+                .ToDictionary(kv => kv.Key, kv => (IReadOnlyList<Guid>)kv.Value.AsReadOnly());
+
+        private Placement? FindBestPair(Func<ProjectIdea, int> capacity)
+        {
+            Placement? best = null;
+
+            var projectsWithRoom = openProjects
+                .Where(project => _members[project.Id].Count < capacity(project))
+                .Select(project => project.Id);
+
+            foreach (var projectId in projectsWithRoom)
+            {
+                foreach (var participantId in _unassigned)
+                {
+                    var score = scores[(participantId, projectId)];
+                    if (best is null || score > best.Score)
+                        best = new Placement(participantId, projectId, score);
+                }
+            }
+
+            return best;
+        }
     }
 }

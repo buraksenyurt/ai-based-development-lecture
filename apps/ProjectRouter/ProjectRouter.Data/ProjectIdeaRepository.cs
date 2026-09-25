@@ -113,13 +113,6 @@ public class ProjectIdeaRepository(SqliteConnectionFactory connectionFactory) : 
         }).ToList();
     }
 
-    private sealed class ProjectRow
-    {
-        public string Id { get; set; } = "";
-        public string Title { get; set; } = "";
-        public string Summary { get; set; } = "";
-        public long TeamMin { get; set; }
-        public long TeamMax { get; set; }
-        public string Size { get; set; } = "";
-    }
+    // Materialized by Dapper through the constructor: parameter order must match the SELECT column order.
+    private sealed record ProjectRow(string Id, string Title, string Summary, long TeamMin, long TeamMax, string Size);
 }

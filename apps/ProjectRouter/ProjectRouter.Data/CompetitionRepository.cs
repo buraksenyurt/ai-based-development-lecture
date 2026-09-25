@@ -132,17 +132,8 @@ public class CompetitionRepository(SqliteConnectionFactory connectionFactory) : 
         return competition;
     }
 
-    private sealed class CompetitionRow
-    {
-        public string Id { get; set; } = "";
-        public string Title { get; set; } = "";
-        public string Session { get; set; } = "";
-        public string? SettledAt { get; set; }
-    }
+    // Materialized by Dapper through the constructor: parameter order must match the SELECT column order.
+    private sealed record CompetitionRow(string Id, string Title, string Session, string? SettledAt);
 
-    private sealed class SettlementRow
-    {
-        public string ProjectId { get; set; } = "";
-        public string ParticipantId { get; set; } = "";
-    }
+    private sealed record SettlementRow(string ProjectId, string ParticipantId);
 }

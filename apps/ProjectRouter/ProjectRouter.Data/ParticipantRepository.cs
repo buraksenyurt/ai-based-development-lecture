@@ -106,14 +106,13 @@ public class ParticipantRepository(SqliteConnectionFactory connectionFactory) : 
         }).ToList();
     }
 
-    private sealed class ParticipantRow
-    {
-        public string Id { get; set; } = "";
-        public string FullName { get; set; } = "";
-        public string Email { get; set; } = "";
-        public string University { get; set; } = "";
-        public string Department { get; set; } = "";
-        public long Class { get; set; }
-        public string? GithubUrl { get; set; }
-    }
+    // Materialized by Dapper through the constructor: parameter order must match the SELECT column order.
+    private sealed record ParticipantRow(
+        string Id,
+        string FullName,
+        string Email,
+        string University,
+        string Department,
+        long Class,
+        string? GithubUrl);
 }

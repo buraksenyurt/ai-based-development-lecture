@@ -39,7 +39,7 @@ public class Competition
     /// Projects that are left out of the settlement (or have no members) are not opened.
     /// </summary>
     public void AssignSettlement(
-        IReadOnlyDictionary<Guid, IReadOnlyList<Guid>> settlement,
+        IDictionary<Guid, IReadOnlyList<Guid>> settlement,
         IEnumerable<ProjectIdea> projects,
         DateTime settledAt)
     {

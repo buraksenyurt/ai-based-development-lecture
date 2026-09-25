@@ -8,6 +8,10 @@ public static class TechnologyCatalog
 {
     private const string WildcardSuffix = "-*";
 
+    // Category names are compared against the normalized wildcard prefix ("NoSQL-*" -> "nosql").
+    private const string SqlCategory = "sql";
+    private const string NoSqlCategory = "nosql";
+
     private static readonly Dictionary<string, string> Aliases = new(StringComparer.OrdinalIgnoreCase)
     {
         ["csharp"] = "c#",
@@ -28,23 +32,23 @@ public static class TechnologyCatalog
 
     private static readonly Dictionary<string, string> DatabaseCategories = new(StringComparer.OrdinalIgnoreCase)
     {
-        ["sqlserver"] = "sql",
-        ["postgresql"] = "sql",
-        ["mysql"] = "sql",
-        ["mariadb"] = "sql",
-        ["sqlite"] = "sql",
-        ["oracle"] = "sql",
-        ["mongodb"] = "nosql",
-        ["redis"] = "nosql",
-        ["cassandra"] = "nosql",
-        ["couchdb"] = "nosql",
-        ["couchbase"] = "nosql",
-        ["dynamodb"] = "nosql",
-        ["cosmosdb"] = "nosql",
-        ["ravendb"] = "nosql",
-        ["neo4j"] = "nosql",
-        ["elasticsearch"] = "nosql",
-        ["firebase"] = "nosql",
+        ["sqlserver"] = SqlCategory,
+        ["postgresql"] = SqlCategory,
+        ["mysql"] = SqlCategory,
+        ["mariadb"] = SqlCategory,
+        ["sqlite"] = SqlCategory,
+        ["oracle"] = SqlCategory,
+        ["mongodb"] = NoSqlCategory,
+        ["redis"] = NoSqlCategory,
+        ["cassandra"] = NoSqlCategory,
+        ["couchdb"] = NoSqlCategory,
+        ["couchbase"] = NoSqlCategory,
+        ["dynamodb"] = NoSqlCategory,
+        ["cosmosdb"] = NoSqlCategory,
+        ["ravendb"] = NoSqlCategory,
+        ["neo4j"] = NoSqlCategory,
+        ["elasticsearch"] = NoSqlCategory,
+        ["firebase"] = NoSqlCategory,
     };
 
     /// <summary>Lower-cases, removes whitespace and resolves known aliases.</summary>
