@@ -10,7 +10,7 @@ dotnet test ProjectRouter.slnx
 dotnet run --project ProjectRouter.Web
 ```
 
-Veritabanı (`projectrouter.db`) ilk açılışta `ProjectRouter.Web` klasöründe otomatik oluşturulur.
+Veritabanı (`projectrouter.db`) bağlantı dizesindeki göreli yol nedeniyle uygulamanın çalışma dizininde otomatik oluşturulur (yukarıdaki komutlarla `apps/ProjectRouter` altında).
 
 ## Proje yapısı
 

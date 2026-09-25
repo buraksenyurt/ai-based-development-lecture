@@ -38,7 +38,7 @@
             {
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="Input.ProjectIds" value="@project.Id" id="project-@project.Id"
-                           checked="@Model.Input.ProjectIds.Contains(project.Id)" />
+                           checked="@(Model.Input.ProjectIds.Contains(project.Id) ? "checked" : null)" />
                     <label class="form-check-label" for="project-@project.Id">
                         @project.Title <small class="text-muted">(@project.Team.Min–@project.Team.Max kişi, @string.Join(", ", project.TechStack.Languages))</small>
                     </label>
