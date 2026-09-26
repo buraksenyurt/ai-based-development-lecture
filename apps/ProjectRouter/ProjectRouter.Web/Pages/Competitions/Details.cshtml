@@ -17,7 +17,11 @@
         </form>
         @if (details.IsSettled)
         {
-            <a asp-page-handler="Export" asp-route-id="@competition.Id" class="btn btn-outline-secondary">JSON indir</a>
+            <nav class="btn-group" aria-label="Dışa aktar">
+                <a asp-page-handler="ExportHtml" asp-route-id="@competition.Id" target="_blank" class="btn btn-outline-secondary">Özet (HTML)</a>
+                <a asp-page-handler="ExportCsv" asp-route-id="@competition.Id" class="btn btn-outline-secondary">CSV indir</a>
+                <a asp-page-handler="Export" asp-route-id="@competition.Id" class="btn btn-outline-secondary">JSON indir</a>
+            </nav>
             <form method="post" asp-page-handler="Clear" asp-route-id="@competition.Id">
                 <button type="submit" class="btn btn-outline-danger">Dağıtımı Temizle</button>
             </form>

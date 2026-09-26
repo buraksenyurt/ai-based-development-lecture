@@ -114,8 +114,27 @@ public class PageRenderingTests : IClassFixture<ProjectRouterWebFactory>
         Assert.Contains(competition.Id.ToString(), await response.Content.ReadAsStringAsync());
     }
 
+    [Fact]
+    public async Task Details_CsvAndHtmlExports_AreServed()
+    {
+        var (competition, project, participant) = Seed(route: true);
+
+        var csv = await _client.GetAsync($"/Competitions/Details/{competition.Id}?handler=ExportCsv");
+        var html = await _client.GetAsync($"/Competitions/Details/{competition.Id}?handler=ExportHtml");
+
+        Assert.Equal(HttpStatusCode.OK, csv.StatusCode);
+        Assert.Equal("text/csv", csv.Content.Headers.ContentType?.MediaType);
+        Assert.Contains(participant.FullName, await csv.Content.ReadAsStringAsync());
+
+        Assert.Equal(HttpStatusCode.OK, html.StatusCode);
+        Assert.Equal("text/html", html.Content.Headers.ContentType?.MediaType);
+        Assert.Contains(project.Title, await html.Content.ReadAsStringAsync());
+    }
+
     [Theory]
     [InlineData("/Competitions/Details/{0}")]
+    [InlineData("/Competitions/Details/{0}?handler=ExportCsv")]
+    [InlineData("/Competitions/Details/{0}?handler=ExportHtml")]
     [InlineData("/Competitions/Edit/{0}")]
     [InlineData("/Participants/Edit/{0}")]
     [InlineData("/Projects/Edit/{0}")]
