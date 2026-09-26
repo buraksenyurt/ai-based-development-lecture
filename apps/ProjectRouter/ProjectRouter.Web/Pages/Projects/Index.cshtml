@@ -1,0 +1,65 @@
+@page
+@model ProjectRouter.Web.Pages.Projects.IndexModel
+@{
+    ViewData["Title"] = "Projeler";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Projeler</h1>
+    <a asp-page="Edit" class="btn btn-primary">Yeni Proje</a>
+</div>
+
+@if (Model.Projects.Count == 0)
+{
+    <p class="text-muted">Henüz proje yok.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Proje</th>
+                    <th>Diller</th>
+                    <th>Veritabanları</th>
+                    <th>Platform</th>
+                    <th>Takım</th>
+                    <th>Boyut</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model.Projects)
+                {
+                    <tr>
+                        <td style="max-width: 24rem">
+                            <div class="fw-semibold">@p.Title</div>
+                            <small class="text-muted">@p.Summary</small>
+                            @if (p.Tags.Count > 0)
+                            {
+                                <div>
+                                    @foreach (var tag in p.Tags)
+                                    {
+                                        <span class="badge text-bg-light border me-1">@tag</span>
+                                    }
+                                </div>
+                            }
+                        </td>
+                        <td>@string.Join(", ", p.TechStack.Languages)</td>
+                        <td>@string.Join(", ", p.TechStack.Databases)</td>
+                        <td>@string.Join(", ", p.TechStack.Platforms)</td>
+                        <td class="text-nowrap">@p.Team.Min – @p.Team.Max</td>
+                        <td>@p.Size</td>
+                        <td class="text-end text-nowrap">
+                            <a asp-page="Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-secondary">Düzenle</a>
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@p.Id" class="d-inline"
+                                  data-confirm="@p.Title silinsin mi?" onsubmit="return confirm(this.dataset.confirm);">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

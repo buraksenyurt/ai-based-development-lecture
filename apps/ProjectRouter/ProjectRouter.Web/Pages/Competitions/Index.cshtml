@@ -1,0 +1,61 @@
+@page
+@model ProjectRouter.Web.Pages.Competitions.IndexModel
+@{
+    ViewData["Title"] = "Turnuvalar";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Turnuvalar</h1>
+    <a asp-page="Edit" class="btn btn-primary">Yeni Turnuva</a>
+</div>
+
+@if (Model.Competitions.Count == 0)
+{
+    <p class="text-muted">Henüz turnuva yok.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Başlık</th>
+                    <th>Dönem</th>
+                    <th>Proje</th>
+                    <th>Katılımcı</th>
+                    <th>Durum</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model.Competitions)
+                {
+                    <tr>
+                        <td><a asp-page="Details" asp-route-id="@c.Id">@c.Title</a></td>
+                        <td>@c.Session</td>
+                        <td>@c.ProjectIds.Count</td>
+                        <td>@c.ParticipantIds.Count</td>
+                        <td>
+                            @if (c.SettledAt is null)
+                            {
+                                <span class="badge text-bg-secondary">Dağıtılmadı</span>
+                            }
+                            else
+                            {
+                                <span class="badge text-bg-success">Dağıtıldı</span>
+                            }
+                        </td>
+                        <td class="text-end text-nowrap">
+                            <a asp-page="Details" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary">Detay</a>
+                            <a asp-page="Edit" asp-route-id="@c.Id" class="btn btn-sm btn-outline-secondary">Düzenle</a>
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@c.Id" class="d-inline"
+                                  data-confirm="@c.Title silinsin mi?" onsubmit="return confirm(this.dataset.confirm);">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

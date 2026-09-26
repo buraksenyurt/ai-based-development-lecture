@@ -1,0 +1,8 @@
+# Local SQLite database created on first run
+*.db
+*.db-shm
+*.db-wal
+
+# SonarQube / test ciktilari
+TestResults/
+.sonarqube/

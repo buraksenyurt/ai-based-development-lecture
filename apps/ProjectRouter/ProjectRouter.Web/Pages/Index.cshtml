@@ -1,0 +1,45 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<h1 class="mb-3">Project Router</h1>
+<p class="lead">Derse katılan öğrencileri dönem projelerine tercihlerine göre otomatik dağıtır.</p>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Katılımcılar</h5>
+                <p class="display-6">@Model.ParticipantCount</p>
+                <a asp-page="/Participants/Index" class="btn btn-outline-primary">Yönet</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Projeler</h5>
+                <p class="display-6">@Model.ProjectCount</p>
+                <a asp-page="/Projects/Index" class="btn btn-outline-primary">Yönet</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Turnuvalar</h5>
+                <p class="display-6">@Model.CompetitionCount</p>
+                <a asp-page="/Competitions/Index" class="btn btn-outline-primary">Yönet</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4 class="mt-4">Nasıl çalışır?</h4>
+<ol>
+    <li>Katılımcıları dil ve veritabanı tercihleriyle (ilk tercih önce) ekleyin.</li>
+    <li>Projeleri teknoloji altyapısı ve takım aralığıyla (min-max) ekleyin.</li>
+    <li>Bir turnuva oluşturup katılımcı ve projeleri seçin, ardından <strong>Dağıtımı Çalıştır</strong> deyin.</li>
+</ol>
