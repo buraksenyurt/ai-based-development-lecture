@@ -2,6 +2,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProjectRouter.Application.Exceptions;
+using ProjectRouter.Application.Reports;
 using ProjectRouter.Application.Services;
 using ProjectRouter.Domain;
 
@@ -20,16 +21,12 @@ public class DetailsModel(CompetitionService competitions) : PageModel
     public int MaxCapacity => Details.Projects.Sum(p => p.Team.Max);
 
     /// <summary>Badge color of a match score: green for a strong match, yellow for a partial one, red for none.</summary>
-    public static string ScoreBadgeClass(double score)
+    public static string ScoreBadgeClass(double score) => MatchLevels.Classify(score) switch
     {
-        if (score >= 0.75)
-            return "text-bg-success";
-
-        if (score > 0)
-            return "text-bg-warning";
-
-        return "text-bg-danger";
-    }
+        MatchLevel.Strong => "text-bg-success",
+        MatchLevel.Partial => "text-bg-warning",
+        _ => "text-bg-danger",
+    };
 
     public IActionResult OnGet(Guid id)
     {
@@ -69,6 +66,36 @@ public class DetailsModel(CompetitionService competitions) : PageModel
         competitions.ClearSettlement(id);
         TempData["Success"] = "Dağıtım temizlendi.";
         return RedirectToPage(new { id });
+    }
+
+    /// <summary>Settlement as CSV (one row per participant), for Excel or further processing.</summary>
+    public IActionResult OnGetExportCsv(Guid id)
+    {
+        try
+        {
+            var csv = SettlementCsv.WriteUtf8WithBom(competitions.GetDetails(id));
+            return File(csv, "text/csv; charset=utf-8", $"dagitim-{id}.csv");
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
+        }
+    }
+
+    /// <summary>
+    /// Compact HTML summary that opens in the browser; it can be saved, attached to an e-mail
+    /// or copied into an e-mail body as it only uses inline styles.
+    /// </summary>
+    public IActionResult OnGetExportHtml(Guid id)
+    {
+        try
+        {
+            return Content(SettlementHtml.Write(competitions.GetDetails(id)), "text/html; charset=utf-8");
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
+        }
     }
 
     public IActionResult OnGetExport(Guid id)
