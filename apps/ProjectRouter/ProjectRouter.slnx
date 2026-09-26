@@ -1,4 +1,9 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+    <File Path="scripts/seed-project-ideas.sql" />
+    <File Path="sonar-scan.ps1" />
+  </Folder>
   <Project Path="ProjectRouter.Application.Tests/ProjectRouter.Application.Tests.csproj" />
   <Project Path="ProjectRouter.Application/ProjectRouter.Application.csproj" />
   <Project Path="ProjectRouter.Data.Tests/ProjectRouter.Data.Tests.csproj" />

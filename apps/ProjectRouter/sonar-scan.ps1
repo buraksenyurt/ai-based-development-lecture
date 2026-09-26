@@ -3,7 +3,7 @@
     ProjectRouter solution sends to SonarQube with test coverage.
 
 .DESCRIPTION
-    Adımlar: begin -> build -> test (OpenCover coverage + TRX) -> end
+    Steps: begin -> build -> test (OpenCover coverage + TRX) -> end
     Token, via the -Token parameter or the SONAR_TOKEN environment variable.
 
 .EXAMPLE
