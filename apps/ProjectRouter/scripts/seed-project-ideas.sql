@@ -1,4 +1,5 @@
--- Project Router: README "Uygulama Önerileri" bölümündeki P0001-P0020 proje fikirleri.
+-- Project Router: README "Uygulama Önerileri" bölümündeki P0001-P0020 proje fikirleri
+-- ve README'ye henüz eklenmemiş ek öneriler P0021-P0025 (Go, Zig, Dart/Flutter, Elixir, Kotlin/Swift, Java/Ruby).
 --
 -- Kullanım (uygulama bir kez çalıştırılıp şema oluşturulduktan sonra, apps/ProjectRouter altında):
 --   sqlite3 projectrouter.db ".read scripts/seed-project-ideas.sql"
@@ -9,12 +10,13 @@
 -- * Id'ler küçük harfli Guid'dir; uygulama Guid.ToString() ile aynı biçimi kullanır.
 -- * Zorluk -> büyüklük ve takım aralığı (README'de takım büyüklüğü yok, varsayılan seçildi):
 --     Kolay -> S, 2-5 kişi | Orta -> M, 3-6 kişi | İleri -> L, 3-7 kişi
---   20 projenin toplam kapasitesi 56-125 kişidir. Dağıtımda açıkta öğrenci kalmaması için katılımcı sayısı
---   en fazla 125 olmalıdır; daha kalabalık bir sınıfta proje eklenmeli veya üst sınırlar artırılmalıdır.
+--   25 projenin toplam kapasitesi 70-156 kişidir. Dağıtımda açıkta öğrenci kalmaması için katılımcı sayısı
+--   en fazla 156 olmalıdır; daha kalabalık bir sınıfta proje eklenmeli veya üst sınırlar artırılmalıdır.
 -- * Rule 04 her projede en az bir veritabanı istediği için:
 --     README'de veritabanı belirtilmemiş sunucu tarafı projelerde 'SQL-*' (herhangi bir SQL veritabanı),
 --     veritabanı gerektirmeyen masaüstü/CLI/oyun projelerinde yerel kayıt (skor, ayar vb.) için 'SQLite' kullanıldı.
 -- * '.NET' önerileri dil olarak 'C#', 'Node.js' önerileri 'JavaScript' olarak girildi.
+-- * P0021 (Mini Redis) veritabanı olarak 'Redis' taşır: projenin uyumluluk hedefi Redis'tir (redis-cli ile test edilir).
 -- * Etiketlerin ilki README'deki proje kodudur (P0001 ...).
 
 PRAGMA foreign_keys = ON;
@@ -439,5 +441,116 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
     ('aef238f5-4b11-5954-9adf-e43fb8d4e3c4', 'tag', 0, 'P0020'),
     ('aef238f5-4b11-5954-9adf-e43fb8d4e3c4', 'tag', 1, 'fft'),
     ('aef238f5-4b11-5954-9adf-e43fb8d4e3c4', 'tag', 2, 'sinyal-isleme');
+
+-- P0021 - Mini Redis (İleri)
+INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
+VALUES ('d7977ab8-c372-5f57-b740-326ec3fe5548', 'P0021 - Mini Redis',
+        'RESP protokolüyle konuşan, GET/SET/EXPIRE ve liste/hash komutlarını destekleyen bellek içi anahtar-değer sunucusu. Eşzamanlı istemci yönetimi, TTL ve disk kalıcılığı (AOF/snapshot) öğretir.',
+        3, 7, 'L')
+ON CONFLICT (project_id) DO UPDATE
+SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
+    team_max = excluded.team_max, size = excluded.size;
+DELETE FROM project_items WHERE project_id = 'd7977ab8-c372-5f57-b740-326ec3fe5548';
+INSERT INTO project_items (project_id, kind, rank, name) VALUES
+    ('d7977ab8-c372-5f57-b740-326ec3fe5548', 'language', 0, 'Go'),
+    ('d7977ab8-c372-5f57-b740-326ec3fe5548', 'language', 1, 'Zig'),
+    ('d7977ab8-c372-5f57-b740-326ec3fe5548', 'platform', 0, 'server'),
+    ('d7977ab8-c372-5f57-b740-326ec3fe5548', 'platform', 1, 'cli'),
+    ('d7977ab8-c372-5f57-b740-326ec3fe5548', 'database', 0, 'Redis'),
+    ('d7977ab8-c372-5f57-b740-326ec3fe5548', 'similar', 0, 'Redis'),
+    ('d7977ab8-c372-5f57-b740-326ec3fe5548', 'tag', 0, 'P0021'),
+    ('d7977ab8-c372-5f57-b740-326ec3fe5548', 'tag', 1, 'tcp'),
+    ('d7977ab8-c372-5f57-b740-326ec3fe5548', 'tag', 2, 'eszamanlilik'),
+    ('d7977ab8-c372-5f57-b740-326ec3fe5548', 'tag', 3, 'protokol-tasarimi');
+
+-- P0022 - Alışkanlık Takipçisi (Kolay)
+INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
+VALUES ('f62381ce-a952-512c-8fb1-f1742f0cf517', 'P0022 - Alışkanlık Takipçisi',
+        'Günlük alışkanlıkların işaretlendiği, seri (streak) ve istatistiklerin gösterildiği mobil uygulama. Çevrimdışı öncelikli (offline-first) yerel kayıt, hatırlatıcı bildirimler ve isteğe bağlı bulut senkronizasyonu içerir.',
+        2, 5, 'S')
+ON CONFLICT (project_id) DO UPDATE
+SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
+    team_max = excluded.team_max, size = excluded.size;
+DELETE FROM project_items WHERE project_id = 'f62381ce-a952-512c-8fb1-f1742f0cf517';
+INSERT INTO project_items (project_id, kind, rank, name) VALUES
+    ('f62381ce-a952-512c-8fb1-f1742f0cf517', 'language', 0, 'Dart'),
+    ('f62381ce-a952-512c-8fb1-f1742f0cf517', 'platform', 0, 'mobile'),
+    ('f62381ce-a952-512c-8fb1-f1742f0cf517', 'database', 0, 'SQLite'),
+    ('f62381ce-a952-512c-8fb1-f1742f0cf517', 'database', 1, 'Firebase'),
+    ('f62381ce-a952-512c-8fb1-f1742f0cf517', 'similar', 0, 'Habitica'),
+    ('f62381ce-a952-512c-8fb1-f1742f0cf517', 'similar', 1, 'Loop Habit Tracker'),
+    ('f62381ce-a952-512c-8fb1-f1742f0cf517', 'tag', 0, 'P0022'),
+    ('f62381ce-a952-512c-8fb1-f1742f0cf517', 'tag', 1, 'flutter'),
+    ('f62381ce-a952-512c-8fb1-f1742f0cf517', 'tag', 2, 'offline-first'),
+    ('f62381ce-a952-512c-8fb1-f1742f0cf517', 'tag', 3, 'state-management');
+
+-- P0023 - Sohbet Sunucusu (İleri)
+INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
+VALUES ('47ff4585-5435-5d7e-ad33-64073f5793c1', 'P0023 - Sohbet Sunucusu',
+        'Sunucu/kanal yapısı, gerçek zamanlı mesajlaşma, çevrimiçi durumu (presence) ve okunmadı sayaçları olan sohbet uygulaması. BEAM üzerinde süreç tabanlı eşzamanlılık ve supervisor ile hata toleransı uygulatır.',
+        3, 7, 'L')
+ON CONFLICT (project_id) DO UPDATE
+SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
+    team_max = excluded.team_max, size = excluded.size;
+DELETE FROM project_items WHERE project_id = '47ff4585-5435-5d7e-ad33-64073f5793c1';
+INSERT INTO project_items (project_id, kind, rank, name) VALUES
+    ('47ff4585-5435-5d7e-ad33-64073f5793c1', 'language', 0, 'Elixir'),
+    ('47ff4585-5435-5d7e-ad33-64073f5793c1', 'platform', 0, 'web'),
+    ('47ff4585-5435-5d7e-ad33-64073f5793c1', 'database', 0, 'PostgreSQL'),
+    ('47ff4585-5435-5d7e-ad33-64073f5793c1', 'similar', 0, 'Discord'),
+    ('47ff4585-5435-5d7e-ad33-64073f5793c1', 'similar', 1, 'Slack'),
+    ('47ff4585-5435-5d7e-ad33-64073f5793c1', 'tag', 0, 'P0023'),
+    ('47ff4585-5435-5d7e-ad33-64073f5793c1', 'tag', 1, 'phoenix'),
+    ('47ff4585-5435-5d7e-ad33-64073f5793c1', 'tag', 2, 'websocket'),
+    ('47ff4585-5435-5d7e-ad33-64073f5793c1', 'tag', 3, 'actor-model'),
+    ('47ff4585-5435-5d7e-ad33-64073f5793c1', 'tag', 4, 'fault-tolerance');
+
+-- P0024 - Yemek Siparişi (Orta)
+INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
+VALUES ('db17d934-22bc-59cb-b0dc-af7c1738d6b7', 'P0024 - Yemek Siparişi',
+        'Restoran menüsü, sepet, sipariş durumu ve kurye konumunun haritada izlendiği native mobil uygulama ve API. Push bildirim ve sipariş yaşam döngüsü için durum makinesi (state machine) pratiği sağlar.',
+        3, 6, 'M')
+ON CONFLICT (project_id) DO UPDATE
+SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
+    team_max = excluded.team_max, size = excluded.size;
+DELETE FROM project_items WHERE project_id = 'db17d934-22bc-59cb-b0dc-af7c1738d6b7';
+INSERT INTO project_items (project_id, kind, rank, name) VALUES
+    ('db17d934-22bc-59cb-b0dc-af7c1738d6b7', 'language', 0, 'Kotlin'),
+    ('db17d934-22bc-59cb-b0dc-af7c1738d6b7', 'language', 1, 'Swift'),
+    ('db17d934-22bc-59cb-b0dc-af7c1738d6b7', 'platform', 0, 'mobile'),
+    ('db17d934-22bc-59cb-b0dc-af7c1738d6b7', 'platform', 1, 'api'),
+    ('db17d934-22bc-59cb-b0dc-af7c1738d6b7', 'database', 0, 'PostgreSQL'),
+    ('db17d934-22bc-59cb-b0dc-af7c1738d6b7', 'similar', 0, 'Yemeksepeti'),
+    ('db17d934-22bc-59cb-b0dc-af7c1738d6b7', 'similar', 1, 'Getir'),
+    ('db17d934-22bc-59cb-b0dc-af7c1738d6b7', 'tag', 0, 'P0024'),
+    ('db17d934-22bc-59cb-b0dc-af7c1738d6b7', 'tag', 1, 'android'),
+    ('db17d934-22bc-59cb-b0dc-af7c1738d6b7', 'tag', 2, 'ios'),
+    ('db17d934-22bc-59cb-b0dc-af7c1738d6b7', 'tag', 3, 'jetpack-compose'),
+    ('db17d934-22bc-59cb-b0dc-af7c1738d6b7', 'tag', 4, 'swiftui'),
+    ('db17d934-22bc-59cb-b0dc-af7c1738d6b7', 'tag', 5, 'state-machine');
+
+-- P0025 - Etkinlik Bileti (Orta)
+INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
+VALUES ('687cf59e-f88b-5a5f-93fe-d91eb95aa2b4', 'P0025 - Etkinlik Bileti',
+        'Etkinlik listeleme, salon/koltuk seçimi, süreli koltuk rezervasyonu ve bilet satışı. Aynı koltuğun iki kez satılmaması için transaction, iyimser kilitleme (optimistic locking) ve TTL konularına odaklanır.',
+        3, 6, 'M')
+ON CONFLICT (project_id) DO UPDATE
+SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
+    team_max = excluded.team_max, size = excluded.size;
+DELETE FROM project_items WHERE project_id = '687cf59e-f88b-5a5f-93fe-d91eb95aa2b4';
+INSERT INTO project_items (project_id, kind, rank, name) VALUES
+    ('687cf59e-f88b-5a5f-93fe-d91eb95aa2b4', 'language', 0, 'Java'),
+    ('687cf59e-f88b-5a5f-93fe-d91eb95aa2b4', 'language', 1, 'Ruby'),
+    ('687cf59e-f88b-5a5f-93fe-d91eb95aa2b4', 'platform', 0, 'web'),
+    ('687cf59e-f88b-5a5f-93fe-d91eb95aa2b4', 'platform', 1, 'api'),
+    ('687cf59e-f88b-5a5f-93fe-d91eb95aa2b4', 'database', 0, 'PostgreSQL'),
+    ('687cf59e-f88b-5a5f-93fe-d91eb95aa2b4', 'database', 1, 'Redis'),
+    ('687cf59e-f88b-5a5f-93fe-d91eb95aa2b4', 'similar', 0, 'Biletix'),
+    ('687cf59e-f88b-5a5f-93fe-d91eb95aa2b4', 'similar', 1, 'Eventbrite'),
+    ('687cf59e-f88b-5a5f-93fe-d91eb95aa2b4', 'tag', 0, 'P0025'),
+    ('687cf59e-f88b-5a5f-93fe-d91eb95aa2b4', 'tag', 1, 'spring-boot'),
+    ('687cf59e-f88b-5a5f-93fe-d91eb95aa2b4', 'tag', 2, 'rails'),
+    ('687cf59e-f88b-5a5f-93fe-d91eb95aa2b4', 'tag', 3, 'eszamanlilik'),
+    ('687cf59e-f88b-5a5f-93fe-d91eb95aa2b4', 'tag', 4, 'transaction');
 
 COMMIT;

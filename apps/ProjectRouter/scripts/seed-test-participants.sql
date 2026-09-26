@@ -1,6 +1,6 @@
 -- Project Router: uygulama testleri için 100 anonim test katılımcısı ve bir turnuva.
 --
--- ÖN KOŞUL: Önce scripts/seed-project-ideas.sql çalıştırılmalıdır; turnuva o scriptteki 20 projeyi kullanır.
+-- ÖN KOŞUL: Önce scripts/seed-project-ideas.sql çalıştırılmalıdır; turnuva o scriptteki 25 projeyi kullanır.
 --
 -- Kullanım (apps/ProjectRouter altında, uygulama kapalıyken):
 --   sqlite3 ProjectRouter.Web/projectrouter.db ".read scripts/seed-project-ideas.sql"
@@ -9,11 +9,11 @@
 -- Notlar:
 -- * Veriler sabit tohumlu (seed=2026) bir üreteçle oluşturuldu; script her çalıştırmada aynı kayıtları upsert eder.
 -- * Katılımcılar 1-3 dil ve 1-3 veritabanı tercihi taşır (sıra = tercih sırası, Rule 00/01).
---   Bazı tercihler projelerde karşılığı olmayan dillerdir (Java, Go, Kotlin); eşleşmeyen yerleşimleri test etmek içindir.
+--   Tercih havuzu yaygın dillerin yanında Java, Go ve Kotlin'i de içerir (P0021-P0025 projeleriyle eşleşir).
 --   'SQL-*' / 'NoSQL-*' joker tercihleri de vardır.
 -- * Katılımcıların ~%25'inin GitHub adresi yoktur (NULL).
 -- * Turnuva dağıtılmamış (settled_at = NULL) olarak oluşturulur; mevcut dağıtımı varsa temizlenir.
--- * 20 projenin toplam kapasitesi 56-125 kişidir; 100 katılımcının tamamı bir projeye yerleştirilir
+-- * 25 projenin toplam kapasitesi 70-156 kişidir; 100 katılımcının tamamı bir projeye yerleştirilir
 --   (açıkta öğrenci kalmaz). Hiçbir tercihiyle eşleşmeyen bir projeye yerleştirilen olursa uygulama bunu
 --   uyarı olarak gösterir.
 -- * Katılımcılar gerçek kişi izlenimi vermemesi için 'Katılımcı 1001' ... 'Katılımcı 1100' olarak adlandırılmıştır.
@@ -1217,7 +1217,12 @@ INSERT INTO competition_projects (competition_id, project_id) VALUES
     ('d31fa4ae-ecf6-5a38-a549-e8ae92e14cbd', 'cb31301b-3cba-5779-b1b6-9aa11c9ae4de'),
     ('d31fa4ae-ecf6-5a38-a549-e8ae92e14cbd', '526a6bb7-77e3-5aa2-85d9-9336db910582'),
     ('d31fa4ae-ecf6-5a38-a549-e8ae92e14cbd', '8aeb3a14-e793-55c3-aaed-3aa062179ed4'),
-    ('d31fa4ae-ecf6-5a38-a549-e8ae92e14cbd', 'aef238f5-4b11-5954-9adf-e43fb8d4e3c4');
+    ('d31fa4ae-ecf6-5a38-a549-e8ae92e14cbd', 'aef238f5-4b11-5954-9adf-e43fb8d4e3c4'),
+    ('d31fa4ae-ecf6-5a38-a549-e8ae92e14cbd', 'd7977ab8-c372-5f57-b740-326ec3fe5548'),
+    ('d31fa4ae-ecf6-5a38-a549-e8ae92e14cbd', 'f62381ce-a952-512c-8fb1-f1742f0cf517'),
+    ('d31fa4ae-ecf6-5a38-a549-e8ae92e14cbd', '47ff4585-5435-5d7e-ad33-64073f5793c1'),
+    ('d31fa4ae-ecf6-5a38-a549-e8ae92e14cbd', 'db17d934-22bc-59cb-b0dc-af7c1738d6b7'),
+    ('d31fa4ae-ecf6-5a38-a549-e8ae92e14cbd', '687cf59e-f88b-5a5f-93fe-d91eb95aa2b4');
 
 INSERT INTO competition_participants (competition_id, participant_id) VALUES
     ('d31fa4ae-ecf6-5a38-a549-e8ae92e14cbd', '9286ef93-cb61-54de-a42c-b620bd006e9e'),

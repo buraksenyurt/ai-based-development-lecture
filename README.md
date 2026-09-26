@@ -1069,13 +1069,19 @@ Proje değerlendirmesi için aşağıdaki temel kriterler göz önünde bulundur
 
 | **Kriter** | **Açıklama** |
 | ------ | -------- |
-| **Takım** | En az 1 en fazla 4 kişilik takımlar oluşturulabilir. *(Sınıf mevcuduna göre değişir)* |
-| **Dil Modeli** | Projede en az bir yapay zeka dil modeli aracı kullanılmalıdır. *(Claude Sonnet/ Opus, Gemini, OpenAI Codex vb)* |
-| **Teknik Değerlendirme** | Clean Code prensiplerine uygunluk, SOLID prensiplerine uygunluk, mimari uyum, kodun okunabilirliği, test edilebilirliği gibi kriterler göz önünde bulundurulacaktır. |
+| **Takım** | En az 1 en fazla 4 kişilik takımlar oluşturulabilir. *(Sınıf mevcuduna göre değişir)* Takım üyelerinin projeye birbirlerine yakın ağırlıklarda katkı sağlaması beklenir. |
+| **Dil Modeli** | Projede en az bir yapay zeka aracı kullanılmalıdır. Ürünün yazılmasında araç olarak, proje içerisinde bir yapay zeka entegrasyonu yaparak ya da her iki yaklaşımı bir arada ele almak mümkündür. Kullanım şekli proje dokümantasyonunda açıkça belirtilmelidir. |
+| **Geliştirme Süreci** | Proje mutlaka **GitHub** veya benzeri bir versiyon kontrol sistemi üzerinde geliştirilmelidir. Gerçekçi bir tarihsel **commit** geçmişi sağlanmalıdır. Commit mesajları anlamlı ve açıklayıcı olmalıdır. En az 3 pull request yapılmış olmalıdır. |
+| **Teknik Değerlendirme** | Aşağıdaki konular göz önünde bulundurulur. |
+| | **Teknik Borç:** Kodun A kalite olduğunun herhangi bir ölçümleme aracı ile gösterilmesi veya raporlanması beklenir. *(örneğin SonarQube, CodeClimate)* |
+| | **Güvenlik *(Security)*:** Kodun güvenlik açıkları içerip içermediği değerlendirilir. |
+| | **Mimari Uyum:** Projenin seçilen ve planlanan mimariye ne kadar uyduğu göz önünde bulundurulur. |
+| | **Okunabilirlik *(Readability)*:** Kodun anlaşılabilirliği ve bakım kolaylığı *(maintainability)* değerlendirilir. |
+| | **Test Edilebilirlik:** Kodun birim testleri ve entegrasyon testleri ile ne kadar test edilebilir olduğuna bakılır. |
 | **Dokümantasyon** | Proje ile ilgili mimari tasarım, kullanılan yapay zeka araçları, karşılaşılan zorluklar ve çözümler gibi konuları içeren bir README hazırlanmalıdır. |
-| **Veritabanı** | Projede en az bir veritabanı kullanılmalıdır. (SQL, NoSQL, In-Memory vb) |
-| **Sunum** | Dönem boyunca proje ile ilgili en az iki sunum *(10 dakikayı geçmeyecek şekilde)* yapılmalıdır |
-| **Teslim Tarihi** | Dönemin son dersi |
+| **Veritabanı** | Projede en az bir veritabanı kullanılmalıdır. *(SQL, NoSQL, In-Memory vb)* |
+| **Sunum** | Proje tesliminde önce proje sunumu yapılmalıdır *(25 dakikayı geçmeyecek şekilde)* Sunumda projenin amacı, kullanılan teknolojiler, karşılaşılan zorluklar ve çözümler gibi konuların açıklanması beklenir. **Özellikle koda ne kadar hakim olunduğu sorgulanacaktır.** |
+| **Teslim Tarihi** | Dönemin son dersi veya Üniversite tarafından belirlenen proje teslim tarihidir. |
 
 ### Final Sınavı
 
@@ -1111,3 +1117,8 @@ Aşağıdaki tabloda bu amaçla seçilmiş, farklı zorluk seviyelerinde proje �
 | **P0018** | **Basit Bir Tablolama Aracı** *(Excel/Google Sheets Mini Clone)* | Hücre tabanlı veri girişi, temel formüller *(`SUM`, `AVERAGE` vb.)* ve hücreler arası bağımlılık grafiğinin *(dependency graph)* yönetildiği bir uygulama. Formül ayrıştırma *(parsing)* ve hesaplama sırası *(topological sort)* konularıyla doğrudan ilişkilidir. | İleri | TypeScript/React (web) veya .NET WPF (masaüstü) |
 | **P0019** | **Masaüstü Metin Editörü** *(Notepad++/VS Code Mini Clone)* | Söz dizimi renklendirme *(syntax highlighting)*, çoklu sekme yönetimi ve temel dosya işlemlerini içeren bir masaüstü metin editörü. | Orta | Rust (Tauri), Python (PyQt) veya Electron + TypeScript |
 | **P0020** | **Sinyal Görselleştirme Aracı** *(Basit Bir Osiloskop Simülatörü)* | Mikrofon veya dosya girdisinden alınan ses/sinyal verisinin dalga formunu ve frekans spektrumunu *(**FFT**)* gerçek zamanlı görselleştiren bir masaüstü uygulaması. Sinyaller ve sistemler konusuyla doğrudan kesişir. | İleri | Python *(NumPy/SciPy + PyQt/Matplotlib)* veya Rust |
+| **P0021** | **Mini Redis *(Redis Clone)*** | RESP protokolüyle konuşan, GET/SET/EXPIRE ve liste/hash komutlarını destekleyen bellek içi anahtar-değer sunucusu. Eşzamanlı istemci yönetimi, TTL ve disk kalıcılığı (AOF/snapshot) öğretir. Gerçek redis-cli ile test edilebilmesi somut bir başarı ölçütü sağlar. | İleri | Go (goroutine/channel) veya Zig |
+| **P0022** | **Alışkanlık Takipçisi *(Habitica / Loop Habit Tracker Clone)*** | Günlük alışkanlıkların işaretlendiği, seri (streak) ve istatistiklerin gösterildiği mobil uygulama. Çevrimdışı öncelikli (offline-first) yerel kayıt, hatırlatıcı bildirimler ve isteğe bağlı bulut senkronizasyonu içerir. | Kolay | Dart + Flutter, SQLite/Firebase |
+| **P0023** | **Sohbet Sunucusu *(Discord/Slack Clone)*** | Sunucu/kanal yapısı, gerçek zamanlı mesajlaşma, çevrimiçi durumu (presence) ve okunmadı sayaçları olan sohbet uygulaması. BEAM üzerinde süreç tabanlı eşzamanlılık ve supervisor ile hata toleransı uygulatır; Actor Model'i doğrudan deneyimletir. | İleri | Elixir + Phoenix (Channels/LiveView) + PostgreSQL |
+| **P0024** | **Yemek Siparişi *(Yemeksepeti/Getir Clone)*** | Restoran menüsü, sepet, sipariş durumu ve kurye konumunun haritada izlendiği native mobil uygulama ve API. Push bildirim ve sipariş yaşam döngüsü için durum makinesi (state machine) pratiği sağlar. | Orta | Kotlin (Jetpack Compose) ve/veya Swift (SwiftUI) + PostgreSQL |
+| **P0025** | **Etkinlik Bileti *(Biletix/Eventbrite Clone)*** | Etkinlik listeleme, salon/koltuk seçimi, süreli koltuk rezervasyonu ve bilet satışı. Aynı koltuğun iki kez satılmaması için transaction, iyimser kilitleme (optimistic locking) ve TTL konularına odaklanır. | Orta | Java (Spring Boot) veya Ruby (Rails) + PostgreSQL + Redis |
