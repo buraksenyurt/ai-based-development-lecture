@@ -14,6 +14,8 @@ namespace ProjectRouter.Application.Reports;
 public static class SettlementHtml
 {
     private const string Border = "#d0d7de";
+    private const string ColorDivPrefix = "<div style=\"color:";
+    private const string CloseDiv = "</div>";
 
     // Keeps Turkish characters readable in the source (the document is UTF-8) while still escaping markup.
     private static readonly HtmlEncoder Encoder = HtmlEncoder.Create(UnicodeRanges.All);
@@ -59,14 +61,14 @@ public static class SettlementHtml
             stats.Add($"ortalama uyum %{Percent(placedScores.Average())}");
 
         html.Append("<tr><td style=\"padding:16px 20px;border-bottom:1px solid ").Append(Border).Append(";\">")
-            .Append("<div style=\"font-size:20px;font-weight:600;\">").Append(E(competition.Title)).Append("</div>")
-            .Append("<div style=\"color:").Append(Muted).Append(";margin-top:2px;\">").Append(E(subtitle)).Append("</div>")
-            .Append("<div style=\"margin-top:8px;\">").Append(E(string.Join(" · ", stats))).Append("</div>")
-            .Append("<div style=\"color:").Append(Muted).Append(";font-size:12px;margin-top:6px;\">Uyum: ")
+            .Append("<div style=\"font-size:20px;font-weight:600;\">").Append(E(competition.Title)).Append(CloseDiv)
+            .Append(ColorDivPrefix).Append(Muted).Append(";margin-top:2px;\">").Append(E(subtitle)).Append(CloseDiv)
+            .Append("<div style=\"margin-top:8px;\">").Append(E(string.Join(" · ", stats))).Append(CloseDiv)
+            .Append(ColorDivPrefix).Append(Muted).Append(";font-size:12px;margin-top:6px;\">Uyum: ")
             .Append(Legend(MatchLevel.Strong, "güçlü (≥ %75)")).Append(" · ")
             .Append(Legend(MatchLevel.Partial, "kısmi")).Append(" · ")
             .Append(Legend(MatchLevel.None, "eşleşme yok"))
-            .Append("</div></td></tr>");
+            .Append(CloseDiv).Append("</td></tr>");
     }
 
     private static void AppendTeams(StringBuilder html, CompetitionDetails details)
@@ -92,10 +94,10 @@ public static class SettlementHtml
 
             html.Append("<tr style=\"background:").Append(background).Append(";vertical-align:top;\">")
                 .Append(Td()).Append("<div style=\"font-weight:600;\">").Append(E(project.Title)).Append("</div>")
-                .Append("<div style=\"color:").Append(Muted).Append(";font-size:12px;\">").Append(E(tech)).Append("</div></td>")
+                .Append(ColorDivPrefix).Append(Muted).Append(";font-size:12px;\">").Append(E(tech)).Append(CloseDiv).Append("</td>")
                 .Append(Td()).Append(team.Members.Count.ToString(CultureInfo.InvariantCulture))
-                .Append("<div style=\"color:").Append(Muted).Append(";font-size:12px;\">")
-                .Append(E($"{project.Team.Min}–{project.Team.Max}")).Append("</div></td>")
+                .Append(ColorDivPrefix).Append(Muted).Append(";font-size:12px;\">")
+                .Append(E($"{project.Team.Min}–{project.Team.Max}")).Append(CloseDiv).Append("</td>")
                 .Append(Td()).Append(members).Append("</td>")
                 .Append("</tr>");
         }
