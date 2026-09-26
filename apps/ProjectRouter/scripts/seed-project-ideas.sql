@@ -1,18 +1,16 @@
 -- Project Router: README "Uygulama Önerileri" bölümündeki P0001-P0020 proje fikirleri.
 --
 -- Kullanım (uygulama bir kez çalıştırılıp şema oluşturulduktan sonra, apps/ProjectRouter altında):
---   sqlite3 ProjectRouter.Web/projectrouter.db ".read scripts/seed-project-ideas.sql"
---
--- Veritabanı, bağlantı dizesindeki göreli yol ("Data Source=projectrouter.db") nedeniyle uygulamanın
--- çalışma dizininde oluşur. Visual Studio / dotnet run --project ile çalıştırıldığında bu ProjectRouter.Web klasörüdür.
--- Yanlış yolu verirseniz sqlite3 boş bir veritabanı oluşturur ve "no such table" hatası alırsınız.
+--   sqlite3 projectrouter.db ".read scripts/seed-project-ideas.sql"
 --
 -- Notlar:
 -- * Script tekrar çalıştırılabilir: projeler sabit id'lerle upsert edilir, teknoloji/etiket listeleri yeniden yazılır.
 --   Bir turnuvada kullanılan projeler de güncellenebilir (turnuva bağları korunur).
 -- * Id'ler küçük harfli Guid'dir; uygulama Guid.ToString() ile aynı biçimi kullanır.
 -- * Zorluk -> büyüklük ve takım aralığı (README'de takım büyüklüğü yok, varsayılan seçildi):
---     Kolay -> S, 2-3 kişi | Orta -> M, 3-4 kişi | İleri -> L, 3-5 kişi
+--     Kolay -> S, 2-5 kişi | Orta -> M, 3-6 kişi | İleri -> L, 3-7 kişi
+--   20 projenin toplam kapasitesi 56-125 kişidir. Dağıtımda açıkta öğrenci kalmaması için katılımcı sayısı
+--   en fazla 125 olmalıdır; daha kalabalık bir sınıfta proje eklenmeli veya üst sınırlar artırılmalıdır.
 -- * Rule 04 her projede en az bir veritabanı istediği için:
 --     README'de veritabanı belirtilmemiş sunucu tarafı projelerde 'SQL-*' (herhangi bir SQL veritabanı),
 --     veritabanı gerektirmeyen masaüstü/CLI/oyun projelerinde yerel kayıt (skor, ayar vb.) için 'SQLite' kullanıldı.
@@ -27,7 +25,7 @@ BEGIN TRANSACTION;
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('4ae93a95-259b-5e0c-8107-366062bc0b46', 'P0001 - Not Defteri',
         'Not oluşturma, etiketleme, arama ve arşivleme sunan basit bir not uygulaması. Odak: CRUD operasyonları, kullanıcı bazlı yetkilendirme ve temel arama.',
-        2, 3, 'S')
+        2, 5, 'S')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -50,7 +48,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('eb1437e9-b2f8-5960-9cf1-a8d84459d6d4', 'P0002 - Kitap Takip',
         'Okunan/okunacak kitapların listelenip puanlandığı ve yorumlandığı uygulama. İleri seviyede RAG tabanlı kitap önerisi veya özetleme motoru eklenebilir.',
-        2, 3, 'S')
+        2, 5, 'S')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -70,7 +68,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('81ac748c-4fa3-5585-b5db-a1ceca807281', 'P0003 - Bilgi Yarışması',
         'Farklı kategori ve zorluklarda soru cevaplayarak puan ve rozet kazanılan yarışma uygulaması. Sorular statik bir veri setinden gelebilir veya dil modeline ürettirilebilir.',
-        2, 3, 'S')
+        2, 5, 'S')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -90,7 +88,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('8cdb40b4-56e8-51be-ad7e-201a2acd3905', 'P0004 - Görev Panosu',
         'Pano, liste ve kart yapısıyla iş takibi; kartlar sürükle-bırak ile taşınır. Başka kullanıcının taşıdığı kartın anlık görünmesi (gerçek zamanlı güncelleme) temel teknik zorluktur.',
-        3, 4, 'M')
+        3, 6, 'M')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -111,7 +109,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('9b247339-6cdb-5bf5-b541-23dcff541104', 'P0005 - Mikroblog',
         'Kısa gönderi paylaşımı, takip ve zaman tüneli (feed) sunan uygulama. Takipçi sayısı arttıkça feed''in nasıl üretileceği (fan-out on write/read) mimari tartışma konusudur.',
-        3, 4, 'M')
+        3, 6, 'M')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -132,7 +130,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('8127cff7-c15b-5cb8-8792-196f17dfe3bd', 'P0006 - Oyun Mağazası',
         'Oyun kataloğu, kullanıcı yorum/puanları, oyun kütüphanesi ve kampanya yönetimi. apps/lesson03 altındaki Gamepedia örneği doğrudan başlangıç noktası olabilir.',
-        3, 4, 'M')
+        3, 6, 'M')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -152,7 +150,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('340a48ad-6814-5beb-ad9c-3e3db50ff25c', 'P0007 - Bilgi Tabanı',
         'Sayfa/blok tabanlı not tutma, sayfalar arası iç bağlantı ve içerikte anlamsal arama sunan bilgi yönetim uygulaması. RAG pipeline''ı projenin ayrılmaz parçasıdır.',
-        3, 5, 'L')
+        3, 7, 'L')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -173,7 +171,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('eb6a172c-c174-5fc1-882b-afbc06555cdf', 'P0008 - Mini E-Ticaret',
         'Ürün kataloğu, sepet, sipariş ve stok takibi. Gün 06''daki Sipariş-Stok-Tedarikçi senaryosunun genişletilip gerçek bir kod tabanına dönüştürülmüş hali.',
-        3, 5, 'L')
+        3, 7, 'L')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -196,7 +194,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('a852ba56-8843-55b9-942b-2d55112773f6', 'P0009 - Destek Masası',
         'Destek taleplerinin oluşturulup kategorilere yönlendirildiği ve takip edildiği uygulama. Talebi analiz edip yanıt öneren veya MCP ile durum güncelleyen bir Custom Agent eklenebilir.',
-        3, 5, 'L')
+        3, 7, 'L')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -216,7 +214,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('f3f6530f-ce5e-5857-85c6-7bb71a6f5c5d', 'P0010 - Dijital Cüzdan',
         'Hesap, bakiye ve para transferi yönetimi. Odak; yetkilendirme, hassas veri şifreleme, işlem geçmişi/denetim kaydı (audit log) ve tutarlılıktır (CAP teoreminde CP tercihi).',
-        3, 5, 'L')
+        3, 7, 'L')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -237,7 +235,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('2db61a1f-bbff-52c3-9b4e-27357431781b', 'P0011 - Mini Lisp/Scheme Yorumlayıcısı',
         'Aritmetik, koşullu ifadeler, fonksiyon tanımları ve özyinelemeyi destekleyen minimal yorumlayıcı (lexer -> parser -> evaluator). Closure ve immutability gibi kavramları uygulatır.',
-        3, 5, 'L')
+        3, 7, 'L')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -258,7 +256,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('79cfb6de-1a95-534b-90b9-25f56d30c666', 'P0012 - Basit Bir Unix Shell',
         'Komut çalıştırma, pipe ve yönlendirme (>, <) operatörlerini destekleyen minimal komut satırı yorumlayıcısı. Process spawn ve file descriptor yönetimiyle işletim sistemi kavramlarını somutlaştırır.',
-        3, 5, 'L')
+        3, 7, 'L')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -278,7 +276,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('e1912a08-8fed-55e6-85b6-c1f697420d0a', 'P0013 - Tetris Clone',
         'Çarpışma tespiti, satır temizleme ve skor sistemi içeren klasik blok düşürme oyunu. Oyun döngüsü (game loop), durum yönetimi ve basit render mantığını öğretir.',
-        3, 4, 'M')
+        3, 6, 'M')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -298,7 +296,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('a34615f5-1ac6-5caf-9050-232699d3385a', 'P0014 - 2048 / Yılan (Snake) Clone',
         'Basit kural setine sahip, hızlı tamamlanabilecek bir oyun. Durum yönetimi, klavye olay yönetimi (event handling) ve temel oyun mantığı pratiği için idealdir.',
-        2, 3, 'S')
+        2, 5, 'S')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -320,7 +318,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('3aa269fa-ee86-52b0-8a5f-b71843162e07', 'P0015 - Sistem Kaynak İzleyici',
         'Çalışan process''leri, CPU/bellek kullanımını ve ağ trafiğini gerçek zamanlı listeleyen masaüstü uygulaması. İşletim sistemi API''leriyle doğrudan çalışmayı gerektirir.',
-        3, 4, 'M')
+        3, 6, 'M')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -341,7 +339,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('b8d0f40d-fd92-56a6-9d0a-a9a7f9e87f26', 'P0016 - IoT Sensör Paneli',
         'Simüle edilen sıcaklık, nem, hareket gibi sensör verilerinin MQTT ile merkezi bir panele gerçek zamanlı aktarıldığı sistem. Gün 06''daki asenkron mesajlaşma kavramlarıyla örtüşür.',
-        3, 5, 'L')
+        3, 7, 'L')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -363,7 +361,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('cb31301b-3cba-5779-b1b6-9aa11c9ae4de', 'P0017 - Mini ERP',
         'Ürün stoğu, fatura kesme, cari hesap takibi ve basit raporlama içeren işletme yönetim uygulaması. İş süreçlerini yazılıma dökme pratiği sağlar.',
-        3, 4, 'M')
+        3, 6, 'M')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -384,7 +382,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('526a6bb7-77e3-5aa2-85d9-9336db910582', 'P0018 - Basit Bir Tablolama Aracı',
         'Hücre tabanlı veri girişi, temel formüller (SUM, AVERAGE vb.) ve hücreler arası bağımlılık grafiğinin yönetildiği uygulama. Formül ayrıştırma ve topological sort ile ilişkilidir.',
-        3, 5, 'L')
+        3, 7, 'L')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -405,7 +403,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('8aeb3a14-e793-55c3-aaed-3aa062179ed4', 'P0019 - Masaüstü Metin Editörü',
         'Söz dizimi renklendirme (syntax highlighting), çoklu sekme yönetimi ve temel dosya işlemlerini içeren masaüstü metin editörü.',
-        3, 4, 'M')
+        3, 6, 'M')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
@@ -427,7 +425,7 @@ INSERT INTO project_items (project_id, kind, rank, name) VALUES
 INSERT INTO projects (project_id, title, summary, team_min, team_max, size)
 VALUES ('aef238f5-4b11-5954-9adf-e43fb8d4e3c4', 'P0020 - Sinyal Görselleştirme Aracı',
         'Mikrofon veya dosyadan alınan sinyalin dalga formunu ve frekans spektrumunu (FFT) gerçek zamanlı görselleştiren masaüstü uygulaması. Sinyaller ve sistemler konusuyla kesişir.',
-        3, 5, 'L')
+        3, 7, 'L')
 ON CONFLICT (project_id) DO UPDATE
 SET title = excluded.title, summary = excluded.summary, team_min = excluded.team_min,
     team_max = excluded.team_max, size = excluded.size;
