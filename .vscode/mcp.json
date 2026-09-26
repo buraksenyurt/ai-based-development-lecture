@@ -1,0 +1,26 @@
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "sonarqube-token",
+      "description": "SonarQube User Token",
+      "password": true
+    }
+  ],
+  "servers": {
+    "sonarqube": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "run", "-i", "--rm", "--init",
+        "-e", "SONARQUBE_TOKEN",
+        "-e", "SONARQUBE_URL",
+        "sonarsource/sonarqube-mcp"
+      ],
+      "env": {
+        "SONARQUBE_TOKEN": "${input:sonarqube-token}",
+        "SONARQUBE_URL": "http://host.docker.internal:9000"
+      }
+    }
+  }
+}
