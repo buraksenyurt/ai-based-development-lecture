@@ -12,10 +12,10 @@ PR/Commit: <referans>
 Not: <engel, gözlem veya "insan kararı gerekli">
 ```
 
-## Tur 0 - Başlangıç
+## Tur 0 - 2026-10-21
 Sınıf: -
-Kapsam: %?? (SonarQube ilk tarama sonucu buraya yazılacak)
+Kapsam: %22.4 (SonarQube, modül geneli)
 Eklenen testler: Mevcut durum; OrderTests (3), ShippingCostCalculatorTests (2)
 Reviewer: -
-PR/Commit: -
-Not: Başlangıç ölçümü insan tarafından alınır.
+PR/Commit: ek-4-tur-0
+Not: Başlangıç ölçümü insan tarafından alındı. %0 kapsamlı sınıflar: OrderDiscountCalculator, OrderService, OrderValidator.
