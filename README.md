@@ -33,6 +33,7 @@ Konya Gıda ve Tarım Üniversitesi Yazılım Mühendisliği ve Pamukkale Ünive
     - [Deneme](#deneme)
     - [Setup (Copilot CLI)](#setup-copilot-cli)
   - [Ek 3 - Claude Plugin Kullanımı](#ek-3---claude-plugin-kullanımı)
+  - [Ek 4 - Döngü Mühendisliği (Loop Engineering)](#ek-4---döngü-mühendisliği-loop-engineering)
   - [Aman Dikkat](#aman-dikkat)
   - [Ders Geçme Prosedürü](#ders-geçme-prosedürü)
     - [Proje Değerlendirmesi](#proje-değerlendirmesi)
@@ -1278,6 +1279,50 @@ ideas:idea-reviewer Bütün fikirleri değerlendir.
 ```
 
 ![Claude plugin 03](./images/claude_plugin_03.png)
+
+## Ek 4 - Döngü Mühendisliği (Loop Engineering)
+
+Sürekli gelişmekte olan yapay zeka mühendisliğinin önemli konularından birisi de `Loop Engineering`'dir. Temelde ajanların her adımda bizden komut alarak ilerlediği klasik prompt mühendisliği yaklaşımı yerine bu teknikte bir hedefe göre güdümlenen ajan, görev icra eder, çıktıları değerlendirir, kontrol eder ve gerekiyorsa bir sonraki adıma karar verip süreci tekrarlar. Yani en iyi promptu yazmak yerine bir ajanı ölçülebilir bir hedefe götüren döngünün tasarlanması ve optimize edilmesi ön plana çıkar. Aslında Loop Engineering öncelikleri ortadan kaldırmaz, onları sarmalar ve sürekli iyileştirme döngüsü ile hedefe ulaşmayı kolaylaştırır. Her katman bir alttakini içerir. Bunu aşağıdaki tablo ile özetleyebiliriz.
+
+| **Katman** | **Neyi Tasarlarız?** | **İnsan Rolü** | **Beklenen Çıktı** |
+| --- | --- | --- | --- |
+| **Prompt Engineering** | Sadece bir talimat tasarlanır | Her isteği yazarız, sonucu değerlendiririz | Bir cevap ya da kod parçası |
+| **Context Engineering** | Modelin gördüğü tüm bağlamı tasarlarız. Specs, örnekler, belgeler, geçmiş | Bağlamı seçer ve düzenleriz | Modelin daha tutarlı tek tur sonuçlar vermesi beklenir |
+| **Harness Engineering** | Tek bir ajanın çalışma ortamı hazırlanır. İhtiyaç duyduğu araçlar, dosya sistemi, gerekli izinler ve kurallar belirlenir | Ajanın sınırlarını belirlerliz | Kendi araçlarıyla işi bitiren bir ajan çalışması beklenir |
+| **Loop Engineering** | Ajanı tetikleyen, kontrol eden ve sıradaki işe yönlendiren sistemi tasarlarız | Hedefi belirler, kabul kriterlerini koyar ve döngüyü denetleriz | Hedefe ulaşana kadar tekrar eden ve state'i saklayan bir süreç |
+
+Döngü mühendisliği aşağıdakine benzer bir akış içerir.
+
+![Loop Engineering Akışı](./images/loop_eng.png)
+
+Döngünün temel ritmi; eylem *(action)*, gözlem *(observation)*, ayar *(adjustment)* ve tekrarlama *(repeat)* şeklindedir. Döngü koşul *(ya da ölçüt)* sağlanana kadar devam eder ve bizim tarafımızddan değerlendirmenin yapıldığı son kapıya gelir. Ölçüt sağlanamadığında döngü o anki durumu *(state)* kaydeder ve yeni tura başlar. Sürecin parçlarını aşağıdaki tablo ile değerlendirebiliriz.
+
+| **Parça** | **Ne işe yarar?** | **Karşılığı nedir?** | **Yoksa ne olur?** |
+| --- | --- | --- | --- |
+| **Verifiable Goal *(Doğrulanabilir hedef)*** | Döngünün ne zaman duracağını söyleyen ölçüt | Geçen test sayısı, temiz lint raporu, kapsama oranı *(test coverage)* gibi metrikler | Ajan sonsuz döngüye girebilir ya da ilk iterasyonda hatalı bir state ile durabilir |
+| **Tetikleyici *(Trigger)*** | Döngüyü insana ihtiyaç duymadan başlatan olay veya koşul | Zamanlanmış görevler *(scheduled jobs)*, CI/CD olayları, webhook'lar, dosya değişiklikleri, agent hook'ları | Tetikleyici yoksa döngü hiç başlamaz ya da manuel olarak başlatılması gerekir |
+| **Bağlam ve Kalıcı Durum *(Context and Persistent State)*** | Proje bilgisini ve önceki turların sonuçlarını taşır | Modelin gördüğü tüm bağlam, önceki çıktılar, geçmiş iterasyon verileri, skill'ler, `CLAUDE.md` veya `AGENTS.md` gibi ajan spec'leri | Bağlam eksikse her tur sıfırdan tahmin yürütülür ve asıl amaca ulaşmaktan uzaklaşılabilir |
+| **Araçlar *(Tools)*** | Döngü sırasında kullanılan yazılım ve donanım bileşenleri. Ajanın gerçek sisteme dokunmasını sağlayan şeyler olarak düşünülebilir. | API'ler, MCP sunucuları, CLI komutları | Ajan sadece metin üretmekle yetinir ve sonuçları sınayamaz |
+| **İzolasyon *(Isolation)*** | Paralel çalışan ajanların birbirlerini ezmemesi için önemlidir | git worktree, sandbox gibi izole container ortamları | Ayrı bağlamlarda çakışan değişiklikler olabilir |
+| **Alt ajan doğrulayıcılar *(Sub-agent Checkers)*** | Yazan ile denetleyen ajanların ayrılması | Ayrı bir context'te çalışan review ajanı | Ajan kendi işini denetleyemez ve hataları gözden kaçırabilir |
+
+Bu teknikte döngünün kalbi ölçüm ve değerlendirmedir. Hedef makinenin doğrulayabileceği türden ölçütler belirlenir ve her iterasyonda bu ölçütler üzerinden değerlendirme yapılır. Aşağıdaki örnek içeriği değerlendirebiliriz.
+
+**Yetersiz tanımlama;**
+
+```text
+Kodu daha temiz hale getir.
+```
+
+**Olması gereken;**
+
+```text
+src/Products altındaki tüm testler geçene, SonarQube'da yeni critical bulgu kalmayana ve cyclomatic complexity 10'u aşan metot sayısı sıfıra inene kadar devam et. 8 turda ulaşamazsan dur ve neyin engel olduğunu raporla.
+```
+
+> İyi bir hedef tanımının üç özelliği vardır; Ölçülebilir bir kabul kriteri, bir durma koşulu ve birde kaçış yolu. Özellikle kaçış kapısı olmayan bir döngü sonsuz döngüye yol açabilir ve bu da token tüketimini gereksiz yere artırabilir.
+
+// DEVAM EDECEK...
 
 ## Aman Dikkat
 
