@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+    <File Path="LOOP.md" />
+    <File Path="PROGRESS.md" />
+    <File Path="scripts/sonar-scan.ps1" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/LoopLab.Api/LoopLab.Api.csproj" />
+    <Project Path="src/LoopLab.Application/LoopLab.Application.csproj" />
+    <Project Path="src/LoopLab.Domain/LoopLab.Domain.csproj" />
+    <Project Path="src/LoopLab.Infrastructure/LoopLab.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/LoopLab.Application.Tests/LoopLab.Application.Tests.csproj" />
+    <Project Path="tests/LoopLab.Domain.Tests/LoopLab.Domain.Tests.csproj" />
+  </Folder>
+</Solution>
