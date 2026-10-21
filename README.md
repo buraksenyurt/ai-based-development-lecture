@@ -1403,7 +1403,7 @@ Sen bir test inceleme uzmanısın. Sadece diff'e ve LOOP.md'ye bak.
 Çıktın sadece ONAY veya RED ve gerekçe listesi olsun.
 ```
 
-Döngünün önemli parçalarından birisi de nasıl başlatılacağı. Bunun için trigger'lar ya da hook araçları kullanılabilir. Söz gelimi buradaki senaryoda gece çalışan zamanlanmış bir görev döngüyü başlatır ve hatta ajan durmaya çalıştığıdna bir kanca *(hook)* kabul kriterini tekrar çalıştırır. Aşağıdakine benzer bir json içeriği söz konusu olabilir. Yine Claude ekseninden düşünürsek `.claude/settings.json` dosyasında bu tür ayarları tutabiliriz. *(check-loop-goal.sh temsili bir shell script. Gerçek senaryoda kullanılabilecek bir betiği ifade ediyor)*
+Döngünün önemli parçalarından birisi de nasıl başlatılacağı ve nasıl denetleneceğidir. Bunun için tetikleyiciler *(trigger)* ve kancalar *(hook)* kullanılır. Söz gelimi gece çalışan zamanlanmış bir görev döngüyü başlatabilir, ajan durmaya çalıştığında ise bir hook kabul kriterlerini tekrar kontrol edebilir. Claude ekseninden düşünürsek bu tür ayarları `.claude/settings.json` dosyasında tutarız. Örnek çözümümüzde bu iş için `scripts/check-loop-goal.ps1` betiğini kullanıyoruz *(detaylarına [Döngüyü Otomatikleştirmek](#döngüyü-otomatikleştirmek) kısmında değineceğiz)*.
 
 ```json
 {
@@ -1411,7 +1411,12 @@ Döngünün önemli parçalarından birisi de nasıl başlatılacağı. Bunun i�
     "Stop": [
       {
         "hooks": [
-          { "type": "command", "command": "./scripts/check-loop-goal.sh" }
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File",
+                     "${CLAUDE_PROJECT_DIR}/scripts/check-loop-goal.ps1"]
+          }
         ]
       }
     ]
@@ -1419,7 +1424,7 @@ Döngünün önemli parçalarından birisi de nasıl başlatılacağı. Bunun i�
 }
 ```
 
-Stop sekmesi, ajan durmaya çalıştığında tetiklenen hook'ları ifade eder. Bu tanımlamaya göre ajan çalışmasını durdurduğunda otomatik olarak belirtilen shell script'ini çalıştırır.
+`Stop` olayı, ajan durmaya çalıştığında tetiklenen hook'ları ifade eder. Hook betiği **exit code 0** ile dönerse ajanın durmasına izin verilir. **Exit code 2** ile dönerse betiğin stderr'e yazdığı gerekçe ajana geri bildirim olarak iletilir ve ajan çalışmaya devam eder. Yani hook, ajan için *"henüz bitmedi, şunu düzelt"* diyen bir kapı görevi üstlenir.
 
 Döngü mühendisliği tekniğimizi dönem projelerimizde de deneyebiliriz. Şu alıştırmayı yapmaya çalışalım;
 
@@ -1518,6 +1523,107 @@ Sonuçları ve çalışmayı dikkatlice okumak lazım. Söz gelimi Claude CLI So
 > Tur 1 ve Tur 2'nin tam diff’leri için loop/coverage branch’ine bakabiliriz.
 
 Sonuç olarak bu döngü ile test kapsamının artması ve beklenen hedefe ulaşıldıktan sonra da durmasını bekliyoruz.
+
+### Döngüyü Otomatikleştirmek
+
+Şu ana kadar turları elle başlattık ve sonuçları kendimiz denetledik. Bu sayede döngünün nerelerde zayıf kaldığını da gördük. Örneğin ilk turda ajan SonarQube değerini okuyamadığı için kapsamı kendisi hesapladı ve başlangıç değerini hatalı yazdı. Otomasyonun amacı insanı döngüden çıkarmak değil, bu tür hataları insan kapısına gelmeden yakalamak ve insanı sadece karar vermesi gereken noktalarda devreye sokmaktır. Kurguyu üç katmanda ele alabiliriz.
+
+| **Katman** | **Görevi** | **Örnekteki Karşılığı** |
+| --- | --- | --- |
+| **Hook** *(iç döngünün kapısı)* | Ajan durmaya çalıştığında turun kurallara uyup uymadığını denetler, uymuyorsa geri gönderir | `scripts/check-loop-goal.ps1` |
+| **Headless Çalıştırma** | Turu prompt'u elle yazmadan, `claude -p` ile çalıştırır ve sonucu commit eder | `scripts/run-loop-turn.ps1` |
+| **Tetikleyici** *(dış döngünün saati)* | Turu belirli zamanlarda veya olaylarda başlatır | Elle, Windows Görev Zamanlayıcı veya CI |
+
+#### Hook ile Kalite Kapısı
+
+`check-loop-goal.ps1` betiği ajan her durmaya çalıştığında çalışır. Eğer `tests/`, `src/` veya `PROGRESS.md` üzerinde bir değişiklik yoksa *(yani tur yapılmamışsa)* ya da son kayıt *"insan kararı gerekli"* diyorsa hiçbir şey yapmadan durmaya izin verir. Aksi halde aşağıdaki kontrolleri yapar. Dikkat edilirse her kontrol `LOOP.md`'deki bir kurala ya da elle yürüttüğümüz turlarda yaşadığımız bir soruna karşılık gelir.
+
+| **Kontrol** | **Hangi Kural veya Deneyim?** |
+| --- | --- |
+| `src/` altında değişiklik var mı? | *Üretim koduna dokunma* kuralı. `settings.json`'daki `deny` kuralına ek ikinci bir savunma hattı |
+| `tests/` altındaki değişiklik 300 satırı aşıyor mu? | *Değişiklik 300 satırı geçmesin* kuralı |
+| `PROGRESS.md`'ye yeni bir `## Tur N` kaydı eklenmiş mi? | Döngünün kalıcı durumu *(state)* her turda güncellenmeli |
+| Son kayıtta `Reviewer: ONAY` var mı? | Maker/Checker ayrımı. Doğrulayıcı alt ajan atlanmamalı |
+| Testler geçiyor mu ve `measure-coverage.ps1` sonucu `PROGRESS.md`'de yazan değerle aynı mı? | Tur 1'de yaşadığımız hatalı ölçüm. Ajanın yazdığına değil betiğin ölçtüğüne güveniyoruz |
+
+Kontrollerden biri başarısız olursa betik bulguları stderr'e yazar ve exit code 2 ile döner. Ajan bu gerekçeyi okuyup eksikleri tamamlamaya çalışır.
+
+> Hook'ların da bir kaçış kapısına ihtiyacı vardır. Ajanı sürekli geri gönderen bir hook, kendisi sonsuz bir döngü yaratır ve token patlamasına *(Token Blowout)* yol açar. Bu nedenle `check-loop-goal.ps1` aynı oturumda ajanı **en fazla bir kez** geri gönderir. İkinci denemede de sorun devam ederse bulguları `PROGRESS.md`'ye *"insan kararı gerekli"* notu olarak yazar ve durmaya izin verir. Böylece karar insana bırakılır.
+
+Hook'u geçici olarak devre dışı bırakmak istersek *(örneğin aynı klasörde ders notları üzerinde çalışırken)* `$env:LOOP_HOOK_DISABLED = "1"` ortam değişkenini kullanabiliriz.
+
+#### Headless Tur
+
+`run-loop-turn.ps1` betiği tetikleyicilerin çağıracağı tek giriş noktasıdır ve şu adımları işletir.
+
+1. **Ön kontroller:** `loop/` ile başlayan bir branch'te miyiz, çalışma alanı temiz mi? *(Döngünün yanlışlıkla `main` üzerinde çalışmasını engeller)*
+2. **Durma koşulları:** Son kayıt *"insan kararı gerekli"* diyorsa, tur sınırına *(varsayılan 8)* gelindiyse ya da `measure-coverage.ps1 -Check` hedefin sağlandığını söylüyorsa turu hiç başlatmaz.
+3. **Tur:** Elle kullandığımız prompt'u `claude -p` ile çalıştırır. Turun sonunda Stop hook'u devreye girer.
+4. **Commit:** `tests/` ve `PROGRESS.md` değişikliklerini `test(loop-lab): tur N - ...` mesajıyla commit eder. **Push etmez.** Push ve merge insan kapısıdır.
+
+```powershell
+cd apps/loop-engineering
+./scripts/run-loop-turn.ps1                 # bir tur çalıştır ve commit et
+./scripts/run-loop-turn.ps1 -NoCommit       # bir tur çalıştır, commit etmeden gözlemle
+./scripts/run-loop-turn.ps1 -MaxTurns 25    # ajan adım sayısını sınırla (maliyet freni)
+```
+
+> Headless modda onay penceresi çıkmadığı için izin verilmeyen bir araç çağrısı doğrudan reddedilir. Betik bu nedenle `--permission-mode acceptEdits` ile çalışır. Dosya düzenlemeleri onay beklemez ancak `settings.json`'daki `deny` kuralları *(src/** yasağı)* yine geçerlidir. `--max-turns` parametresi ise tek bir turun kaç ajan adımı sürebileceğini sınırlayarak maliyeti kontrol altında tutar.
+
+#### Tetikleyiciler
+
+| **Tetikleyici** | **Ne Zaman?** | **Dikkat Edilmesi Gerekenler** |
+| --- | --- | --- |
+| **Elle** | Derste canlı gösterim, ilk denemeler | En şeffaf seçenektir, her adımı izleyebiliriz |
+| **Windows Görev Zamanlayıcı** | Örneğin her gece yerel makinede | Makinenin açık ve kullanıcı oturumunun açık olması gerekir. Yerel SonarQube'a erişilebilir |
+| **CI *(GitHub Actions)*** | Her gece, makineden bağımsız | Her tur bir PR olarak açılabilir. API anahtarı, maliyet ve runner ortamı yönetimi gerekir |
+
+Görev Zamanlayıcı için örnek bir kayıt aşağıdaki gibi olabilir *(yolları kendi ortamımıza göre düzenlemeliyiz)*.
+
+```powershell
+$folder  = "C:\Users\<kullanici>\Development\ai-based-development-lecture\apps\loop-engineering"
+$action  = New-ScheduledTaskAction -Execute "powershell.exe" `
+             -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$folder\scripts\run-loop-turn.ps1`"" `
+             -WorkingDirectory $folder
+$trigger = New-ScheduledTaskTrigger -Daily -At 02:00
+Register-ScheduledTask -TaskName "LoopLab-Tur" -Action $action -Trigger $trigger
+```
+
+CI tarafında `anthropics/claude-code-action@v1` ile `schedule` *(cron)* ve `workflow_dispatch` olaylarına bağlı bir workflow kurulabilir. Ancak bu senaryoda dikkat etmemiz gereken birkaç nokta var. Action repo kökünde çalıştığı için `apps/loop-engineering/.claude` altındaki ayarlar ve `test-reviewer` alt ajanı otomatik olarak yüklenmeyebilir. Ayrıca Linux runner'larda `powershell.exe` bulunmadığından hook komutunun `pwsh` ile çalışacak şekilde uyarlanması gerekir. Zamanlanmış workflow'ların sadece varsayılan branch üzerinden çalıştığını da unutmamak gerekir. Bu nedenle CI adımını yerel otomasyon oturduktan sonra ayrıca ele alacağız.
+
+#### Otomatik Döngüyü Deneyelim
+
+`main` branch'i çözümün başlangıç halini *(Tur 0)* ve düzeltilmiş döngü mekaniğini içeriyor. Otomatik döngüyü ayrı bir branch'te çalıştırıp `loop/coverage` branch'indeki elle yürütülmüş turlarla karşılaştırabiliriz.
+
+1. Yeni bir branch açalım.
+    ```bash
+    git switch main
+    git switch -c loop/coverage-auto
+    ```
+2. Başlangıç ölçümünü alalım ve `PROGRESS.md`'deki `Tur 0` kaydını güncelleyip commit edelim.
+    ```powershell
+    cd apps/loop-engineering
+    ./scripts/measure-coverage.ps1
+    ```
+3. İlk otomatik turu çalıştıralım ve sonucu inceleyelim.
+    ```powershell
+    ./scripts/run-loop-turn.ps1
+    git log --oneline -3
+    git show --stat HEAD
+    ```
+4. Betik *"Tur başlatılmadı"* diyene kadar 3. adımı tekrarlayalım ya da bir tetikleyiciye bağlayalım.
+
+Bu sırada şunları gözlemlemeye çalışalım;
+
+- Otomatik döngü elle yürüttüğümüz turlarla aynı sınıfları mı seçti?
+- Hook ajanı geri gönderdi mi? Gönderdiyse hangi gerekçeyle ve ajan bunu nasıl düzeltti?
+- Döngü nerede ve hangi koşulla durdu?
+- Commit'lerin diff'lerini gerçekten okuduk mu? *(Otomasyon arttıkça anlama borcu da sinsice büyür)*
+
+Ek olarak şu alıştırmaları deneyebiliriz;
+
+- `-NoCommit` ile bir tur çalıştıralım, ardından `PROGRESS.md`'deki kapsam değerini elle yanlış bir değerle değiştirip ajandan turu bitirmesini isteyelim. Hook bu tutarsızlığı yakalıyor mu?
+- `-MaxTurns` değerini çok düşük *(örneğin 3)* verelim. Ajan yarıda kesildiğinde ne oluyor, betik bu durumu nasıl raporluyor?
 
 ## Aman Dikkat
 
