@@ -1443,8 +1443,38 @@ Bu konu ile ilgili [Loop Engineering](./apps/loop-engineering) klasöründe örn
     $env:SONAR_TOKEN_LOOP_LAB="your_sonar_token";
     ./scripts/sonar-scan.ps1
     ```
+    Aşağıdaki gibi bir çıktı elde etmemiz gerekiyor.
+    
+    ![Loop Engineering sonar results](./images/LoopEngSonar.png)
+    
+    Görüldüğü üzere güncel code coverage değerimiz `%22.4` ve sınıfların code coverage oranları da aşağıdaki gibi.
+    | **Sınıf** | **Coverage** |
+    | --- | --- |
+    | OrderDiscountCalculator | %0 (0/39) |
+    | OrderService | %0 (0/52) |
+    | OrderValidator | %0 (0/17) |
+    | OrderDtos, OrderNotFoundException, DependencyInjection | %0 |
+    | Order | %0 (30/82) |
+    | OrderLine | %60.7 (17/28) |
+    | ShippingCostCalculator | %81.8 (18/22) |
+
+    Bu rapora ve eklediğimiz kurala göre kapsamı en düşük kalmış sınıfı seçmemiz gerekiyor.
 3. Eğer git reposunda çalışıyorsak projenin şu anki halini ayrı bir commit olarak kayıt edebiliriz. Hatta döngüyü ayrı bir branch içerisinde *(örneğin `loop/coverage`)* çalıştırabiliriz.
-4. Claude Code veya CLI üzerinden aşağıdaki prompt ile ilk turu elle çalıştırabiliriz.
+    ```bash
+    git switch -c loop/coverage
+    ```
+    ve `PROGRESS.md` dosyasındaki `Tur 0` kısmını da aşağıdaki gibi güncelleyebiliriz.
+    
+    ```markdown
+    ## Tur 0 - 2026-10-21
+    Sınıf: -
+    Kapsam: %22.4 (SonarQube, modül geneli)
+    Eklenen testler: Mevcut durum; OrderTests (3), ShippingCostCalculatorTests (2)
+    Reviewer: -
+    PR/Commit: ek-4-tur-0
+    Not: Başlangıç ölçümü insan tarafından alındı. %0 kapsamlı sınıflar: OrderDiscountCalculator, OrderService, OrderValidator.
+    ```
+4. Şimdi çözümün olduğu klasöre gidelim ve Claude Code veya CLI aracını başlatalım. Ardından şu prompt'u verip ilk turu manuel çalıştırabiliriz.
     ```text
     LOOP.md ve PROGRESS.md dosyalarını oku ve döngünün bir sonraki turunu çalıştır. Turu bitirmeden önce test-reviewer alt ajanından onay al ve sonucu PROGRESS.md'ye kaydet. Tek tur yap ve dur.
     ```
@@ -1455,7 +1485,25 @@ Bu sırada şunları gözlemlemeye çalışalım;
 - Reviewer gerçekten bağımsız davrandı mı,
 - `PROGRESS.md` dosyasına doğru şekilde yansıtıldı mı ve bir sonraki tur için yeterli bilgi içeriyor mu?
 
-Elle tetkileme sonrası pek tabii bir tetikleyici ve hook kurgusu da tasarlayabiliriz.
+İlk etapta aşağıdaki ekran görüntülerine benzer çıktılar elde etmemiz gerekiyor.
+
+![Loop Engineering Runtime 0 - Tur 0](./images/loop_eng_00.png)
+
+![Loop Engineering Runtime 0 - Tur 1](./images/loop_eng_01.png)
+
+![Loop Engineering Runtime 0 - Tur 2](./images/loop_eng_02.png)
+
+Sonuçları ve çalışmayı dikkatlice okumak lazım. Söz gelimi Claude CLI Sonarqube web arayüzünden sonuçları okumaya çalıştığından aslında hesaplanan iyileşme değerleri progress dosyasını hatalı işleniyor görünüyor. Bu sebeple bazı düzeltmeler yaparak loop'un mekaniğini daha da iyileştirmek lazım. Gerekli düzeltmelerden sonra aynı prompt ile ikinci bir tur başlatabiliriz. Buna göre aşağıdakilerin olması gerekiyor:
+
+- Turun başında ve sonunda ajanın `measure-coverage.ps1` betiğini onay sormadan çalıştırması gerekiyor *(Zira settings dosyasından bu betik için izin vermiştik)*
+
+![Loop Engineering Runtime 0 - Tur 3](./images/loop_eng_03.png)
+
+- Uygun sınıfı seçip testleri eklemesi ve sonrasında `test-reviewer` ajanını çalıştırması gerekiyor.
+
+![Loop Engineering Runtime 0 - Tur 4](./images/loop_eng_04.png)
+
+Sonuç olarak bu döngü ile test kapsamının artması ve beklenen hedefe ulaşıldıktan sonra da durmasını bekliyoruz.
 
 ## Aman Dikkat
 
