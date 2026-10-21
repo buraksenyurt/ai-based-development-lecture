@@ -1431,6 +1431,32 @@ Döngü mühendisliği tekniğimizi dönem projelerimizde de deneyebiliriz. Şu 
 6. Döngüyü en az 3 tur çalıştıralım ve her turun diff'ini kendimiz okuyalım.
 7. Kendimiz elle kısa bir rapor yazalım. Döngü nerede durdu, hangi noktada insan kararı gerekti, hangi tür borçla oluştu?
 
+Bu konu ile ilgili [Loop Engineering](./apps/loop-engineering) klasöründe örnek bir çalışma yer alıyor. İlgili klasörde **Clean Architecture** prensiplerini baz alan deneysel bir .Net çözümü yer almakta. İlk olarak aşağıdaki adımları işleterek süreci manuel yürütüp gözlemleyelim.
+
+1. Projeyi derleyip testleri koşalım.
+   ```bash
+   dotnet build
+   dotnet test
+   ```
+2. Sonarqube üzerinden bir proje açalım ve gerekli yapılandırmaları yapalım. *(Sonarqube Community sürümünü local ortamda docker imajı olarak kullanabiliriz)* Proje için bir token üretilecektir. Bunu ortam değişkeni olarak ekledikten sonra `sonar-scan.ps1` dosyasını çalıştırarak ilke taramayı yaptırabiliriz. Tarama sonucu elde edilen coverage değerini `PROGRESS.md` içerisindeki `Tur 0` kaydına ekleyelim.
+    ```bash
+    $env:SONAR_TOKEN_LOOP_LAB="your_sonar_token";
+    ./scripts/sonar-scan.ps1
+    ```
+3. Eğer git reposunda çalışıyorsak projenin şu anki halini ayrı bir commit olarak kayıt edebiliriz. Hatta döngüyü ayrı bir branch içerisinde *(örneğin `loop/coverage`)* çalıştırabiliriz.
+4. Claude Code veya CLI üzerinden aşağıdaki prompt ile ilk turu elle çalıştırabiliriz.
+    ```text
+    LOOP.md ve PROGRESS.md dosyalarını oku ve döngünün bir sonraki turunu çalıştır. Turu bitirmeden önce test-reviewer alt ajanından onay al ve sonucu PROGRESS.md'ye kaydet. Tek tur yap ve dur.
+    ```
+
+Bu sırada şunları gözlemlemeye çalışalım;
+
+- Hangi sınıflar geçti,
+- Reviewer gerçekten bağımsız davrandı mı,
+- `PROGRESS.md` dosyasına doğru şekilde yansıtıldı mı ve bir sonraki tur için yeterli bilgi içeriyor mu?
+
+Elle tetkileme sonrası pek tabii bir tetikleyici ve hook kurgusu da tasarlayabiliriz.
+
 ## Aman Dikkat
 
 - Yapay zeka botları ile çalışırken şifre, gizli anahtar, kişisel veri gibi hassas bilgileri prompt'lara dahil etmekten kaçınmalısınız. Bu tür bilgilerin istemeden de olsa loglanması veya üçüncü taraflarla paylaşılması ciddi güvenlik risklerine yol açabilir. Lisanslı modeller kullanırken de mutlaka sözleşme şartlarını dikkatlice inceleyin ve gizlilik politikalarını anlayın.
