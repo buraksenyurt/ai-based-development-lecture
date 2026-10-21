@@ -11,5 +11,26 @@
       "Edit(src/**)",
       "Write(src/**)"
     ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/scripts/check-loop-goal.ps1"
+            ],
+            "timeout": 600,
+            "statusMessage": "LOOP.md kuralları denetleniyor..."
+          }
+        ]
+      }
+    ]
   }
 }

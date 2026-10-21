@@ -3,7 +3,9 @@
     <File Path="README.md" />
     <File Path="LOOP.md" />
     <File Path="PROGRESS.md" />
+    <File Path="scripts/check-loop-goal.ps1" />
     <File Path="scripts/measure-coverage.ps1" />
+    <File Path="scripts/run-loop-turn.ps1" />
     <File Path="scripts/sonar-scan.ps1" />
   </Folder>
   <Folder Name="/src/">

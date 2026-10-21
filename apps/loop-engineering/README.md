@@ -11,9 +11,11 @@ loop-engineering/
 ├── PROGRESS.md                  # Döngünün kalıcı durumu (state); her tur bir kayıt
 ├── .claude/
 │   ├── agents/test-reviewer.md  # Doğrulayıcı alt ajan (maker/checker ayrımı)
-│   └── settings.json            # İzinler; ajanın src/ altını düzenlemesi yasak
+│   └── settings.json            # İzinler (src/ yasak) ve Stop hook tanımı
 ├── scripts/
 │   ├── measure-coverage.ps1     # Döngünün ölçütü: Orders modülü satır kapsamı
+│   ├── check-loop-goal.ps1      # Stop hook: turu LOOP.md kurallarına göre denetler
+│   ├── run-loop-turn.ps1        # Headless tek tur + commit (tetikleyicilerin giriş noktası)
 │   └── sonar-scan.ps1           # Build + test + coverage + SonarQube taraması (insan kapısı)
 ├── src/
 │   ├── LoopLab.Domain           # Order, OrderLine, kurallar (bağımlılık yok)
@@ -88,7 +90,22 @@ Her turdan sonra şunları gözlemleyelim:
 - `PROGRESS.md` bir sonraki tur için yeterli bilgi içeriyor mu?
 - Diff'i kendimiz okuduk mu? *(Anlama borcu burada başlar)*
 
-## Sonraki Adımlar
+## Döngüyü Otomatik Çalıştırma
 
-- Döngüyü başlatacak tetikleyici *(zamanlanmış görev veya CI olayı)*.
-- `Stop` hook'u ile kabul kriterini yeniden çalıştıran `scripts/check-loop-goal.sh` betiği.
+```powershell
+./scripts/run-loop-turn.ps1             # tek tur: ön kontrol -> claude -p -> Stop hook -> commit
+./scripts/run-loop-turn.ps1 -NoCommit   # commit etmeden gözlem
+```
+
+- Betik yalnızca `loop/` ile başlayan branch'lerde çalışır ve push etmez.
+- Son kayıt "insan kararı gerekli" diyorsa, 8 tura ulaşıldıysa ya da hedef sağlandıysa tur başlatmaz.
+- `.claude/settings.json` içindeki Stop hook'u (`check-loop-goal.ps1`) her turun sonunda `src/` yasağını, 300 satır sınırını, PROGRESS kaydını, reviewer onayını ve yazılan kapsamın ölçülen değerle uyumunu kontrol eder. Ajanı en fazla bir kez geri gönderir, sonra kararı insana bırakır.
+- Hook'u geçici olarak kapatmak için: `$env:LOOP_HOOK_DISABLED = "1"`
+
+Ayrıntılar ve tetikleyici seçenekleri (Görev Zamanlayıcı, CI) için ana README'deki **Ek 4 → Döngüyü Otomatikleştirmek** bölümüne bakın.
+
+## Branch'ler
+
+- `main`: Tur 0 başlangıç hali ve güncel döngü mekaniği.
+- `loop/coverage`: Elle yürütülen turlar, ajanın eklediği testler ve tur aralarındaki insan düzeltmeleri. `git log --oneline main..loop/coverage`
+- `ek-4-tur-0` etiketi: Çözümün ilk yayınlanan hali.
