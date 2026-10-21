@@ -4,7 +4,8 @@
       "Bash(dotnet build:*)",
       "Bash(dotnet test:*)",
       "Bash(git diff:*)",
-      "Bash(git status:*)"
+      "Bash(git status:*)",
+      "Bash(pwsh ./scripts/measure-coverage.ps1:*)"
     ],
     "deny": [
       "Edit(src/**)",

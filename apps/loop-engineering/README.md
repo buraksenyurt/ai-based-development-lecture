@@ -12,7 +12,9 @@ loop-engineering/
 ├── .claude/
 │   ├── agents/test-reviewer.md  # Doğrulayıcı alt ajan (maker/checker ayrımı)
 │   └── settings.json            # İzinler; ajanın src/ altını düzenlemesi yasak
-├── scripts/sonar-scan.ps1       # Build + test + coverage + SonarQube taraması
+├── scripts/
+│   ├── measure-coverage.ps1     # Döngünün ölçütü: Orders modülü satır kapsamı
+│   └── sonar-scan.ps1           # Build + test + coverage + SonarQube taraması (insan kapısı)
 ├── src/
 │   ├── LoopLab.Domain           # Order, OrderLine, kurallar (bağımlılık yok)
 │   ├── LoopLab.Application      # İndirim, kargo, doğrulama, OrderService
@@ -49,6 +51,15 @@ dotnet build LoopLab.slnx
 dotnet test LoopLab.slnx
 dotnet run --project src/LoopLab.Api
 ```
+
+## Döngünün Ölçütü
+
+```powershell
+./scripts/measure-coverage.ps1          # tablo + ORDERS_LINE_COVERAGE=<değer>
+./scripts/measure-coverage.ps1 -Check   # hedefin (%70) altındaysa exit code 1
+```
+
+> Tur 1'de ölçüt SonarQube olarak tanımlıydı. Ajan Sonar'ı okuyamayınca kendi hesabını yaptı ve başlangıç değerini yanlış yazdı. Bu yüzden döngünün ölçütü, ajanın da doğrudan çalıştırabildiği bu betiğe taşındı; SonarQube insan kapısı olarak kaldı.
 
 ## SonarQube Taraması
 

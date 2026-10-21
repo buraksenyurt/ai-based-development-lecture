@@ -2,11 +2,14 @@
 `src/LoopLab.Application/Orders` ve `src/LoopLab.Domain/Orders` klasörlerinden oluşan Orders modülünde satır kapsamını (line coverage) %70'e çıkar.
 
 # Ölçüm
-- Kapsam değeri `scripts/sonar-scan.ps1` çalıştırıldıktan sonra SonarQube'daki **Coverage** metriğinden okunur.
-- Hızlı yerel kontrol için: `dotnet test --collect:"XPlat Code Coverage"`.
+- Döngünün tek ölçütü `scripts/measure-coverage.ps1` betiğidir. Betik testleri çalıştırır ve son satırda `ORDERS_LINE_COVERAGE=<değer>` yazar.
+- Her turun başında ve sonunda betiği çalıştır; `PROGRESS.md`'deki "Kapsam" satırına bu iki değeri yaz. Değeri tahmin etme, başka yöntemle hesaplama.
+- "İlerleme" = `ORDERS_LINE_COVERAGE` değerinin bir önceki tura göre artması.
+- SonarQube (`scripts/sonar-scan.ps1`) insan kapısıdır; döngü Sonar değerini okumaya çalışmaz.
 
 # Her turda
-- Kapsamı en düşük `TEK` sınıfı seç.
+- Kapsamı en düşük `TEK` sınıfı seç (`measure-coverage.ps1` çıktısındaki tabloya göre).
+- Eşitlik varsa üretim koduna dokunmadan deterministik olarak test edilebilen sınıfı seç; seçim gerekçesini `PROGRESS.md`'ye yaz.
 - Sadece `tests/` altına test ekle; `src/` altındaki üretim koduna dokunma.
 - Testler geçmeli, mevcut hiçbir test kırılmamalı.
 - Değişiklik 300 satırı geçmesin.
