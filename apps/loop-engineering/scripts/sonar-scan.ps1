@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     LoopLab solution'ını test kapsamı ile birlikte SonarQube'a gönderir.
 
