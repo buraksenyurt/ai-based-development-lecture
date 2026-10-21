@@ -1431,7 +1431,19 @@ Döngü mühendisliği tekniğimizi dönem projelerimizde de deneyebiliriz. Şu 
 6. Döngüyü en az 3 tur çalıştıralım ve her turun diff'ini kendimiz okuyalım.
 7. Kendimiz elle kısa bir rapor yazalım. Döngü nerede durdu, hangi noktada insan kararı gerekti, hangi tür borçla oluştu?
 
-Bu konu ile ilgili [Loop Engineering](./apps/loop-engineering) klasöründe örnek bir çalışma yer alıyor. İlgili klasörde **Clean Architecture** prensiplerini baz alan deneysel bir .Net çözümü yer almakta. İlk olarak aşağıdaki adımları işleterek süreci manuel yürütüp gözlemleyelim.
+Bu konu ile ilgili [Loop Engineering](./apps/loop-engineering) klasöründe örnek bir çalışma yer alıyor.
+
+> **Branch'ler hakkında:** `main` branch'inde çözümün yalnızca başlangıç hali *(Tur 0)* yer alıyor. Yani adımları kendimiz uygulayabiliriz. Döngünün gerçekten çalıştırıldığı turları, ajanın eklediği testleri, `PROGRESS.md` kayıtlarını ve tur aralarında yaptığımız insan düzeltmelerini görmek için `loop/coverage` branch'ine geçelim.
+>
+> ```bash
+> git fetch origin
+> git switch loop/coverage
+> git log --oneline main..loop/coverage   # turların commit geçmişi
+> ```
+>
+> Başlangıç noktasına dönmek istersek `git switch --detach ek-4-tur-0` komutunu kullanabilirsiniz. Her turun commit'ini kendi döngümüzün çıktısıyla karşılaştırmak, özellikle *anlama borcu* açısından faydalı bir alıştırmadır.
+
+İlgili klasörde **Clean Architecture** prensiplerini baz alan deneysel bir .Net çözümü yer almakta. İlk olarak aşağıdaki adımları işleterek süreci manuel yürütüp gözlemleyelim.
 
 1. Projeyi derleyip testleri koşalım.
    ```bash
@@ -1454,7 +1466,7 @@ Bu konu ile ilgili [Loop Engineering](./apps/loop-engineering) klasöründe örn
     | OrderService | %0 (0/52) |
     | OrderValidator | %0 (0/17) |
     | OrderDtos, OrderNotFoundException, DependencyInjection | %0 |
-    | Order | %0 (30/82) |
+    | Order | %36.6 (30/82) |
     | OrderLine | %60.7 (17/28) |
     | ShippingCostCalculator | %81.8 (18/22) |
 
@@ -1502,6 +1514,8 @@ Sonuçları ve çalışmayı dikkatlice okumak lazım. Söz gelimi Claude CLI So
 - Uygun sınıfı seçip testleri eklemesi ve sonrasında `test-reviewer` ajanını çalıştırması gerekiyor.
 
 ![Loop Engineering Runtime 0 - Tur 4](./images/loop_eng_04.png)
+
+> Tur 1 ve Tur 2'nin tam diff’leri için loop/coverage branch’ine bakabiliriz.
 
 Sonuç olarak bu döngü ile test kapsamının artması ve beklenen hedefe ulaşıldıktan sonra da durmasını bekliyoruz.
 
