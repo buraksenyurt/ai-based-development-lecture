@@ -1322,7 +1322,114 @@ src/Products altındaki tüm testler geçene, SonarQube'da yeni critical bulgu k
 
 > İyi bir hedef tanımının üç özelliği vardır; Ölçülebilir bir kabul kriteri, bir durma koşulu ve birde kaçış yolu. Özellikle kaçış kapısı olmayan bir döngü sonsuz döngüye yol açabilir ve bu da token tüketimini gereksiz yere artırabilir.
 
-// DEVAM EDECEK...
+Dikkat edilmesi gerken birkaç nokta vardır. Örneğin bu yaklaşımda yazan ve denetleyen ajanların ayrı olması tercih edilir. Zira bu klasik bir yaklaşımdır; *kodu yazan kişi ile PR'ı onaylayan kişi aynı olmamalıdır* felsefesi burada da geçerlidir. Doğrulama işini genelde bir alt ajan *(sub-agent)* üstlenir ve asıl yazan akanın gerekçelerini değil sadece kabul ölçütlerini ve diff sonuçlarını değerlendirir. Bir diğer husus bizim yani insanın rolüdür. İnsan bu döngünün dışına itilemez, mutlaka döngünün kritik kapılarına yerleştirilir. Örneğin hedefi koyan, kabul ölçütünü onaylayan, merge öncesi çıktıları değerlendiren kişi insan olmalıdır. İç döngü ajanların kendi alanıyken dış döngü tamamen insanın kontrolündedir.
+
+Döngü mühendisliğinin altında yatan fikirlerin hepsi zaten var olan yazılım geliştirme pratiklerinden esinlenmiştir.
+
+| **Klasik Pratik** | **Süreç** | **Döngü Mühendisliği Karşılığı** |
+| --- | --- | --- |
+| **Test Driven Development (TDD)** | Red -> Green -> Blue | Testler geçene kadar iterasyonu devam ettiren ajan. Testler kabul ölçütüdür |
+| **Code Review** | Pull Request -> Review -> Approve *(Yazan kişi ile onaylayan aynı kişi değildir)* | `Maker/Checker` ayrımı ve doğrulayıcı alt ajan. |
+| **Continuous Integration (CI)** | Commit -> Build -> Test -> Report | Bir olay ile tetiklenen döngü, red build bir sonraki iterasyonun girdisi olur |
+| **Cron Jobs** | Belirli aralıklarla tetiklenen işler | Zamanlanmış ajan görevleri |
+| **OODA *(Observe, Orient, Decide, Act)*** | Gözlemle -> Yönlendir -> Karar Ver -> Uygula | Ajanın döngünün her iterasyonunda gözlem ve karar adımlarını işletmesi |
+| **PDCA *(Plan, Do, Check, Act)*** | Planla -> Uygula -> Kontrol Et -> Önlem Al | Döngü mühendisliğinde iteratif iyileştirme süreci, her iterasyonda planlama, uygulama, kontrol ve önlem adımlarının işetilmesi |
+
+Dolayısıyla yukarıdaki tabloda bahsedilen disiplinler iyi bir döngü mühendisliği için temel yapı taşlarını oluşturur. Temiz kod, test kapsamı ve statik kod analizi konularını ele aldığımız bölümler bu nedenle oldukça önemlidir.
+
+Döngü mühendisliği oldukça etkili bir yaklaşımdır ancak gizlediği bazı maliyetler de vardır. İyi tasasrlanan bir döngü kod üretimini neredeyse bedava hale getirir ama bunun da bir bedeli olur. Özellikle teknik borç kavramına daha önceden de sıkça değindiğimiz için burada olası diğer borç türlerini tanıtmakta fayda vardır.
+
+| **Borç/Maliyet** | **Tanım** | **Nasıl olur?** | **Nasıl ödenir?** |
+| --- | --- | --- | --- |
+| **Teknik Borç *(Technical Debt)*** | Yazılım geliştirme sürecinde alınan kısa vadeli kararların uzun vadede ek maliyet yaratması | Kasıtlı olarak da biriktirilebilir ama genellikle farkında olmadan birikir ve ileride çözülmesi gereken ek işler yaratır | Refactoring ve planlı iyileştirmeler |
+| **Anlama Borcu *(Comprehension Debt)*** | Sistemin yaptığı ile ekibin anladığı arasındaki fark olarak ifade edilebilir. | Sinsice oluşur. Kod testleri geçtiği için kimse tarafından okunmaz | Döngünün ürettiğini okumak, ajana değişikliği açıklatmak, ufak diff kayıtları eklettirmek |
+| **Niyet Borcu *(Intent Debt)*** | Kararların gerekçesinin hiçbir yere yazılmamış olması | Her turda ajan aynı niyeti yeniden tahmin eder, bazen farklı tahmin eder | Skills, AGENTS.md, ADR dökümanları ile niyeti bir kez yazıp kalıcılaştırmak |
+| **Doğrulama Borcu *(Verification Debt)*** | Üretim hızının denetim kapasitesini aşmasıdır ve çok yaygın görülür | Ajan sayısı ve döngü iterasyon sıklığı arttıkça oluşur | Otomatik kabul ölçütleri koyulabilir, insan kapılarını *(Human Gates)* azaltmak değil hedeflemek düşünülmelidir |
+| **Token Patlaması *(Token Blowout)*** | Alt ajanların ve sık iterasyonların maliyeti katlamasıdır | Durma koşulu olmayan ya da zayıf döngüler | Döngü için tur sınırı, token bütçesi belirlenmesi ve mutlaka maliyetin izlenmesi |
+| **Bilişsel Teslimiyet *(Cognitive Surrender)*** | Model bazlı muhakemelerin de döngüye devredilmesidir | Zaten döngü hallediyor rahatlığıyla oluşur | Dış döngünün sahibinin insan olduğunu unutmamak, korumak ve kararları insanın vermesini sağlamak |
+
+Teknik borç anladığımız ama keşke daha iyi yazsaydık dediğimiz türden bir borçlanma iken anlama borcu *(Comprehension Debt)* kod üzerinden kimsenin akıl yürütemediği kodlar için söz konusudur. Döngü ne kadar iyi çalışırsa anlama borcu o kadar hızlı büyüyebilir zira kötü çalışan döngünün çıktısına zaten bakarız fakat iyi çalışanınkine bakmayı bir süre sonra bırakabiliriz.
+
+### Örnek Senaryo
+
+Döngü mühendisliği konusunu daha iyi anlamak için basit bir senaryo üzerinden ilerleyelim. Elimizde şöyle bir senaryo olsun;
+
+```text
+Test kapsamı %25 civarında olan eski bir sipariş servisini ele alalım. Amacımız, her gece çalışan ve kapsamı adım adım artıran, her turu küçük bir pull request ile bitiren bir döngü kurmak.
+```
+
+İlk olarak `LOOP.md` dosyasını oluşturalım. Burada ölçüt, durma koşulu ve yasakları tanımlayacağız.
+
+```markdown
+# Hedef
+src/Orders modülünde satır kapsamını %70'e çıkar.
+
+# Her turda
+- Kapsamı en düşük `TEK` sınıfı seç.
+- Sadece test ekle; üretim koduna dokunma.
+- Testler geçmeli, mevcut hiçbir test kırılmamalı.
+- Değişiklik 300 satırı geçmesin.
+
+# Dur
+- Hedefe ulaşınca, `VEYA`
+- Aynı sınıfta 2 tur üst üste ilerleme yoksa, `VEYA`
+- Test edilebilmesi için üretim kodu değişmesi gerekiyorsa (bunu `PROGRESS.md`'ye "insan kararı gerekli" olarak yaz).
+```
+
+İkinci olarak döngünün her bir turunda olanları kayıtl altına alınacağı bir `PROGRESS.md` dosyası oluşturalım. Bu sayede döngü kendi geçmişini tutup hatırlayabilir.
+
+```markdown
+## Tur 7 - 2026-10-20
+Sınıf: OrderDiscountCalculator
+Kapsam: %41 → %46 (modül geneli)
+PR:`#118`
+Not: Tarih bağımlılığı var, IClock arayüzü yok. İnsan kararı gerekli.
+```
+
+Doğrulama işlerinin ayrı bir ajan tarafından yapılmasını önermiştik. Bu senaryo için `test-reviewer.md` isimli bir dosya ile söz konusu alt ajanı tanımlayabiliriz. Claude ortamında bu dosya `.claude/agents/test-reviewer.md` olarak yazılır. Aşağıdaki gibi bir içeriğe sahip olabilir.
+
+```markdown
+---
+name: test-reviewer
+description: Döngünün eklediği testleri bağımsız olarak denetler
+tools: Read, Grep, Bash
+---
+Sen bir test inceleme uzmanısın. Sadece diff'e ve LOOP.md'ye bak.
+Şunları kontrol et:
+- Testler gerçekten davranışı mı doğruluyor, yoksa sadece
+  satırları mı çalıştırıyor (assert'siz test var mı)?
+- Üretim koduna dokunulmuş mu?
+- Test isimleri senaryoyu anlatıyor mu?
+Çıktın sadece ONAY veya RED ve gerekçe listesi olsun.
+```
+
+Döngünün önemli parçalarından birisi de nasıl başlatılacağı. Bunun için trigger'lar ya da hook araçları kullanılabilir. Söz gelimi buradaki senaryoda gece çalışan zamanlanmış bir görev döngüyü başlatır ve hatta ajan durmaya çalıştığıdna bir kanca *(hook)* kabul kriterini tekrar çalıştırır. Aşağıdakine benzer bir json içeriği söz konusu olabilir. Yine Claude ekseninden düşünürsek `.claude/settings.json` dosyasında bu tür ayarları tutabiliriz. *(check-loop-goal.sh temsili bir shell script. Gerçek senaryoda kullanılabilecek bir betiği ifade ediyor)*
+
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "./scripts/check-loop-goal.sh" }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Stop sekmesi, ajan durmaya çalıştığında tetiklenen hook'ları ifade eder. Bu tanımlamaya göre ajan çalışmasını durdurduğunda otomatik olarak belirtilen shell script'ini çalıştırır.
+
+Döngü mühendisliği tekniğimizi dönem projelerimizde de deneyebiliriz. Şu alıştırmayı yapmaya çalışalım;
+
+1. Döngü için tek cümlelik, makinenin doğrulayabileceği bir hedef yazalım. Örneğin *tüm lint uyarılarını sıfırlamak, bir endpoint grubuna entegrasyon testi eklemek, bağımlılık güncellemelerini kırmadan uygulamak*).
+2. Hedefin kabul ölçütünü, durma koşulunu ve kaçış kapısını LOOP.md dosyasına yazalım.
+3. Döngünün tetikleyicisini seçelim ve neden seçtiğimizi açıklayalım *(Zamanlanmış, CI olayı ya da hook)*
+4. Kalıcı durum dosyasının şablonunu çıkaralım. Her tur sonunda hangi bilgi yazılmalı sorusunu cevaplayalım.
+5. Doğrulayıcı alt ajanın talimatını yazalım. Özellikle yazan ajanla hangi bilgiyi paylaşmayacağını da belirtelim.
+6. Döngüyü en az 3 tur çalıştıralım ve her turun diff'ini kendimiz okuyalım.
+7. Kendimiz elle kısa bir rapor yazalım. Döngü nerede durdu, hangi noktada insan kararı gerekti, hangi tür borçla oluştu?
 
 ## Aman Dikkat
 
