@@ -1,0 +1,37 @@
+local.file_match "lab_logs" {
+  path_targets = [{
+    __path__ = "/var/log/lab/*.jsonl",
+    job        = "synthetic-lab",
+  }]
+}
+
+loki.source.file "lab_logs" {
+  targets    = local.file_match.lab_logs.targets
+  forward_to = [loki.process.standardize.receiver]
+}
+
+loki.process "standardize" {
+  stage.json {
+    expressions = {
+      service_name          = "service_name",
+      deployment_environment = "deployment_environment",
+      severity_text         = "severity_text",
+    }
+  }
+
+  stage.labels {
+    values = {
+      service_name           = "",
+      deployment_environment = "",
+      severity_text          = "",
+    }
+  }
+
+  forward_to = [loki.write.local.receiver]
+}
+
+loki.write "local" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+}

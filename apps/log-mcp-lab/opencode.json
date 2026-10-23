@@ -1,0 +1,19 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "log-loki": {
+      "type": "local",
+      "command": [
+        "dotnet",
+        "run",
+        "--project",
+        "LogMcpServer/LogMcpServer.csproj"
+      ],
+      "environment": {
+        "Loki__BaseUrl": "http://localhost:3101"
+      },
+      "enabled": true,
+      "timeout": 15000
+    }
+  }
+}

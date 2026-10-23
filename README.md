@@ -844,6 +844,8 @@ Sonrasında herhangi bir ajanı kullanarak bu MCP sunucusunu keşfedebilir ve ku
 
 ![day 10_02](./images/day_10_02.png)
 
+> Bir başka MCP server örneği de [Log Loki MCP Server](apps/log-mcp-lab/docs/mcp-server.md) olabilir. İlgili klasörde örnek uygulama, setup düzeneği ve çıktılara da yer verilmektedir.
+
 ## Gün 11 - Custom Agent ve Skill Yapıları ile Çalışmak
 
 Yapay zeka destekli yazılım geliştirme süreçlerinde kullandığımız birçok teknik ve araç vardır. Sadece prompt girerek ilerlemek, yüksek kapasiteleri context pencerelerine sahip modellerle çalışırken yeterli olabilir. Ancak daha karmaşık senaryolarda, yapay zeka asistanlarının yeteneklerini genişletmek ve bağlamı zenginleştirmek için farklı araçlara ve tekniklere ihtiyaç duyulur. **MCP *(Model Context Protocol)*** sunucularından yararlanmak, **RAG *(Retrieval Augmented Generation)*** tabanlı geliştirme hatları tesis etmek, **Fine-Tuning** ile domain özel eğitilmiş modelleri kullanmak bunlardan bazılarıdır. Diğer yandan kendi özelleştirdiğimiz ajanları *(Custom Agents)* ve yetenek setlerini *(Skills)* geliştirmek de mümkündür ve giderek daha çok senaryoda tercih edilmektedir.

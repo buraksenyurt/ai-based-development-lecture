@@ -1,0 +1,21 @@
+filebeat.inputs:
+  - type: filestream
+    id: lab-jsonl
+    enabled: true
+    paths:
+      - /input/*.jsonl
+    parsers:
+      - ndjson:
+          target: ""
+          overwrite_keys: true
+
+setup.template.enabled: false
+setup.ilm.enabled: false
+
+output.elasticsearch:
+  hosts:
+    - http://elasticsearch:9200
+  index: lab-logs-%{+yyyy.MM.dd}
+
+logging.to_files: false
+logging.to_stderr: true

@@ -21,6 +21,18 @@
         "SONARQUBE_TOKEN": "${input:sonarqube-token}",
         "SONARQUBE_URL": "http://host.docker.internal:9000"
       }
+    },
+    "log-loki": {
+      "type": "stdio",
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "${workspaceFolder}/apps/log-mcp-lab/LogMcpServer/LogMcpServer.csproj"
+      ],
+      "env": {
+        "Loki__BaseUrl": "http://localhost:3101"
+      }
     }
   }
 }

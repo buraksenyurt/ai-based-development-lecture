@@ -1,0 +1,17 @@
+groups:
+  - name: faz1-log-alerts
+    rules:
+      - alert: ErrorBurstDetected
+        expr: sum by (service_name) (count_over_time({job="synthetic-lab"} | json | severity_text="ERROR" [5m])) > 5
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Error burst detected for {{ $labels.service_name }}"
+      - alert: SustainedLatencyDetected
+        expr: sum by (service_name) (count_over_time({job="synthetic-lab"} | json | attributes_duration_ms > 500 [5m])) > 5
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Sustained latency detected for {{ $labels.service_name }}"

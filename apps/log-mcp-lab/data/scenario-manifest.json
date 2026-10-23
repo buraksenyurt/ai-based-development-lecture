@@ -1,0 +1,12 @@
+{
+  "seed": 42,
+  "baseline_events": 120,
+  "expected_event_count": 152,
+  "scenarios": {
+    "baseline": 120,
+    "latency_degradation": 12,
+    "error_burst": 8,
+    "dependency_failure": 6,
+    "recovery": 6
+  }
+}

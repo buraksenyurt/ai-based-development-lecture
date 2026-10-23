@@ -1,0 +1,8 @@
+route:
+  receiver: lab-webhook
+
+receivers:
+  - name: lab-webhook
+    webhook_configs:
+      - url: http://host.docker.internal:9999/lab-alerts
+        send_resolved: true
