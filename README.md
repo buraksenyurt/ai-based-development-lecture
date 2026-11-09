@@ -39,6 +39,7 @@ Ders iki eksen üzerinde ilerler. İlk kısımda geleneksel temel yazılım geli
 - [Ders Rehberi: Değerlendirme Kriterleri ve Proje Önerileri](course-guide.md)
 - [Terimler Sözlüğü](Dictionary.md)
 - [Örnek Final Sınavı](Exam00.md)
+- [Kaynakça](References.md)
 
 ## Aman Dikkat
 
