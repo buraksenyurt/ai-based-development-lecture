@@ -1,0 +1,19 @@
+{
+	"mcpServers": {
+		"log-loki": {
+			"type": "stdio",
+			"command": "dotnet",
+			"args": [
+				"run",
+				"--project",
+				"C:\\Users\\burak\\Development\\ai-based-development-lecture/apps/log-mcp-lab/LogMcpServer/LogMcpServer.csproj"
+			],
+			"tools": [
+				"*"
+			],
+			"env": {
+				"Loki__BaseUrl": "http://localhost:3101"
+			}
+		}
+	}
+}
