@@ -2,9 +2,9 @@
 
 # Yapay Zeka Destekli Yazılım Geliştirme
 
-Konya Gıda ve Tarım Üniversitesi Yazılım Mühendisliği ve Pamukkale Üniversitesi Elektrik-Elektronik Mühendisliği ve Yönetim Bilişim Sistemleri bölümleri için açılan derse ait doküman ve örnek uygulamaların yer aldığı bir depodur.
+Sektör Kampüste projesi kapsamında lisans bölümleri için açılan derse ait doküman ve örnek uygulamaların yer aldığı bir repodur.
 
-Ders iki eksen üzerinde ilerler. İlk kısımda yapay zeka öncesi dönemin temel yazılım geliştirme konuları *(hata yönetimi, kod kalitesi, test, mimari, dağıtık sistemler)* ele alınır. İkinci kısımda ise modern yapay zeka araçlarıyla bu temellere bağlı kalarak nasıl yazılım geliştirileceği incelenir.
+Ders iki eksen üzerinde ilerler. İlk kısımda geleneksel temel yazılım geliştirme konuları *(hata yönetimi, kod kalitesi, test, mimari, dağıtık sistemler vb)* ele alınır. İkinci kısımda ise modern yapay zeka araçlarıyla bu temellere bağlı kalarak nasıl yazılım geliştirileceği incelenir.
 
 ## Kısım I: Yazılım Geliştirmenin Temelleri
 
@@ -51,29 +51,3 @@ Ders iki eksen üzerinde ilerler. İlk kısımda yapay zeka öncesi dönemin tem
 - İyi **prompt**'lar vermek, yapay zeka araçlarından kaliteli çıktılar almak için kritik öneme sahiptir. Prompt'larınızda açık ve net olun, gerekli detayları sağlayın ve mümkünse örnekler verin. Çıktıları mutlaka dikkatlice inceleyin, ispat arayın, doğruluğundan emin olun. Yapay zeka araçlarının ürettiği çıktıları denetleyen kodlar da geliştirebilirsiniz ;-)
 - Yapay zeka araçlarının ürettiği konfigürasyon içeriklerinde şifre, gizli anahtar gibi bilgiler varsa klasik metodolojide olduğu gibi bunları daha güvenli ortamlarda *(Vault, Azure Key Vault, AWS Secrets Manager gibi)* saklamayı tercih edin. Yapay zeka araçlarının ürettiği kodlarda bu tür bilgilerin hardcoded olarak yer almamasına da ayrıca dikkat edin.
 - Özellikle **SKILL** gibi araçlar dosya sistemine erişip kod çalıştırabilirler. Bu nedenle dikkatli kullanılmaları ve Guardrails gibi güvenlik önlemleriyle desteklenmeleri önemlidir. Skill'lerin ne tür işlemler yapabileceğini, hangi kaynaklara erişebileceğini ve bu işlemlerin güvenli olup olmadığını dikkatlice değerlendirin.
-
-## Önceki Numaralandırma
-
-Ders notları önceki dönemde gün/hafta bazlı tek bir README dosyasında tutuluyordu. Eski başlıkların yeni yerleri aşağıdaki gibidir.
-
-| **Önceki Başlık** | **Yeni Yeri** |
-| --- | --- |
-| Önsöz, Anahtar Terimler, Gün 00 | [Bölüm 01](chapter-01.md) |
-| Gün 01 | [Bölüm 02](chapter-02.md) |
-| Gün 02 | [Bölüm 03](chapter-03.md) |
-| Gün 02.5 | [Bölüm 04](chapter-04.md) |
-| Gün 03 | [Bölüm 05](chapter-05.md) |
-| Gün 04 | [Bölüm 06](chapter-06.md) |
-| Gün 05 | [Bölüm 07](chapter-07.md) |
-| Gün 06 | [Bölüm 08](chapter-08.md) |
-| Gün 07 | [Bölüm 09](chapter-09.md) |
-| Gün 08 | [Bölüm 10](chapter-10.md) |
-| Ek 1, Ek 5 | [Bölüm 11](chapter-11.md) |
-| Gün 09 | [Bölüm 12](chapter-12.md) |
-| Gün 10 | [Bölüm 13](chapter-13.md) |
-| Gün 11, Ek 3 | [Bölüm 14](chapter-14.md) |
-| Ek 4 | [Bölüm 15](chapter-15.md) |
-| Ek 2 | [Bölüm 16](chapter-16.md) |
-| Gün 12 | [Bölüm 17](chapter-17.md) |
-| Gün 13 | [Bölüm 18](chapter-18.md) |
-| Gün 14, Ders Geçme Prosedürü, Uygulama Önerileri | [Ders Rehberi](course-guide.md) |
