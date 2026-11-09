@@ -34,6 +34,7 @@ Konya Gıda ve Tarım Üniversitesi Yazılım Mühendisliği ve Pamukkale Ünive
     - [Setup (Copilot CLI)](#setup-copilot-cli)
   - [Ek 3 - Claude Plugin Kullanımı](#ek-3---claude-plugin-kullanımı)
   - [Ek 4 - Döngü Mühendisliği (Loop Engineering)](#ek-4---döngü-mühendisliği-loop-engineering)
+  - [Ek 5 - RAG, CAG vs KAG](#ek-5---rag-cag-ve-kag)
   - [Aman Dikkat](#aman-dikkat)
   - [Ders Geçme Prosedürü](#ders-geçme-prosedürü)
     - [Proje Değerlendirmesi](#proje-değerlendirmesi)
@@ -1570,7 +1571,7 @@ cd apps/loop-engineering
 ./scripts/run-loop-turn.ps1 -MaxTurns 25    # ajan adım sayısını sınırla (maliyet freni)
 ```
 
-> Headless modda onay penceresi çıkmadığı için izin verilmeyen bir araç çağrısı doğrudan reddedilir. Betik bu nedenle `--permission-mode acceptEdits` ile çalışır. Dosya düzenlemeleri onay beklemez ancak `settings.json`'daki `deny` kuralları *(src/** yasağı)* yine geçerlidir. `--max-turns` parametresi ise tek bir turun kaç ajan adımı sürebileceğini sınırlayarak maliyeti kontrol altında tutar.
+> Headless modda onay penceresi çıkmadığı için izin verilmeyen bir araç çağrısı doğrudan reddedilir. Betik bu nedenle `--permission-mode acceptEdits` ile çalışır. Dosya düzenlemeleri onay beklemez ancak `settings.json`'daki `deny` kuralları *(`src/` yasağı)* yine geçerlidir. `--max-turns` parametresi ise tek bir turun kaç ajan adımı sürebileceğini sınırlayarak maliyeti kontrol altında tutar.
 
 #### Tetikleyiciler
 
@@ -1626,6 +1627,33 @@ Ek olarak şu alıştırmaları deneyebiliriz;
 
 - `-NoCommit` ile bir tur çalıştıralım, ardından `PROGRESS.md`'deki kapsam değerini elle yanlış bir değerle değiştirip ajandan turu bitirmesini isteyelim. Hook bu tutarsızlığı yakalıyor mu?
 - `-MaxTurns` değerini çok düşük *(örneğin 3)* verelim. Ajan yarıda kesildiğinde ne oluyor, betik bu durumu nasıl raporluyor?
+
+## Ek 5 - RAG, CAG ve KAG
+
+Güncel olarak tartışma konularından birisi de dil modellerini eğitilmedikleri veya bilmedikleri konularda kullanırken nasıl tutarlı sonuçlar elde edileceğiz. **RAG *(Retrieval-Augmented Generation)***, **CAG *(Cache-Augmented Generation)*** ve **KAG *(Knowledge-Augmented Generation)*** gibi yaklaşımlar bu soruna çözüm arayan yöntemler arasındadır. Bunlar hangi senaryolarda kullanabileceğimi bilmek önemlidir.
+
+**RAG** yaklaşımında bilgi sorgu anında getirilir. Dokümanlar önceden parçalara *(chunk)* bölünür, embedding’leri çıkarılır ve bir vektör veritabanına yazılır. Kullanıcı soru sorduğunda, sorunun embedding’ine en benzer parçalar bulunur ve prompt’a eklenir. Model cevabı bu parçalara dayanarak üretir. Güçlü yanı ölçeklenmesidir. Milyonlarca doküman olabilir, veri sık değişebilir; yeni doküman eklemek için sadece indekslemek yeterlidir. Kaynak gösterme *(citation)* ve doküman bazlı yetkilendirme de doğal olarak kurulabilir. Zayıf yanı, cevap kalitesinin tamamen retrieval kalitesine bağlı olmasıdır. Yanlış parça gelirse model yanlış cevap verir. Kurumsal bilgi havuzları ve wiki üzerinden arama asistanı, büyük doküman arşivleri, sürekli güncellenen içerik *(destek talepleri, ürün katalogları, haberler gibi*), farklı kullanıcıların farklı dokümanlara erişebildiği sistemlerde göz önüne alınabilir.
+
+**CAG** yaklaşımında fikir oldukça basittir. Bilgi kümesi modelin context penceresine sığıyorsa retrieval’a hiç gerek yoktur. Tüm bilgi önceden context’e yüklenir ve modelin bu kısım için hesapladığı vektörel değerler cache saklanır. Sonraki her soru bu hazır cache’in üzerine eklenir, böylece doküman her seferinde yeniden işlenmez. Günümüz API’lerindeki prompt caching özelliği, bu fikrin pratikteki karşılığıdır. Güçlü yanı, retrieval hatasını ortadan kaldırmasıdır. Model her zaman bilginin tamamını görür. Dolayısıyla parçalar arası ilişkileri de kurabilir. Bu yaklaşımda vektör veritabanı, embedding pipeline’ı ya da chunking stratejisi yoktur. Cache hazırlandıktan sonra gecikme *(latency)* de  düşüktür. Pek tabii bilgi context penceresine sığmalıdır. Uzun context’lerde model ortadaki bilgiyi gözden kaçırabilir *(`lost in the middle` etkisini araştıralım)*. Veri değiştiğinde cache yeniden oluşturulmalıdır. Ayrıca her istek tüm bağlamı taşıdığı için, cache kullanılsa bile maliyet hesabı yapılmalıdır.
+Tek bir ürün kılavuzu ya da teknik dokümantasyon üzerine soru cevap, şirket içi politika ve yönetmelik asistanı, bir ders müfredatı ve yönergeleri üzerine öğrenci asistanı, tek bir sözleşme ya da şartname üzerinde analiz gibi senaryolar için idealdir. İlgili senaryolarda ortak nokta bilgi kümesinin sınırlı, görece statik ve sık sorgulanan bir yapıda olmasıdır.
+
+**KAG**, Ant Group’un [OpenSPG](https://github.com/openspg/kag) ekibinden çıkan bir yaklaşım. Öözellikle uzmanlık gerektiren alanlarda RAG’in yetersiz kaldığı noktalara odaklanmakta. Burada bilgi düz metin parçaları olarak değil, yapılandırılmış bir bilgi grafiği *(knowledge graph)* olarak hazırlanır. Entity'ler *(kişi, ilaç, kanun maddesi, ürün gibi)* ve aralarındaki ilişkiler bir şemaya göre çıkarılır, grafik ile orijinal metin parçaları arasında karşılıklı indeksleme yapılır. Sorgu anında soru mantıksal adımlara ayrıştırılır. Her adım uygun olana göre bir grafik sorgusuyla bir metin aramasıyla ya da bir hesaplamayla çözülür ve sonuçlar zincirlenir. Güçlü yanı, çok adımlı akıl yürütme ve kesinlik gerektiren sorularda çok daha tutarlı olmasıdır. İlişkiler açık olduğu için cevabın nasıl elde edildiği de izlenebilir. Regülasyonların ön planda olduğu sektörlerde önemli bir avantaj sağlar ancak bedeli yüksektir. Şema *(Schema)* tasarımı alan *(domain)* uzmanlığı ister. Bilgi çıkarımı *(entity/relation extraction)* maliyetlidir ve hata yapabilir. Grafiğin güncel tutulması ise ayrı bir mühendislik yüküdür. Microsoft’un GraphRAG yaklaşımına da bu açıdan değerlendirilebilir. O da graph sistemini kullanır ama ağırlık daha çok topluluk *(community)* özetleri ve geniş kapsamlı sorulardadır. KAG ise mantıksal akıl yürütmeye ve domain bilgisinin hassasiyetine odaklanır. Tıbbi bilgi sistemleri *(ilaç etkileşimleri, tanı-tedavi ilişkileri)*, hukuk *(kanun maddeleri arası atıflar)*, finans ve risk analizi *(şirketler arası ortaklık ve sahiplik zincirleri)*, e-devlet hizmetleri *(hangi koşulda hangi belge gerekir)* ve karmaşık ürün konfigürasyonlarında tercih edilebilir.
+
+Buradaki yaklaşımlar zaman içerisinde değişikliğe uğrayabilir veya tamamen güncelliğini yitirebilir. Yine de karar verme noktasında aşağıdaki bilgi tablosundan yararlanabiliriz.
+
+| | **RAG** | **CAG** | **KAG** |
+| --- | --- | --- | --- |
+| **Bilgi ne zaman verilir?** | Sorgu anında, konu ile ilgili parçalar eklenir `[1, 2]` | Önceden ve tamamı `[2]` | Önceden yapılandırılır, sorgu anında akıl yürütülür `[3]` |
+| **Veri Boyutu** | Büyük olabilir | Context'e sığmaldır `[2]` | Büyük olabilir |
+| **Veri değişim sıklığı** | Sık değişebilir `[3]` | Görece statik | Orta *(Graph güncelleme maliyeti vardır)* |
+| **Çok adımlı sorularda başarım** | Zayıf `[5]` | Ortalama ve üstü | Güçlü `[3]` |
+| **Kurulum karmaşıklığı** | Kolay | Basit `[2]` | Zor |
+
+1. Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., … Kiela, D. (2020). Retrieval-augmented generation for knowledge-intensive NLP tasks. Advances in Neural Information Processing Systems, 33, 9459–9474. arXiv:2005.11401
+2. Chan, B. J., Chen, C.-T., Cheng, J.-H., & Huang, H.-H. (2025). Don’t do RAG: When cache-augmented generation is all you need for knowledge tasks. Companion Proceedings of the ACM Web Conference 2025 (WWW ‘25). `https://doi.org/10.1145/3701716.3715490` (arXiv:2412.15605)
+3. Liang, L., Sun, M., Gui, Z., Zhu, Z., Jiang, Z., Zhong, L., … Zhou, J. (2024). KAG: Boosting LLMs in professional domains via knowledge augmented generation (v3). arXiv:2409.13731. `https://doi.org/10.48550/arXiv.2409.13731`
+4. Liu, N. F., Lin, K., Hewitt, J., Paranjape, A., Bevilacqua, M., Petroni, F., & Liang, P. (2024). Lost in the middle: How language models use long contexts. Transactions of the Association for Computational Linguistics, 12, 157–173. `https://doi.org/10.1162/tacl_a_00638`
+5. Tang, Y., & Yang, Y. (2024). MultiHop-RAG: Benchmarking retrieval-augmented generation for multi-hop queries. arXiv:2401.15391
 
 ## Aman Dikkat
 
