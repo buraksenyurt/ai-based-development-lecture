@@ -1,117 +1,124 @@
 <a id="top"></a>
 
-# Bölüm 17: LoRA *(Low-Rank Adaptation)* ile Model Özelleştirme
+# Bölüm 17: Token Kullanımlarını Open Telemetry ve Aspire Dashboard ile İzlemek
 
 <!-- nav:top:start -->
 [← Bölüm 16](chapter-16.md#top) · [İçindekiler](README.md#top) · [Bölüm 18 →](chapter-18.md#top)
 <!-- nav:top:end -->
 
-Yapay zeka modellerini yeniden eğitmen yerine, çok daha az parametre ekleyerek yeni özellikler kazandırmak için kullanılan Fine Tuning tekniklerinden birisi de **LoRA (Low-Rank Adaptation)**'dır. LoRA, modelin ağırlıklarını değiştirmek yerine, modelin belirli katmanlarına düşük dereceli matrisler ekleyerek yeni görevlere adapte olmasını sağlar. Çalışma mantığı basittir; ana modelin ağırlıkları tamamen dondurulur ve düşük dereceli ek matrisler eklenir ve sadece bu ek matrisler eğitilir. Bu teknik belli avantajlar sağlar; modelin fiziksel boyutu ve eğitim süresi önemli ölçüde azalır, aynı zamanda ana modelin genel yetenekleri korunur. LoRA, özellikle büyük dil modelleri için etkili bir yöntemdir ve belirli görevler veya domainler için hızlı ve verimli bir şekilde özelleştirme imkanı sunar.
+Yapay zeka araçlarının token maliyetleri, kullanım bedelleri ve lisanslamalar zamanla değişiyor. Bu nedenle yapay zeka destekli uygulamalar geliştirirken, bu araçların kullanımını ve maliyetlerini izlemek önemlidir. **Open Telemetry** gibi açık kaynaklı gözlemleme araçları, uygulamanızın yapay zeka araçlarına yaptığı çağrıları, kullanılan token miktarını ve diğer ilgili metrikleri takip etmek için kullanılabilir. **Aspire Dashboard** gibi özel panolar ise bu verileri görselleştirerek, hangi araçların ne kadar kullanıldığını, hangi işlemlerin daha fazla token tükettiğini ve genel maliyet trendlerini anlamanıza yardımcı olabilir. Örneğin **Visual Studio Code** arabiriminde çalışırken, **Context Window** daki kullanımları **Open Telemetry** araclığı ile **Microsoft Aspire Dashboard**' a gönderip takip edebiliriz.
 
-Yerel bilgisayarda LoRA tekniğine göre çalışmak için yine de NVIDIA tabanlı iyi bir GPU'ya sahip olmak gerekebilir. Zira [NVIDIA Cuda Toolkit](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html) gereklidir. Ancak alternatif bir yöntem olarak bulut tabanlı GPU hizmetlerinden yararlanmak da mümkündür. Örneğin [Google Colab](https://colab.research.google.com/), [Kaggle](https://www.kaggle.com/) veya [RunPod.ai](https://www.runpod.io/) gibi platformlar, LoRA tabanlı model özelleştirme işlemlerini gerçekleştirmek için kullanılabilir. Krikik noktalardan birisi model eğitimi için iyi bir veri setine sahip olmaktır.
+## Setup (Visual Studio Code)
 
-## RunPod.ai ile LoRA Denemesi
+Öncelikle Aspire Dashboard' u ayağa kaldıralım. Local ortamda çalışırken bu amaçla **docker container** kullanabiliriz. **docker-compose.yml** dosyasına aşağıdaki servisi eklemek yeterli.
 
-`lesson11/LoRA` klasöründe bu konu ile ilgili örnek bir çalışma yer almaktadır.
-
-`trainer.py` dosyasında python ile yazılmış bir eğitim betiği yer almaktadır. Kod basitçe `dataSet.json` dosyasındaki verileri baz alarak bir model eğitimi gerçekleştirir. Örneği yerel bilgisayarda çalıştırmak yerine `RunPod.ai` üzerinde çalıştırmak için aşağıdaki adımlar izlenebilir.
-
-- RunPod.ai üzerinde bir hesap oluşturun ve giriş yapın.
-- Kısa süreli bir çalışma için kredi yüklemek gerekecektir. Minimum 10$ civarında bir kredi yüklemesi yeterli olur.
-- Yeni bir **Pod** oluşturmamız gerekiyor. Örneğin denediğimiz tarih itibariyle **RTX 3090** GPU'suna sahip bir pod seçebiliriz. Bu pod, LoRA tabanlı model eğitimi için yeterli olacaktır.
-- Pod için gerekli ayarları yaptıktan sonra **Deploy** etmek gerekir. Böylece elimizde uzaktan bağlanıp üzerinde çalışabileceğimi bir sunucu ortamı oluşur.
-- Pod açıldıktan sonra büyük ihtimalle varsayılan şablonda yer alan **Jupyter Notebook** ortamı da hazır olacaktır. Bu ortam üzerinden `lesson11/LoRA` klasöründeki dosyaları yükleyebilir ve `trainer.py` dosyasını çalıştırabilirsiniz. Çalıştırma sırasında model eğitimi başlar ve eğitim süreci boyunca ilerleme durumu ekranda görüntülenir.
-
-**Jupyter Notebook** ortamında çalışırken, eğitim sürecini başlatmak için aşağıdaki komutu kullanabilirsiniz.
-
-Modülleri kurmadan önce pod sürücüsünün hangi **CUDA** sürümünü desteklediğini kontrol etmekte yarar var. Devam eden kısımda yer alan `pip install` komutundaki `--index-url` bu sürüme göre seçilmelidir.
-
-```bash
-nvidia-smi   # Sağ üstte "CUDA Version: 12.8" gibi bir değer görünür. Bu değer sürücünün desteklediği üst sınırdır.
-python -c "import torch; print(torch.__version__, torch.version.cuda)"   # Kurulu torch'un hangi CUDA sürümüyle derlendiğini gösterir.
+```yaml
+aspire-dashboard:
+    image: mcr.microsoft.com/dotnet/aspire-dashboard:latest
+    container_name: ai-aspire-dashboard
+    restart: always
+    ports:
+      - "18888:18888" # Dashboard UI Portu
+      - "4317:18889"  # OTLP gRPC Portu (VS Code Copilot'un veri göndereceği port)
+      - "4318:18890"  # OTLP HTTP Portu
+    environment:
+      ASPIRE_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS: "true"
 ```
 
-Eğer `torch.version.cuda`, `nvidia-smi`'nin gösterdiği sürümden daha yeniyse *(örneğin sürücü 12.8'i desteklerken torch 13.0 için derlenmişse)* kuvvetle muhtemel aşağıdaki gibi bir hata alabiliriz. Böyle bir durumda modülleri sürücüyle uyumlu bir torch sürümüyle yeniden kurmanız gerekir.
+Eğer Aspire Dashboard'unu doğrudan docker ile başlatmak istersek aşağıdaki komutla da hareket edebiliriz.
+
+```bash
+docker run -d --name aspire-dashboard --restart unless-stopped -p 18888:18888 -p 4317:18889 -p 4318:18890 -e ASPIRE_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS=true mcr.microsoft.com/dotnet/aspire-dashboard:latest
+```
+
+Servisi başlattıktan sonra `http://localhost:18888` adresinden Aspire Dashboard' a erişebiliriz. Dashboard üzerinde yapay zeka araçlarının kullanımını izlemek için **Open Telemetry**'nin OTLP protokolü üzerinden veri göndermesi gerekir. **Visual Studio Code** üzerinde çalışırken, **VS Code Copilot** gibi yapay zeka araçlarının kullanımını izlemek için **Open Telemetry**'nin OTLP gRPC portuna veri göndermesi sağlanabilir. Bunun için **VS Code**'un `settings.json` dosyasına aşağıdaki konfigürasyonu ekleyebiliriz.
+
+```json
+"github.copilot.chat.otel.enabled": true,
+"github.copilot.chat.otel.exporterType": "otlp-grpc",
+"github.copilot.chat.otel.otlpEndpoint": "http://localhost:4317",
+"github.copilot.chat.otel.captureContent": true
+```
+
+Öncelikle otel.enabled ile Telemetry log aktarım özelliğini etkinleştiriyoruz. Verinin **gRPC** protokolü üzerinden gönderilmesi için exporterType'ı `otlp-grpc` olarak belirtiyoruz. Local ortamda logların akacağı endpoint'i ise `http://localhost:4317` olarak tanımlıyoruz. Son olarak **captureContent** özelliği ile logların içeriğinin de gönderilmesini sağlıyoruz.
+
+## Deneme
+
+Örnek bir senaryo ile logları inceleyelim. Context Window pencersinde, **ask** modunda, herhangi bir dil modeline aşağıdaki soruyu sorduğumuzu düşünelim. *(docker-compose.yml dosyası açıkken)*
 
 ```text
-UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 12080)
-...
-NotImplementedError: Unsloth cannot find any torch accelerator? You need a GPU.
+Bu docker dosyasındaki servislerin hangi amaçla kullanıldığını söyler misin?
 ```
+
+İşlemler devam ederken ve tamamlandığında **Aspire Dashboard**'un logları yakaladığını görürüz.
+
+![Aspire Dashboard](./images/day14_01.png)
+
+Özellikle dikkat etmemiz gereken noktalardan birisi söz konusu işlemler için harcanan token miktarlarıdır. Örneğin bu soru için içeriğin hazırlandığı **Mayıs 2026** tarihi itibariyle **gpt 5.4** modeli için harcanan token değerleri aşağıdaki gibidir.
+
+- Cache Üzerinden Okunan Token Sayısı: 8704
+- Girdi Token Sayısı: 11773
+- Çıktı Token Sayısı: 768
+
+![Aspire Dashboard II](./images/day14_02.png)
+
+## Setup (Copilot CLI)
+
+Vekil yapay zeka ajanları farklı araçlarla kullanılabilir. Visual Studio Code, Visual Studio gibi kod geliştirme araçlarının chat pencereleri, Claude CLI gibi terminal arabirimleri vs Aradaki iletişimi dinleyerek giden gelen token değerlerini, sistem promptlarını, süre bazlı ölçümlemeleri görmek mümkündür. Tüm bunlar ilgili arabirimlerin **Open Telemetry** gibi standartlarda bilgi vermesi üzerine kuruludur. Ölçümlerde bir dashboard kullanarak monitoring kolaylaştırılır. Copilot CLI tarafından çıkan metriklerin izlenmesi için de bazı ortam parametrelerinin sisteme eklenmesi gerekir. **Windows** ortamında aşağıdaki **powershell** komutları ile ilerlenebilir. Burada kullanıcı bazından bir ortam ayarı yapılmaktadır.
 
 ```bash
-# torch'u pod sürücüsüyle(driver) uyumlu CUDA sürümüne göre sabitleyerek kuruyoruz.
-# `nvidia-smi` çıktısındaki "CUDA Version" değeri sürücünün desteklediği üst sınırı gösterir (Benim denememde versiyon 12.8).
-pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cu128
+Environment]::SetEnvironmentVariable(
+    "COPILOT_OTEL_ENABLED",
+    "true",
+    "User"
+)
 
-# Diğer modüllerin yüklenmesi. 
-# `--no-deps` önemli, aksi halde unsloth'un bağımlılık çözümleyicisi
-# yukarıda sabitlediğimiz torch'u daha yeni (ve pod'un sürücüsüyle uyumsuz) bir sürümle değiştirebilir.
-pip install --no-cache-dir --no-deps --upgrade unsloth
-pip install --no-cache-dir "trimesh" transformers datasets trl bitsandbytes peft accelerate unsloth_zoo
+[Environment]::SetEnvironmentVariable(
+    "OTEL_EXPORTER_OTLP_ENDPOINT",
+    "http://localhost:4318",
+    "User"
+) 
 
-# Not: Eğer install işlemi sırasında torchaudio modülü ile ilgili bir hata alınırsa aşağıdaki komut ile bu modülü kaldırıp
-# tekrardan modülleri yüklemeyi deneyin.
-# pip uninstall -y torchaudio
+[Environment]::SetEnvironmentVariable(
+    "COPILOT_OTEL_EXPORTER_TYPE",
+    "otlp-http",
+    "User"
+) 
 
-# Kurulumu doğrulamak için kullanacağımız komut(True dönmesi gerekiyor)
-python -c "import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available())"
-
-# Eğitim betiğinin çalıştırılması
-python trainer.py
+[Environment]::SetEnvironmentVariable(
+    "OTEL_SERVICE_NAME",
+    "github-copilot-cli",
+    "User"
+)
 ```
 
-Çalışma tamamlandığında `lora_model_sonuc` klasörü altında eğitilmiş model dosyalarının oluşması gerekir.
-
-![LoRA Runtime 00](./images/LoraRuntime_00.png)
-
-Sonuç klasöründe aşağıdaki dosyalar yer alır;
-
-- `adapter_config.json`:
-- `adapter_model.safetensors`:
-- `tokenizer_config.json`:
-- `tokenizer.json`:
-- `chat_template.jinja`:
-- `README.MD`:
-
-## Nasıl Test Edeceğiz?
-
-Oluşturulan yeni modeli test etmek için kullanabileceğimiz yöntemlerden birisi **LM Studio** gibi bir araç ile local ortamda denemeler yapmaktır. **LM Studio**, **GGUF *(GGML Unified Format)*** tabanlı modelleri çalıştırmak için kullanılan bir araçtır. Dolayısıyla **LoRA** tekniği ile eğitilmiş modelin **GGUF** formatına dönüştürülmesi gerekir. Bunun için `export_gguf.py` programı kullanılabilir. Tabii bu python programı da **CUDA** tabanlı bir **GPU** gerektirir. Dolayısıyla yerel makinede gerekli donanım gücü yoksa yine `RunPod.ai` üzerinde bu işlemi gerçekleştirmek mümkündür.
+Ubuntu tarafında kalıcı olarak ilgili ayarları oluşturmak için ilgili değişkenler doğrudan `~/.bashrc` dosyasına eklenebilir.
 
 ```bash
-python export_gguf.py
+cat >> ~/.bashrc <<'EOF'
+
+# GitHub Copilot CLI - OpenTelemetry
+export COPILOT_OTEL_ENABLED=true
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318
+export COPILOT_OTEL_EXPORTER_TYPE=otlp-http
+export OTEL_SERVICE_NAME=github-copilot-cli
+EOF
 ```
 
-Program, aynı lokasyonda yer alan `lora_model_sonuc` klasöründeki model dosyalarını alır ve **GGUF** formatına dönüştürür. Örneğimize göre `llama3-8b-ai-lecture-gguf_gguf` isimli bir klasör oluşması gerekir. Bu klasör içerisinde yer alan `gguf` uzantılı dosyayı bilgisayarımıza indirip **LM Studio** ile birlikte kullanabiliriz. Test sırasında modelin eğitildiği konulara dair sorular sorabilir ve modelin verdiği cevapları değerlendirebiliriz.
+> Sistemde birden fazla open telemetry değişkeni kullanılacaksa ayrı konfigurasyon dosyaları hazırlayıp `bashrc` dosyasından referans vermek daha mantıklı olur.
 
-![LoRA Runtime 01](./images/LoraRuntime_01.png)
+Copilot CLI kullanımı sırasında Aspire Dashboard ile izlenebilecek örnek sayfalar aşağıdaki gibidir.
 
-**GGUF** uzantılı dosyasını LM Studio ortamına sürükle bırak yöntemi ile ekleyebiliriz ancak bu şekilde çalışmazsa ikinci bir yol olarak modellerin yüklendiği klasöre taşıyabiliriz. Kabaca aşağıdaki gibi bir dizin yapısı oluşturmak yeterli olur.
+![Aspire Dashboard III](./images/day14_03.png)
 
-```text
-local(folder)
-----llama3-8b-ai-lecture(folder)
---------llama-3-8b-instruct.Q4_K_M.gguf
-```
+Örnek bir istek sonrası oluşan token kullanımlarına ait grafiksel özet.
 
-Bu işlemin ardından yeni dil modelimizin **LM Studio** ortamında görünmesi gerekir. Modeli seçip test edebiliriz.
-
-![LoRA Runtime 02](./images/LoraRuntime_02.png)
-
-Örnekte kullandığımız veri seti oldukça basit ve sınırlı. Dolayısıyla gerçekten düşündüğümüz şekilde eğitememiş de olabiliriz. Test etmek için dataSet içerisinde yer alan soruları sorup deneyebiliriz. Örneğin `Bu dersin geçme kriterleri nelerdir?` sorusunu yöneltelim. Dokümanda bu `%40` proje ve `%60` final sınavı olarak belirtilmişti. Ancak aşağıdaki gibi bir cevap alma ihtimaliz de var.
-
-![LoRA Runtime 03](./images/LoraRuntime_03.png)
-
-Aynı soruyu tekrar sorduğumuzda çok daha yakın bir cevap da alabiliriz.
-
-![LoRA Runtime 04](./images/LoraRuntime_04.png)
-
-Bu bize kullanılan veri seti ve seçilen alt modelin eğitimi ne kadar etkilediğini gösterir. Daha iyi bir sonuç almak için daha geniş ve kaliteli bir veri seti ile daha uzun süreli bir eğitim yapmak gerekebilir.
+![Aspire Dashboard IV](./images/day14_04.png)
 
 <!-- nav:bottom:start -->
 ---
 
 | ← Önceki Bölüm | İçindekiler | Sonraki Bölüm → |
 | :--- | :---: | ---: |
-| [Bölüm 16: Token Kullanımlarını Open Telemetry ve Aspire Dashboard ile İzlemek](chapter-16.md#top) | [İçindekiler](README.md#top) | [Bölüm 18: Yapay Zeka Destekli Yazılım Geliştirmede Güvenlik](chapter-18.md#top) |
+| [Bölüm 16: Döngü Mühendisliği (Loop Engineering)](chapter-16.md#top) | [İçindekiler](README.md#top) | [Bölüm 18: LoRA *(Low-Rank Adaptation)* ile Model Özelleştirme](chapter-18.md#top) |
 <!-- nav:bottom:end -->

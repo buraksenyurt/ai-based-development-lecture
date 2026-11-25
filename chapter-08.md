@@ -52,7 +52,7 @@ lesson05 altındaki BookApp çözümünü referans alarak Sipariş, Stok ve Teda
 - Senkron ve asenkron iletişim arasındaki tercih, projenin tutarlılık ve erişilebilirlik önceliklerine göre bilinçli şekilde yapılmalıdır.
 - Yapay zeka ajanları **Retry**, **Circuit Breaker** gibi dayanıklılık stratejilerini hızla üretebilir ancak kullanılan parametrelerin *(deneme sayısı, bekleme süresi, eşik değerleri)* senaryoya uygunluğu mutlaka gözden geçirilmelidir. *(Bu noktada ölçümlemeler yapıp sonuçları değerlendirmek faydalı olabilir.)*
 - Her uygulama dağıtık bir mimariye ihtiyaç duymaz. Basit ve düşük trafikli sistemlerde monolitik/layered bir yaklaşım hem daha az maliyetli olur hem de daha az hataya açıktır.
-- Dağıtık sistemlerde gözlemlenebilirlik *(observability)* kritik önem taşır. Bir isteğin hangi servislerden geçtiğini izleyemiyorsak hata ayıklamak neredeyse imkansız hale gelir *(Bknz: [Bölüm 16 - Token Kullanımlarını Open Telemetry ve Aspire Dashboard ile İzlemek](chapter-16.md#top))*.
+- Dağıtık sistemlerde gözlemlenebilirlik *(observability)* kritik önem taşır. Bir isteğin hangi servislerden geçtiğini izleyemiyorsak hata ayıklamak neredeyse imkansız hale gelir *(Bknz: [Bölüm 17 - Token Kullanımlarını Open Telemetry ve Aspire Dashboard ile İzlemek](chapter-17.md#top))*.
 
 <!-- nav:bottom:start -->
 ---

@@ -161,5 +161,5 @@ ideas:idea-reviewer Bütün fikirleri değerlendir.
 
 | ← Önceki Bölüm | İçindekiler | Sonraki Bölüm → |
 | :--- | :---: | ---: |
-| [Bölüm 13: MCP Server'lar ile Çalışmak](chapter-13.md#top) | [İçindekiler](README.md#top) | [Bölüm 15: Döngü Mühendisliği (Loop Engineering)](chapter-15.md#top) |
+| [Bölüm 13: MCP Server'lar ile Çalışmak](chapter-13.md#top) | [İçindekiler](README.md#top) | [Bölüm 15: Vibe Coding ve Agentic Coding: Ne Zaman Hangisi?](chapter-15.md#top) |
 <!-- nav:bottom:end -->

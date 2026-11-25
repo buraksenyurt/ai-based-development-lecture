@@ -223,7 +223,15 @@ Bu sayfada ders notlarında yararlanılan, atıfta bulunulan veya konuyu derinle
 - [Claude Code - Plugins](https://code.claude.com/docs/en/plugins) - Skill, agent ve hook'ların plugin olarak paketlenmesi.
 - [VS Code - Custom Agents](https://code.visualstudio.com/docs/copilot/customization/custom-agents) - GitHub Copilot için özel ajan tanımları.
 
-### [Bölüm 15: Döngü Mühendisliği (Loop Engineering)](chapter-15.md)
+### [Bölüm 15: Vibe Coding ve Agentic Coding: Ne Zaman Hangisi?](chapter-15.md)
+
+**Video ve Web Kaynakları**
+
+- IBM Technology - *Vibe Coding vs Agentic Coding: Which Should You Use?* *(Grace Ableidinger, 2026)* - Bölümün temel aldığı anlatım.
+- [Anthropic - Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents) - Ajan tabanlı iş akışları ve orkestrasyon desenleri.
+- [Claude Code - Subagents](https://code.claude.com/docs/en/sub-agents) - Alt ajanlar ile görev ve yetki ayrıştırma.
+
+### [Bölüm 16: Döngü Mühendisliği (Loop Engineering)](chapter-16.md)
 
 **Kitaplar ve Makaleler**
 
@@ -238,7 +246,7 @@ Bu sayfada ders notlarında yararlanılan, atıfta bulunulan veya konuyu derinle
 - [anthropics/claude-code-action](https://github.com/anthropics/claude-code-action) - GitHub Actions üzerinden zamanlanmış veya tetiklenmiş ajan çalıştırma.
 - [SonarQube Community Build Documentation](https://docs.sonarsource.com/sonarqube-community-build/) - Örnekte döngünün hedef metriklerini sağlayan kod analizi aracı.
 
-### [Bölüm 16: Token Kullanımlarını Open Telemetry ve Aspire Dashboard ile İzlemek](chapter-16.md)
+### [Bölüm 17: Token Kullanımlarını Open Telemetry ve Aspire Dashboard ile İzlemek](chapter-17.md)
 
 **Resmi Dokümanlar ve Web Kaynakları**
 
@@ -248,7 +256,7 @@ Bu sayfada ders notlarında yararlanılan, atıfta bulunulan veya konuyu derinle
 - [VS Code - Monitor Agent Usage with OpenTelemetry](https://code.visualstudio.com/docs/copilot/guides/monitoring-agents) - VS Code Copilot için telemetri ayarları.
 - [GitHub Docs - OpenTelemetry for Copilot Agents](https://docs.github.com/en/copilot/concepts/agents/opentelemetry) - Copilot CLI ve ajanları için OpenTelemetry desteği.
 
-### [Bölüm 17: LoRA *(Low-Rank Adaptation)* ile Model Özelleştirme](chapter-17.md)
+### [Bölüm 18: LoRA *(Low-Rank Adaptation)* ile Model Özelleştirme](chapter-18.md)
 
 **Kitaplar ve Makaleler**
 
@@ -265,7 +273,7 @@ Bu sayfada ders notlarında yararlanılan, atıfta bulunulan veya konuyu derinle
 - [PyTorch - Get Started](https://pytorch.org/get-started/locally/) - CUDA sürümüne uygun PyTorch kurulumu.
 - [NVIDIA CUDA Toolkit Release Notes](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html) - CUDA ve sürücü uyumluluk tablosu.
 
-### [Bölüm 18: Yapay Zeka Destekli Yazılım Geliştirmede Güvenlik](chapter-18.md)
+### [Bölüm 19: Yapay Zeka Destekli Yazılım Geliştirmede Güvenlik](chapter-19.md)
 
 **Kitaplar ve Makaleler**
 

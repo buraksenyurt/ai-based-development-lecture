@@ -187,7 +187,7 @@ Yapısal loglar ve `request_id` sayesindeki yapay zeka modellerine tek bir iste�
 ## Dikkat edilmesi gerekenler
 
 - Yapay zeka ajanları, "hata vermesin" yönündeki isteklere sıklıkla **her şeyi `try/except Exception: pass` ile sarmalayarak** veya `unwrap_or_default()` ile hatayı sessizce yutarak cevap verebilir. Bu yaklaşım hatayı düzeltmek değil gizlemektir. Üretilen kodu mutlaka gözden geçirin ve hataların doğru şekilde ele alındığından emin olun.
-- Üretim loglarını bir yapay zeka aracına yapıştırmadan önce içinde **kişisel veri, token, parola** olmadığından emin olun *([Bölüm 18 - Güvenlik](chapter-18.md#top))*.
+- Üretim loglarını bir yapay zeka aracına yapıştırmadan önce içinde **kişisel veri, token, parola** olmadığından emin olun *([Bölüm 19 - Güvenlik](chapter-19.md#top))*.
 - Modelden hata yollarını kapsayan testler üretmesini isteyin *(Negative path testing)*. Bu sayede yazılımın geçersiz verilerle, hatalı kullanıcı eylemleriyle veya beklenmeyen durumlarla karşılaştığında nasıl davrandığını test edebilirsiniz.
 - Bu kurallar bir projede kalıcı hale getirilecekse, [Bölüm 14](chapter-14.md#top)'te ele alınan `custom agent / skill` veya proje talimat dosyalarına *(`copilot-instructions.md`, `CLAUDE.md` vb.)* yazılabilir. Örneğin: *"Handler'larda try/catch kullanma, AppError döndür. 4xx durumlarını WARN olarak logla."*
 
