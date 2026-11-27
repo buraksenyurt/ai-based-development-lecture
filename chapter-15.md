@@ -77,6 +77,10 @@ Ajanların kod okuma/yazma, terminal komutları çalıştırma ve sistem araçla
 
 Kaynak: IBM Technology, *Vibe Coding vs Agentic Coding: Which Should You Use?*, Grace Ableidinger, 2026
 
+## Örnek Senaryo 1 (Agentic Coding)
+
+![Agentic Coding Scenario 1](./images/agentic_scenario_1.png)
+
 <!-- nav:bottom:start -->
 ---
 
